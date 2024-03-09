@@ -4,6 +4,12 @@ plugins {
 }
 
 android {
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+android {
     namespace = "com.miniproject.attendx"
     compileSdk = 34
 
