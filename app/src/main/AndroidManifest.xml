@@ -14,17 +14,18 @@
         tools:targetApi="31">
         <activity
 
+            android:name=".Dashboard.Dashboard_activity"
+   <activity
+    
             android:name=".CourseDetailActivity"
             android:exported="false" />
-
+   <activity
 
             android:name=".Dashboard_activity"
             android:exported="false" />
-
+   <activity
             android:parentActivityName=".login"
-            android:name=".CourseDetails"
             android:exported="false" />
-
         <activity
             android:name=".login"
             android:exported="true">
@@ -34,7 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
 
     </application>
 
