@@ -51,15 +51,15 @@
                     android:id="@+id/TextView_tStd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/rounded_corner_background"
                     android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
                     android:paddingTop="8dp"
+                    android:paddingRight="12dp"
                     android:paddingBottom="8dp"
-                    android:text="Total students : xx"
-                    android:textColor="#fff"
-                    android:textSize="16dp" />
+                    android:text="Total Students: XXX"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/TextView_Year"
@@ -67,12 +67,12 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_corner_background"
                     android:paddingLeft="12dp"
-                    android:paddingRight="12dp"
                     android:paddingTop="8dp"
+                    android:paddingRight="12dp"
                     android:paddingBottom="8dp"
                     android:text="SY"
-                    android:textColor="#fff"
-                    android:textSize="16dp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
 
 
             </LinearLayout>

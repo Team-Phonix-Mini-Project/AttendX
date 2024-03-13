@@ -8,21 +8,20 @@ import com.miniproject.attendx.databinding.ActivityLoginBinding
 
 
 class login : AppCompatActivity() {
-    lateinit var bindingLoginPage:ActivityLoginBinding
+    lateinit var bindingLoginPage: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindingLoginPage=ActivityLoginBinding.inflate(layoutInflater)
+        bindingLoginPage = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(bindingLoginPage.root)
         bindingLoginPage.buttonLogin.setOnClickListener {
-            val intent=Intent(this, Dashboard_activity::class.java)
+            val intent = Intent(this, Dashboard_activity::class.java)
             startActivity(intent)
 
-            val Intent = Intent(this,CourseDetails::class.java)
+            val intentToDashboard = Intent(this, CourseDetails::class.java)
 
-            startActivity(Intent)
+            startActivity(intentToDashboard)
 
         }
-
 
     }
 
