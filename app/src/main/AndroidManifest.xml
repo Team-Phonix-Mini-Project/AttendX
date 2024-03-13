@@ -13,7 +13,17 @@
         android:theme="@style/Theme.AttendX"
         tools:targetApi="31">
         <activity
+
             android:name=".Dashboard.Dashboard_activity"
+   <activity
+    
+            android:name=".CourseDetailActivity"
+            android:exported="false" />
+   <activity
+
+            android:name=".Dashboard_activity"
+            android:exported="false" />
+   <activity
             android:parentActivityName=".login"
             android:exported="false" />
         <activity
@@ -25,6 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
