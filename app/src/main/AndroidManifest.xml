@@ -12,27 +12,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AttendX"
         tools:targetApi="31">
-        <activity
 
-            android:name=".Dashboard.Dashboard_activity"
-   <activity
-    
+
+        <activity
             android:name=".CourseDetailActivity"
             android:exported="false" />
-   <activity
 
-            android:name=".Dashboard_activity"
+
+        <activity
+            android:name=".Dashboard.Dashboard_activity"
             android:exported="false" />
-   <activity
-            android:parentActivityName=".login"
-            android:exported="false" />
+
+
         <activity
             android:name=".login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
             </intent-filter>
         </activity>
 
