@@ -18,13 +18,9 @@
             android:layout_height="wrap_content"
             android:text="Software Engineering Lab"
             android:textColor="@color/white"
-            android:textSize="24dp"/>
-
+            android:textSize="24sp" />
 
 
     </androidx.appcompat.widget.Toolbar>
-
-    <!-- Your content here -->
-    <!-- For example, a RecyclerView or a LinearLayout -->
 
 </RelativeLayout>
