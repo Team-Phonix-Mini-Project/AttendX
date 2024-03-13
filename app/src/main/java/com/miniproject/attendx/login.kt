@@ -17,6 +17,10 @@ class login : AppCompatActivity() {
             val intent=Intent(this, Dashboard_activity::class.java)
             startActivity(intent)
 
+            val Intent = Intent(this,CourseDetails::class.java)
+
+            startActivity(Intent)
+
         }
 
 
