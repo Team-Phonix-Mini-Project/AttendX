@@ -2,6 +2,7 @@ package com.miniproject.attendx.Dashboard
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,6 +18,13 @@ class Dashboard_activity : AppCompatActivity() {
         setContentView(binding.root)
         var data= arrayOf<String>("Try1","Try2","Try3","Try4","Try5","Try6")
         binding.RecyclerView.adapter=RecyclerViewDashboard_Adapter(data)
+        var actionBar=supportActionBar;
+
+
+        binding.drawerIconId.setOnClickListener {
+//            val intentToOpenMenu = intent
+        }
+
 
     }
 }

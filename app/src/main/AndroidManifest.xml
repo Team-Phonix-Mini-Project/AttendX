@@ -13,18 +13,10 @@
         android:theme="@style/Theme.AttendX"
         tools:targetApi="31">
         <activity
-
             android:name=".Dashboard.Dashboard_activity"
-   <activity
-    
+            android:exported="false"/>
+        <activity
             android:name=".CourseDetailActivity"
-            android:exported="false" />
-   <activity
-
-            android:name=".Dashboard_activity"
-            android:exported="false" />
-   <activity
-            android:parentActivityName=".login"
             android:exported="false" />
         <activity
             android:name=".login"
