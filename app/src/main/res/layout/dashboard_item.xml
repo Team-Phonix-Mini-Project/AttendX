@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="14dp"
-    android:paddingVertical="18dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.cardview.widget.CardView
-        app:layout_constraintTop_toTopOf="parent"
+    android:paddingVertical="18dp">
+
+    <androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/Card_view_container_id"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:id="@+id/Card_view_container_id"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardCornerRadius="25dp"
         app:cardBackgroundColor="#3E86DC"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        app:cardCornerRadius="25dp"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:id="@+id/text_view_dashboard_card"
-                android:textSize="30dp"
-                android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:textSize="30dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
