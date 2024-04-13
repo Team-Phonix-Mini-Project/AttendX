@@ -9,15 +9,14 @@
         android:id="@+id/toolbar_dashboard"
         android:layout_width="match_parent"
         android:layout_height="440px"
-        android:background="#A4D3DF"
+        android:contentInsetStart="0dp"
+        android:background="#895EDA"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="50px"
-            android:elevation="0dp">
+            android:layout_marginTop="50px">
 
             <ImageButton
                 android:id="@+id/drawer_icon_id"
@@ -33,7 +32,7 @@
                 android:id="@+id/text_view_hi_user"
                 android:layout_width="50dp"
                 android:layout_height="20dp"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:text="Hi User!"
                 android:textColor="@color/black"
@@ -58,11 +57,11 @@
         android:id="@+id/Recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="#8055A4CF"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_dashboard"
-        app:layout_constraintVertical_bias="0.0"
-        tools:layout_editor_absoluteX="45dp"
+
         tools:listitem="@layout/dashboard_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

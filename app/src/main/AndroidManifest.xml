@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,8 +15,22 @@
         android:theme="@style/Theme.AttendX"
         tools:targetApi="31">
         <activity
+            android:name=".AttendanceTakingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity_course_details"
+            android:exported="false" />
+        <activity
+            android:name=".T"
+            android:exported="false"
+            android:label="@string/title_activity_t"
+            android:theme="@style/Theme.AttendX" />
+        <activity
+            android:name=".Activity_course_details"
+            android:exported="false" />
+        <activity
             android:name=".Dashboard.Dashboard_activity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".CourseDetailActivity"
             android:exported="false" />
@@ -27,7 +43,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

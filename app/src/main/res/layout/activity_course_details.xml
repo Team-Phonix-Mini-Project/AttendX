@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity_course_details">
+    <Toolbar
+        android:id="@+id/course_details_toolbar_dashboard"
+        android:layout_width="match_parent"
+        android:layout_height="440px"
+        android:contentInsetStart="0dp"
+        android:background="#895EDA"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="70px"
+            android:layout_height="match_parent">
+            <TextView
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/course_details_courseName"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:textSize="28sp"
+                android:hint="Course Name"/>
+            <TextView
+                android:id="@+id/course_details_applicants"
+                app:layout_constraintTop_toBottomOf="@id/course_details_courseName"
+                android:layout_marginTop="15dp"
+                app:layout_constraintStart_toStartOf="@id/course_details_courseName"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:hint="Number of applicants : 69"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </Toolbar>
+
+    <Button
+        android:id="@+id/course_details_take_attendance"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:padding="60px"
+        android:backgroundTint="#6200EA"
+        android:textSize="16sp"
+        android:text="Take Attendance"
+        android:textStyle="bold"
+        android:textColor="#FFD600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/course_details_toolbar_dashboard" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

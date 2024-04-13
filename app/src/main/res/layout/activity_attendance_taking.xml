@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AttendanceTakingActivity">
+    <Toolbar
+        android:id="@+id/attendance_taking_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="440px"
+        android:contentInsetEnd="0dp"
+        android:contentInsetStart="0dp"
+        android:background="#895EDA"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="50px"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:hint="Attendance for theory of computation"
+                android:id="@+id/attendance_taking_courseName"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingLeft="30dp"
+                android:paddingEnd="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="28sp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </Toolbar>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/attendance_taking_create_session"
+        app:layout_constraintTop_toBottomOf="@id/attendance_taking_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18dp"
+        android:layout_marginTop="70dp"
+        android:text="Create attendance session"
+
+        />
+<!--    <Button-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        android:layout_marginTop="150px"-->
+<!--        android:id="@+id/attendance_taking_present_btn"-->
+<!--        android:layout_marginLeft="250px"-->
+<!--        android:textColor="@color/black"-->
+<!--        style="@style/Widget.MaterialComponents.Button.TextButton"-->
+<!--        android:backgroundTint="#00BFA5"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="PRESENT✅"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/attendance_taking_create_session"-->
+<!--        />-->
+<!--    <Button-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginTop="150px"-->
+<!--        android:layout_marginRight="250px"-->
+<!--        android:id="@+id/attendance_taking_absent_btn"-->
+<!--        android:textColor="@color/black"-->
+<!--        style="@style/Widget.MaterialComponents.Button.TextButton"-->
+<!--        android:backgroundTint="#DD2C00"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Absent❌"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/attendance_taking_create_session"-->
+<!--        />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
