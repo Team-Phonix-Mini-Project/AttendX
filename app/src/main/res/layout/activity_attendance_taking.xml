@@ -37,40 +37,62 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/attendance_taking_create_session"
+        android:id="@+id/attendance_taking_create_module"
         app:layout_constraintTop_toBottomOf="@id/attendance_taking_toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textSize="18dp"
-        android:layout_marginTop="70dp"
-        android:text="Create attendance session"
+        android:layout_marginTop="40dp"
+        android:text="Create attendance Module"
 
         />
-<!--    <Button-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:layout_marginTop="150px"-->
-<!--        android:id="@+id/attendance_taking_present_btn"-->
-<!--        android:layout_marginLeft="250px"-->
-<!--        android:textColor="@color/black"-->
-<!--        style="@style/Widget.MaterialComponents.Button.TextButton"-->
-<!--        android:backgroundTint="#00BFA5"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="PRESENT✅"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/attendance_taking_create_session"-->
-<!--        />-->
-<!--    <Button-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        android:layout_marginTop="150px"-->
-<!--        android:layout_marginRight="250px"-->
-<!--        android:id="@+id/attendance_taking_absent_btn"-->
-<!--        android:textColor="@color/black"-->
-<!--        style="@style/Widget.MaterialComponents.Button.TextButton"-->
-<!--        android:backgroundTint="#DD2C00"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Absent❌"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/attendance_taking_create_session"-->
-<!--        />-->
+    <Button
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/attendance_taking_create_module"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18dp"
+        android:id="@+id/attendance_taking_create_session"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create session in current module"
+        />
+    <TextView
+        android:layout_marginTop="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/course_details_student_name"
+        android:textSize="50dp"
+        app:layout_constraintTop_toBottomOf="@id/attendance_taking_create_session"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+    <Button
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="250px"
+        android:id="@+id/attendance_taking_present_btn"
+        android:layout_marginLeft="250px"
+        android:textColor="@color/black"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:backgroundTint="#00BFA5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PRESENT✅"
+        app:layout_constraintTop_toBottomOf="@id/course_details_student_name"
+        />
+    <Button
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="150px"
+        android:layout_marginRight="250px"
+        android:id="@+id/attendance_taking_absent_btn"
+        android:textColor="@color/black"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:backgroundTint="#DD2C00"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Absent❌"
+        app:layout_constraintBottom_toBottomOf="@id/attendance_taking_present_btn"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

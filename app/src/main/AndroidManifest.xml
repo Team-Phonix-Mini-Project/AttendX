@@ -21,18 +21,7 @@
             android:name=".activity_course_details"
             android:exported="false" />
         <activity
-            android:name=".T"
-            android:exported="false"
-            android:label="@string/title_activity_t"
-            android:theme="@style/Theme.AttendX" />
-        <activity
-            android:name=".Activity_course_details"
-            android:exported="false" />
-        <activity
             android:name=".Dashboard.Dashboard_activity"
-            android:exported="false" />
-        <activity
-            android:name=".CourseDetailActivity"
             android:exported="false" />
         <activity
             android:name=".login"

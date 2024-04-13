@@ -26,7 +26,7 @@ class Dashboard_activity : AppCompatActivity() {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
 
         val params = mapOf(
-            "wstoken" to "5e62aa6a8c3ab1b1a3aefa9e39fad4be",
+            "wstoken" to "cd8c3e7ed7bf515ad9a3fec7f7f8e8ef",
             "wsfunction" to "core_course_get_courses",
             "moodlewsrestformat" to "json"
         )
@@ -68,7 +68,7 @@ class Dashboard_activity : AppCompatActivity() {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
 
         val params = mapOf(
-            "wstoken" to "5e62aa6a8c3ab1b1a3aefa9e39fad4be",
+            "wstoken" to "cd8c3e7ed7bf515ad9a3fec7f7f8e8ef",
             "wsfunction" to "core_enrol_get_enrolled_users",
             "moodlewsrestformat" to "json",
             "courseid" to courseId
