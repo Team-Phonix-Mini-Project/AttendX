@@ -15,16 +15,31 @@
         android:theme="@style/Theme.AttendX"
         tools:targetApi="31">
         <activity
-            android:name=".AttendanceTakingActivity"
+            android:name=".submit_attendance_item"
             android:exported="false" />
         <activity
-            android:name=".activity_course_details"
+            android:name=".submitAttendance.SubmitAttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".submit_attendance.SubmitAttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".attendance.RecordingAttendance"
+            android:exported="false" />
+        <activity
+            android:name=".FetchingNamesTakingAttendance"
+            android:exported="false" />
+        <activity
+            android:name=".attendance.AttendanceTakingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".course_details.activity_course_details"
             android:exported="false" />
         <activity
             android:name=".Dashboard.Dashboard_activity"
             android:exported="false" />
         <activity
-            android:name=".login"
+            android:name=".Login_activity.login"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

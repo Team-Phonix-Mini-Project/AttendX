@@ -5,11 +5,11 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity_course_details">
+    tools:context=".course_details.activity_course_details">
     <Toolbar
         android:id="@+id/course_details_toolbar_dashboard"
         android:layout_width="match_parent"
-        android:layout_height="440px"
+        android:layout_height="400px"
         android:contentInsetStart="0dp"
         android:background="#895EDA"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,6 +18,7 @@
             android:layout_marginTop="70px"
             android:layout_height="match_parent">
             <TextView
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginLeft="30dp"
@@ -28,6 +29,7 @@
                 android:textSize="28sp"
                 android:hint="Course Name"/>
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/course_details_applicants"
                 app:layout_constraintTop_toBottomOf="@id/course_details_courseName"
                 android:layout_marginTop="15dp"

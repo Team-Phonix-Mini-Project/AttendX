@@ -4,9 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.compose.ui.res.integerResource
 import androidx.recyclerview.widget.RecyclerView
-import com.miniproject.attendx.activity_course_details
+import com.miniproject.attendx.course_details.activity_course_details
 import com.miniproject.attendx.databinding.DashboardItemBinding
 
 
@@ -32,7 +31,7 @@ class RecyclerViewDashboard_Adapter(var data:ArrayList<objDashboard> ) :
             binding.textViewDashboardCardUserName.text=s.name;
             binding.textViewDashboardCardApplicantsNumber.text="Total Applicants : ${s.applicant}"
             binding.CardViewContainerId.setOnClickListener {
-                var intent= Intent(context,activity_course_details::class.java)
+                var intent= Intent(context, activity_course_details::class.java)
                 intent.putExtra("Name",s.name)
                 intent.putExtra("User",s.applicant)
                 intent.putExtra("courseid",s.courseId)

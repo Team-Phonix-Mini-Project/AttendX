@@ -1,4 +1,4 @@
-package com.miniproject.attendx
+package com.miniproject.attendx.Login_activity
 
 import android.content.Intent
 import android.os.Bundle

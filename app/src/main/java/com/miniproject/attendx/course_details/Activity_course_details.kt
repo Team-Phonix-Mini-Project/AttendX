@@ -1,4 +1,4 @@
-package com.miniproject.attendx
+package com.miniproject.attendx.course_details
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,6 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.miniproject.attendx.R
+import com.miniproject.attendx.attendance.AttendanceTakingActivity
 import com.miniproject.attendx.databinding.ActivityCourseDetailsBinding
 
 class activity_course_details : AppCompatActivity() {
@@ -32,7 +34,7 @@ class activity_course_details : AppCompatActivity() {
     }
 
     private fun onTakeAttendanceButtonClicked(courseID: String?, name: String?) {
-        var intent=Intent(this,AttendanceTakingActivity::class.java)
+        var intent=Intent(this, AttendanceTakingActivity::class.java)
         intent.putExtra("Name",name)
         intent.putExtra("courseid",courseID)
         startActivity(intent)
