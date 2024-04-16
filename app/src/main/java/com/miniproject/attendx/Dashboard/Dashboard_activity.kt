@@ -1,6 +1,5 @@
 package com.miniproject.attendx.Dashboard
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -11,7 +10,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.miniproject.attendx.Login_activity.LoginActivity
 import com.miniproject.attendx.databinding.ActivityDashboardBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -38,25 +36,25 @@ class Dashboard_activity : AppCompatActivity() {
 
         // Heere is the Firebase code
         auth = FirebaseAuth.getInstance()
-        val user = auth.currentUser
-        if (user == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
-        } else {
-            Toast.makeText(this, user.email, Toast.LENGTH_SHORT).show()
-        }
+//        val user = auth.currentUser
+//        if (user == null) {
+//            startActivity(Intent(this, LoginActivity::class.java))
+//            finish()
+//        } else {
+//            Toast.makeText(this, user.email, Toast.LENGTH_SHORT).show()
+//        }
 
         // Add click listener to logout button
-        binding.logoutButton.setOnClickListener {
-            // Sign out the user
-            auth.signOut()
-
-            // Redirect to login activity
-            startActivity(Intent(this, LoginActivity::class.java).apply {
-                putExtra("fuckOFF", false)
-            })
-            finish()
-        }
+//        binding.logoutButton.setOnClickListener {
+//            // Sign out the user
+//            auth.signOut()
+//
+//            // Redirect to login activity
+//            startActivity(Intent(this, LoginActivity::class.java).apply {
+//                putExtra("fuckOFF", false)
+//            })
+//            finish()
+//        }
 
 
         // Initialize Firebase database reference
@@ -146,9 +144,28 @@ class Dashboard_activity : AppCompatActivity() {
         })
     }
 
+
+    // Variables to store the Tokens of the course teacher to access the specific Course
+    val token_cn = ""
+    val token_se = ""
+    val token_ps = ""
+    val token_java = ""
+    val token_ap = ""
+
+
+    // UID for all teachers in Firebase
     val cn_UID = "8qd1AmvNspdMriLQmKGh1wvxZNm1"
     val ps_UID = "7zXfIyDi76dmKlzkjsGHvsLCVMQ2"
     val se_UID = "2S8Gy6tcwKQ8ABIqVJMA2ztthuR2"
+
+
+    var CurrentToken: String = "" // Token retrived from Firebase after Authentication (Login)
+
+
+    // Now compare the CurrentToken and the HardCoded Tokens
+    // Here
+
+
     private fun readDataOnce() {
         // Add listener to database reference for a single value event
         database.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -164,18 +181,28 @@ class Dashboard_activity : AppCompatActivity() {
                             Toast.makeText(
                                 applicationContext, "Key: $key, Value: $value", Toast.LENGTH_LONG
                             ).show()
+
+                            CurrentToken = key
+
+
                         }
 
                         se_UID -> {
                             Toast.makeText(
                                 applicationContext, "Key: $key, Value: $value", Toast.LENGTH_LONG
                             ).show()
+
+                            CurrentToken = key
+
                         }
 
                         ps_UID -> {
                             Toast.makeText(
                                 applicationContext, "Key: $key, Value: $value", Toast.LENGTH_LONG
                             ).show()
+
+                            CurrentToken = key
+
                         }
                     }
                     // Do something with the retrieved data
