@@ -159,7 +159,7 @@ class Dashboard_activity : AppCompatActivity() {
     val se_UID = "2S8Gy6tcwKQ8ABIqVJMA2ztthuR2"
 
 
-    var CurrentToken: String = "" // Token retrived from Firebase after Authentication (Login)
+    var currentToken : String = "" // Token retrived from Firebase after Authentication (Login)
 
 
     // Now compare the CurrentToken and the HardCoded Tokens
@@ -182,7 +182,7 @@ class Dashboard_activity : AppCompatActivity() {
                                 applicationContext, "Key: $key, Value: $value", Toast.LENGTH_LONG
                             ).show()
 
-                            CurrentToken = key
+                            currentToken = key
 
 
                         }
@@ -192,7 +192,7 @@ class Dashboard_activity : AppCompatActivity() {
                                 applicationContext, "Key: $key, Value: $value", Toast.LENGTH_LONG
                             ).show()
 
-                            CurrentToken = key
+                            currentToken = key
 
                         }
 
@@ -201,11 +201,13 @@ class Dashboard_activity : AppCompatActivity() {
                                 applicationContext, "Key: $key, Value: $value", Toast.LENGTH_LONG
                             ).show()
 
-                            CurrentToken = key
+                            currentToken = key
 
                         }
                     }
                     // Do something with the retrieved data
+
+
                 }
             }
 
