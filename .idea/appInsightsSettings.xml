@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.miniproject.attendx" />
+                  <option name="mobileSdkAppId" value="1:587501035882:android:7326c2c4d351a88e1fc513" />
+                  <option name="projectId" value="attendx-login-credentials" />
+                  <option name="projectNumber" value="587501035882" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
