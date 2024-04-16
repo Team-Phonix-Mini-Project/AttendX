@@ -25,8 +25,6 @@ class SubmitAttendanceActivity : AppCompatActivity() {
         }
 
         data= intent.getSerializableExtra("report") as ArrayList<markedDataObj>
-        data.forEach {obj->
-            Log.d("TAGSTATUS",obj.studentName)
-        }
+        binding.submitAttendanceRecyclerView.adapter=submit_attendance_recycleView_adapter(data)
     }
 }
