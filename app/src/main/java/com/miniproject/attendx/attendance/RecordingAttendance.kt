@@ -24,6 +24,7 @@ class RecordingAttendance : AppCompatActivity() {
     lateinit var binding: ActivityRecordingAttendanceBinding
     var dataArray = arrayListOf<MarkingAttDataObj>()
     var dataMarkedArray = arrayListOf<markedDataObj>()
+    lateinit var courseName:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecordingAttendanceBinding.inflate(layoutInflater)
@@ -37,46 +38,48 @@ class RecordingAttendance : AppCompatActivity() {
         dataArray = intent.getSerializableExtra("data") as ArrayList<MarkingAttDataObj>
         binding.recordingAttendanceToolbarTextview.text =
             "Recording Attendance for " + intent.getStringExtra("coursename")
+        courseName= intent.getStringExtra("coursename").toString()
         binding.attendanceTakingGoToMainBtn.visibility=View.GONE
         var i=0
         binding.recordingAttendanceStudentName.text=dataArray[0].studentName
-        binding.attendanceTakingPresentBtn.setOnClickListener {
-            markAttendance(dataArray[i].statusID,dataArray[i].studentID,1,dataArray[i].studentID,dataArray[i].sessionID)
-            var obj=markedDataObj(dataArray[i].statusID,dataArray[i].studentID,dataArray[i].statusID,dataArray[i].sessionID,dataArray[i].studentName,"present")
-            dataMarkedArray.add(obj)
-            if((i+1)<dataArray.size)
-            {
-                binding.recordingAttendanceStudentName.text=dataArray[i+1].studentName
-            }
-            else
-            {
-                binding.recordingAttendanceStudentName.text="Attendance completed"
-                i--
-                updateButtonVisibility()
-            }
-            i++
-        }
-        binding.attendanceTakingAbsentBtn.setOnClickListener {
-            markAttendance(((dataArray[i].statusID).toInt()+1).toString(),dataArray[i].studentID,1,dataArray[i].studentID,dataArray[i].sessionID)
-            var obj=markedDataObj(((dataArray[i].statusID).toInt()+1).toString(),dataArray[i].studentID,dataArray[i].statusID,dataArray[i].sessionID,dataArray[i].studentName,"absent")
-            dataMarkedArray.add(obj)
-            if((i+1)<dataArray.size)
-            {
-                binding.recordingAttendanceStudentName.text=dataArray[i+1].studentName
 
+        binding.attendanceTakingPresentBtn.setOnClickListener {
+            if (binding.recordingAttendanceStudentName.text != "Attendance completed") {
+                markAttendance(dataArray[i].statusID, dataArray[i].studentID, 1, dataArray[i].studentID, dataArray[i].sessionID)
+                var obj = markedDataObj(dataArray[i].statusID, dataArray[i].studentID, dataArray[i].statusID, dataArray[i].sessionID, dataArray[i].studentName, "PRESENT")
+                dataMarkedArray.add(obj)
+                if ((i + 1) < dataArray.size) {
+                    binding.recordingAttendanceStudentName.text = dataArray[i + 1].studentName
+                } else {
+                    binding.recordingAttendanceStudentName.text = "Attendance completed"
+                    i--
+                    updateButtonVisibility()
+                }
+                i++
             }
-            else
-            {
-                binding.recordingAttendanceStudentName.text="Attendance completed"
-                i--
-                updateButtonVisibility()
-            }
-            i++
         }
+
+        binding.attendanceTakingAbsentBtn.setOnClickListener {
+            if (binding.recordingAttendanceStudentName.text != "Attendance completed") {
+                markAttendance(((dataArray[i].statusID).toInt() + 1).toString(), dataArray[i].studentID, 1, dataArray[i].studentID, dataArray[i].sessionID)
+                var obj = markedDataObj(((dataArray[i].statusID).toInt() + 1).toString(), dataArray[i].studentID, dataArray[i].statusID, dataArray[i].sessionID, dataArray[i].studentName, "ABSENT")
+                dataMarkedArray.add(obj)
+                if ((i + 1) < dataArray.size) {
+                    binding.recordingAttendanceStudentName.text = dataArray[i + 1].studentName
+                } else {
+                    binding.recordingAttendanceStudentName.text = "Attendance completed"
+                    i--
+                    updateButtonVisibility()
+                }
+                i++
+            }
+        }
+
 
         binding.attendanceTakingGoToMainBtn.setOnClickListener {
             var intentX=Intent(this,SubmitAttendanceActivity::class.java)
             intentX.putExtra("report",dataMarkedArray)
+            intentX.putExtra("coursename",courseName)
             startActivity(intentX)
         }
 

@@ -19,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <TextView
+                android:fontFamily="sans-serif-light"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:hint="Attendance for theory of computation"
                         android:id="@+id/recording_attendance_toolbar_textview"
@@ -37,6 +38,7 @@
 
     </Toolbar>
     <TextView
+        android:fontFamily="sans-serif-light"
         android:textAlignment="center"
         android:id="@+id/recording_attendance_student_name"
         android:layout_width="wrap_content"

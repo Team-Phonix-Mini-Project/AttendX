@@ -7,14 +7,18 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miniproject.attendx.R
 import com.miniproject.attendx.databinding.ActivityAttendanceTakingBinding
+import com.miniproject.attendx.databinding.AlertDialogueAttendanceNameBinding
 import okhttp3.*
 import org.json.JSONArray
 import org.json.JSONObject
@@ -48,57 +52,78 @@ class AttendanceTakingActivity : AppCompatActivity() {
         val courseID = intent.getStringExtra("courseid").toString()
 
         binding.attendanceTakingCreateModule.setOnClickListener {
+            var bindingX:AlertDialogueAttendanceNameBinding
+            bindingX= AlertDialogueAttendanceNameBinding.inflate(layoutInflater)
+            MaterialAlertDialogBuilder(this)
+                .setView(bindingX.root)
+                .setTitle("Attendance module name ?")
+                .setPositiveButton("CREATE"){_,_->
+                    var attendanceName=bindingX.alertDialogueAttendanceName.text.toString()
+                    Log.d("CHECKTAGS",attendanceName)
+                    if(attendanceName!=null)
+                    {
+                        Log.d("CHECKTAGS","->"+attendanceName)
 
-            toCreateAttendanceModule(courseID){attendanceModID,attendanceName->
-              attendanceID=attendanceModID
-                runOnUiThread {
-                    Toast.makeText(this@AttendanceTakingActivity,"Created att_module ${attendanceName} id-${attendanceID}]",Toast.LENGTH_SHORT).show()
-                }
-                binding.attendanceTakingCreateSession.setOnClickListener {
-                    createSessionForAttendance(attendanceID,courseID){sessionIdForMod->
-                        sessionID=sessionIdForMod
-                        runOnUiThread {
-                            Toast.makeText(this@AttendanceTakingActivity,"Session created",Toast.LENGTH_SHORT).show()
-                        }
-                        makeUpdationsInAttendance(attendanceID,courseID,sessionID){studentID,studentName,noOfUsers->
-                            getStatusID(studentID,sessionID,courseID,studentName){statusIdPresent,statusset,takenByid->
-                                Log.d("TAGSTATUS","[CourseID="+courseID+"] "+"[attendID="+attendanceModID+"] "+"[sessiID="+sessionID+"] "+"[studentID="+studentID+"] "+"[studName="+studentName+"] "+"[statusID=${statusIdPresent}]")
-
-                                val obj= MarkingAttDataObj(courseID,attendanceID,sessionID,studentName,studentID,statusIdPresent)
-                                dataArray.add(obj)
-                                Log.d("TAGCURRENT",noOfUsers)
-                                var checker=(dataArray.size);
-                                Log.d("TAGCURRENT","-c "+checker.toString())
-                                if(checker.toString()==noOfUsers)
-                                {
-                                        binding.attendanceTakingTakeAttendance.setOnClickListener {
-                                            Log.d("TAGCURRENT","IN_INTENT")
-                                            var intent=Intent(this, RecordingAttendance::class.java)
-                                            intent.putExtra("data",dataArray)
-                                            intent.putExtra("coursename",courseName)
-                                            startActivity(intent)
-                                        }
-                                }
-                                else{
+                        toCreateAttendanceModule(courseID,attendanceName){attendanceModID,attendanceName->
+                            attendanceID=attendanceModID
+                            runOnUiThread {
+                                Toast.makeText(this@AttendanceTakingActivity,"Created attendance module ${attendanceName}",Toast.LENGTH_SHORT).show()
+                            }
+                            binding.attendanceTakingCreateSession.setOnClickListener {
+                                createSessionForAttendance(attendanceID,courseID){sessionIdForMod->
+                                    sessionID=sessionIdForMod
                                     runOnUiThread {
-                                        Toast.makeText(this@AttendanceTakingActivity,"Wait",Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(this@AttendanceTakingActivity,"Session created",Toast.LENGTH_SHORT).show()
+                                    }
+                                    makeUpdationsInAttendance(attendanceID,courseID,sessionID){studentID,studentName,noOfUsers->
+                                        getStatusID(studentID,sessionID,courseID,studentName){statusIdPresent,statusset,takenByid->
+                                            Log.d("TAGSTATUS","[CourseID="+courseID+"] "+"[attendID="+attendanceModID+"] "+"[sessiID="+sessionID+"] "+"[studentID="+studentID+"] "+"[studName="+studentName+"] "+"[statusID=${statusIdPresent}]")
+
+                                            val obj= MarkingAttDataObj(courseID,attendanceID,sessionID,studentName,studentID,statusIdPresent)
+                                            dataArray.add(obj)
+                                            Log.d("TAGCURRENT",noOfUsers)
+                                            var checker=(dataArray.size);
+                                            Log.d("TAGCURRENT","-c "+checker.toString())
+                                            if(checker.toString()==noOfUsers)
+                                            {
+                                                binding.attendanceTakingTakeAttendance.setOnClickListener {
+                                                    Log.d("TAGCURRENT","IN_INTENT")
+                                                    var intent=Intent(this, RecordingAttendance::class.java)
+                                                    intent.putExtra("data",dataArray)
+                                                    intent.putExtra("coursename",courseName)
+                                                    startActivity(intent)
+                                                }
+                                            }
+                                            else{
+                                                binding.attendanceTakingTakeAttendance.setOnClickListener {
+                                                    runOnUiThread {
+                                                        Toast.makeText(this@AttendanceTakingActivity,"Wait",Toast.LENGTH_SHORT).show()
+                                                    }
+                                                }
+                                            }
+
+                                        }
                                     }
                                 }
-
                             }
                         }
                     }
+
                 }
-            }
+                .setNegativeButton("CANCEL"){_,_->
+
+                }
+                .show()
+
         }
 
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun toCreateAttendanceModule(courseID: String, callback: (String, String) -> Unit) {
+    private fun toCreateAttendanceModule(courseID: String,attendanceName:String,callback: (String, String) -> Unit) {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
-        var attendanceName="Attendance_Mod(${convertUnixTime(getCurrentUnixTimestamp())})"
+        //var attendanceName="Attendance_Mod(${convertUnixTime(getCurrentUnixTimestamp())})"
         val params = mapOf(
             "wstoken" to "cd8c3e7ed7bf515ad9a3fec7f7f8e8ef",
             "wsfunction" to "mod_attendance_add_attendance",

@@ -40,6 +40,7 @@
                 app:layout_constraintTop_toBottomOf="@id/drawer_icon_id" />
 
             <TextView
+                android:fontFamily="sans-serif-light"
                 android:layout_width="200sp"
                 android:layout_height="40sp"
                 android:text="Your courses"
