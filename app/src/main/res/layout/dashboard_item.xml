@@ -1,36 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingHorizontal="14dp"
-    android:paddingVertical="18dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <androidx.cardview.widget.CardView
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:id="@+id/Card_view_container_id"
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_margin="50px"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardCornerRadius="25dp"
-        app:cardBackgroundColor="#3E86DC"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        android:id="@+id/Card_view_container_id"
+        android:layout_width="match_parent"
+        app:cardElevation="80dp"
+        android:layout_height="160dp"
+        app:cardBackgroundColor="#6BECC2"
+        app:cardCornerRadius="35px"
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <TextView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:id="@+id/text_view_dashboard_card"
-                android:textSize="30dp"
+                android:id="@+id/text_view_dashboard_card_userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="35dp"
+                android:hint="Subject Name"
+                android:textSize="22dp"
                 android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_view_dashboard_card_applicants_number"
+                android:background="#DCDFB0"
+                android:padding="6px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:layout_marginTop="15dp"
+                android:hint="Total Applicants : 69"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@id/text_view_dashboard_card_userName"
+                app:layout_constraintTop_toBottomOf="@id/text_view_dashboard_card_userName" />
+
+            <TextView
+                android:id="@+id/text_view_dashboard_card_year"
+                android:layout_width="60px"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="15dp"
+                android:hint="SY"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/text_view_dashboard_card_applicants_number"
+                app:layout_constraintStart_toEndOf="@id/text_view_dashboard_card_applicants_number"
+                app:layout_constraintTop_toBottomOf="@id/text_view_dashboard_card_userName"
+                app:layout_constraintTop_toTopOf="@id/text_view_dashboard_card_applicants_number" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
