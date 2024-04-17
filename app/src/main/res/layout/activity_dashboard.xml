@@ -8,15 +8,16 @@
     <Toolbar
         android:id="@+id/toolbar_dashboard"
         android:layout_width="match_parent"
-        android:layout_height="400px"
-        android:contentInsetStart="0dp"
+        android:layout_height="wrap_content"
         android:background="#895EDA"
+        android:contentInsetStart="0dp"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50px">
+            android:layout_margin="20dp">
 
             <ImageButton
                 android:id="@+id/drawer_icon_id"
@@ -25,31 +26,39 @@
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/option_menu_icon"
-                app:layout_constraintStart_toStartOf="@id/text_view_hi_user"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_view_hi_user"
-                android:layout_width="50dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:text="Hi User!"
                 android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/drawer_icon_id" />
+                app:layout_constraintStart_toEndOf="@id/drawer_icon_id"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/text_view_your_courses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:layout_width="200sp"
-                android:layout_height="40sp"
                 android:text="Your courses"
                 android:textColor="@color/black"
                 android:textSize="28sp"
                 app:layout_constraintStart_toStartOf="@id/text_view_hi_user"
-                app:layout_constraintTop_toBottomOf="@id/text_view_hi_user"
+                app:layout_constraintTop_toBottomOf="@id/text_view_hi_user" />
 
-                />
+            <Button
+                android:id="@+id/logout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Logout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </Toolbar>
 
@@ -63,15 +72,6 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar_dashboard"
 
         tools:listitem="@layout/dashboard_item" />
-
-<!--    <Button-->
-<!--        android:id="@+id/logout_button"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

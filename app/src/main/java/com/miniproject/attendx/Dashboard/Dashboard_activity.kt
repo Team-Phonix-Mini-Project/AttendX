@@ -1,5 +1,7 @@
 package com.miniproject.attendx.Dashboard
 
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -10,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.miniproject.attendx.Login_activity.LoginActivity
 import com.miniproject.attendx.databinding.ActivityDashboardBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -24,19 +27,35 @@ class Dashboard_activity : AppCompatActivity() {
     lateinit var binding: ActivityDashboardBinding
     var data = arrayListOf<objDashboard>()
 
+    //    var courseNameToTokenMap= mapOf<String,String>()
     private lateinit var auth: FirebaseAuth
 
+    private lateinit var sharedPreferences: SharedPreferences
+
+
     private lateinit var database: DatabaseReference
+    private lateinit var infoReference: DatabaseReference
+
 
     private lateinit var userEmail: String
     private lateinit var userUID: String
+    lateinit var currentTOKEN: String
 
+    // For firebase retrieval
+    lateinit var uid: String
+    lateinit var courseName: String
+    lateinit var token: String
+
+
+    var courseNameToTokenMap = mutableMapOf<String, String>()
+
+//    lateinit var courseName: String
+//    lateinit var TOKEN: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        FetchUserName()
 
         // Heere is the Firebase code
         auth = FirebaseAuth.getInstance()
@@ -52,27 +71,58 @@ class Dashboard_activity : AppCompatActivity() {
 //            Toast.makeText(this, user.email, Toast.LENGTH_SHORT).show()
 //        }
 
-        // Add click listener to logout button
-//        binding.logoutButton.setOnClickListener {
-//            // Sign out the user
-//            auth.signOut()
-//
-//            // Redirect to login activity
-//            startActivity(Intent(this, LoginActivity::class.java).apply {
-//                putExtra("fuckOFF", false)
-//            })
-//            finish()
-//        }
+//         Add click listener to logout button
+        binding.logoutButton.setOnClickListener {
+            // Sign out the user
+            auth.signOut()
+
+            sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
+
+            val editor = sharedPreferences.edit()
+            editor.putString("name", "")
+            editor.apply()
+
+            // Redirect to login activity
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+        }
 
 
         // Initialize Firebase database reference
         database = FirebaseDatabase.getInstance().reference
+        infoReference = FirebaseDatabase.getInstance().reference.child("uidInfo")
+
 
         // Read data from the database
         readDataOnce()
+        FetchUserName()
+
+        RetrieveDataFromFirebase()
+
+//        WriteOntoDatabase(user)
+
+    }
+
+    private fun RetrieveDataFromFirebase() {
 
 
     }
+
+//    private fun WriteOntoDatabase(user: FirebaseUser) {
+//        // Writing into the Realtime Database
+//
+//        // Step 2: Create a data class to represent the data you want to store
+//        data class MyData(val key: String, val value: String)
+//        val new = "NewClass"
+//        // Step 3: Create an instance of the data class with the new key-value pair
+//        val newData = MyData("currentToken", "courseIdStore")
+//
+//        // Step 4: Use the reference to the Firebase database to push the data to the database
+//        // Push the new data to the database under a new unique key
+//        val newDataRef = database.child("module_session_info").child("CourseName")
+//        newDataRef.setValue(newData)
+//        Toast.makeText(this, "Running", Toast.LENGTH_SHORT).show()
+//    }
 
     fun FetchUserName() {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
@@ -107,6 +157,8 @@ class Dashboard_activity : AppCompatActivity() {
                         Log.d("TAGXX", courseName)
                         Log.d("TAGXX", courseId)
                         FetchApplicantsList(courseId, courseName)
+
+//                        courseNameNew = course.getString("fullname")
                     }
                 }
             }
@@ -165,7 +217,7 @@ class Dashboard_activity : AppCompatActivity() {
 //    val cn_UID = "8qd1AmvNspdMriLQmKGh1wvxZNm1"
 //    val ps_UID = "7zXfIyDi76dmKlzkjsGHvsLCVMQ2"
 //    val se_UID = "2S8Gy6tcwKQ8ABIqVJMA2ztthuR2"
-    // Now we dont need to hard code this as we have also fetched the UID from firebase
+    // Now we don't need to hard code this as we have also fetched the UID from firebase
 
 
     // Now compare the CurrentToken and the HardCoded Tokens
@@ -173,6 +225,7 @@ class Dashboard_activity : AppCompatActivity() {
 
     var currentToken: String? =
         null // Initialize currentToken to null // Token retrieved from Firebase after Authentication (Login)
+    var anotherData: String? = null
 
     private fun readDataOnce() {
         // Add listener to database reference for a single value event
@@ -191,12 +244,33 @@ class Dashboard_activity : AppCompatActivity() {
                         userUID -> {
                             currentToken = value.toString()
                             // Do something with the retrieved data
+                            currentTOKEN = currentToken as String
                             Log.d("TokenHere", currentToken!!)
                             // You can break the loop here if you only want one token
 
                         }
+
                     }
                 }
+
+                // Now we don't need this
+//                // Retrieve uid_info and its children
+//                val uidInfoSnapshot = dataSnapshot.child("uidInfo")
+//                val uid1Snapshot = uidInfoSnapshot.child("uid1")
+//                val uid2Snapshot = uidInfoSnapshot.child("uid2")
+//
+//                // Retrieve token and courseName for uid1 and uid2
+//                val uid1Token = uid1Snapshot.child("token").value.toString()
+//                val uid1CourseName = uid1Snapshot.child("courseName").value.toString()
+//
+//                val uid2Token = uid2Snapshot.child("token").value.toString()
+//                val uid2CourseName = uid2Snapshot.child("courseName").value.toString()
+
+                // Do something with the retrieved data
+                currentTOKEN = currentToken as String
+
+//                courseNameToTokenMap[]=uid1Token
+                // Here you can use both currentToken and anotherData as needed
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -205,6 +279,35 @@ class Dashboard_activity : AppCompatActivity() {
                     .show()
             }
         })
+
+
+        infoReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                for (uidSnapshot in dataSnapshot.children) {
+                    val currentKey = uidSnapshot.key // Get the key (UID of the teacher)
+
+                    // Check if the current key matches the UID of the logged-in user
+
+                    // Retrieve token and course name for the logged-in user
+                    token = uidSnapshot.child("token").getValue(String::class.java) ?: ""
+                    courseName = uidSnapshot.child("courseName").getValue(String::class.java) ?: ""
+                    courseNameToTokenMap[courseName] = token
+
+                    // Store the values for the logged-in user
+                    // You can use these values as needed within this block
+                    Log.d("UserValues", "Token: $token, CourseName: $courseName")
+
+
+                }
+            }
+
+
+            override fun onCancelled(error: DatabaseError) {
+                // Handle error
+            }
+        })
+
+
     }
 
 
