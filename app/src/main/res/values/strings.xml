@@ -43,4 +43,8 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_t">T</string>
+    <string name="login_page_title">Teacher Login</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_page_password_hint">Password</string>
+    <string name="login_page_button_text">Login</string>
 </resources>

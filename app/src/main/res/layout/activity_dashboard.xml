@@ -9,7 +9,7 @@
         android:id="@+id/toolbar_dashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#895EDA"
+        android:background="#F98012"
         android:contentInsetStart="0dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,7 +36,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:text="Hi User!"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toEndOf="@id/drawer_icon_id"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:text="Your courses"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="28sp"
                 app:layout_constraintStart_toStartOf="@id/text_view_hi_user"
                 app:layout_constraintTop_toBottomOf="@id/text_view_hi_user" />
@@ -66,11 +66,13 @@
         android:id="@+id/Recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#8055A4CF"
+        android:background="#FFF8E1"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_dashboard"
 
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/dashboard_item" />
 
 

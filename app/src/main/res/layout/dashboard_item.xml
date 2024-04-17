@@ -1,61 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_margin="50px"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/Card_view_container_id"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Card_view_container_id"
+    android:layout_width="match_parent"
+    android:layout_height="160dp"
+    android:layout_margin="50px"
+    app:cardBackgroundColor="#FF6E40"
+    app:cardCornerRadius="35px"
+    app:cardElevation="80dp"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        app:cardElevation="80dp"
-        android:layout_height="160dp"
-        app:cardBackgroundColor="#6BECC2"
-        app:cardCornerRadius="35px"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/text_view_dashboard_card_userName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginEnd="35dp"
+            android:fontFamily="sans-serif"
+            android:hint="Subject Name"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:fontFamily="sans-serif-light"
-                android:id="@+id/text_view_dashboard_card_userName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:layout_marginTop="40dp"
-                android:layout_marginRight="35dp"
-                android:hint="Subject Name"
-                android:textSize="22dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView android:id="@+id/text_view_dashboard_card_applicants_number"
-                android:background="#DCDFB0"
-                android:padding="6px"
-                android:fontFamily="sans-serif-medium"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:hint="Total Applicants : 69"
-                android:textSize="18dp"
-                app:layout_constraintStart_toStartOf="@id/text_view_dashboard_card_userName"
-                app:layout_constraintTop_toBottomOf="@id/text_view_dashboard_card_userName" />
+        <TextView
+            android:id="@+id/text_view_dashboard_card_applicants_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="#FFFFFF"
+            android:fontFamily="sans-serif-light"
+            android:hint="Total Applicants : 69"
+            android:padding="6dp"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/text_view_dashboard_card_userName"
+            app:layout_constraintTop_toBottomOf="@id/text_view_dashboard_card_userName" />
 
-            <TextView
-                android:id="@+id/text_view_dashboard_card_year"
-                android:layout_width="60px"
-                android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/text_view_dashboard_card_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:background="#FFFFFF"
+            android:fontFamily="sans-serif-light"
+            android:hint="SY"
+            android:padding="6dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="@id/text_view_dashboard_card_applicants_number"
+            app:layout_constraintStart_toEndOf="@id/text_view_dashboard_card_applicants_number"
+            app:layout_constraintTop_toBottomOf="@id/text_view_dashboard_card_userName"
+            app:layout_constraintTop_toTopOf="@id/text_view_dashboard_card_applicants_number" />
 
-                android:layout_marginLeft="15dp"
-                android:hint="SY"
-                android:textSize="18dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/text_view_dashboard_card_applicants_number"
-                app:layout_constraintStart_toEndOf="@id/text_view_dashboard_card_applicants_number"
-                app:layout_constraintTop_toBottomOf="@id/text_view_dashboard_card_userName"
-                app:layout_constraintTop_toTopOf="@id/text_view_dashboard_card_applicants_number" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>
 
 

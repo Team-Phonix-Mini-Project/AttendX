@@ -13,35 +13,7 @@
         android:contentInsetStart="0dp"
         android:background="#895EDA"
         app:layout_constraintTop_toTopOf="parent">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="70px"
-            android:layout_height="match_parent">
-            <TextView
-                android:fontFamily="sans-serif-light"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/course_details_courseName"
-                android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:textSize="28sp"
-                android:hint="Course Name"/>
-            <TextView
-                android:fontFamily="sans-serif-light"
-                android:textColor="@color/black"
-                android:id="@+id/course_details_applicants"
-                app:layout_constraintTop_toBottomOf="@id/course_details_courseName"
-                android:layout_marginTop="15dp"
-                app:layout_constraintStart_toStartOf="@id/course_details_courseName"
-                android:textSize="18sp"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:hint="Number of applicants : 69"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </Toolbar>
 
     <Button
@@ -59,5 +31,37 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/course_details_toolbar_dashboard" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="27dp">
+
+        <TextView
+            android:id="@+id/course_details_courseName"
+            android:layout_width="wrap_content"
+            android:layout_height="40sp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-light"
+            android:hint="Course Name"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/course_details_applicants"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="sans-serif-light"
+            android:hint="Number of applicants : 69"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/course_details_courseName"
+            app:layout_constraintTop_toBottomOf="@id/course_details_courseName" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
