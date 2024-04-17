@@ -28,6 +28,10 @@ class Dashboard_activity : AppCompatActivity() {
 
     private lateinit var database: DatabaseReference
 
+    private lateinit var userEmail: String
+    private lateinit var userUID: String
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
@@ -36,7 +40,11 @@ class Dashboard_activity : AppCompatActivity() {
 
         // Heere is the Firebase code
         auth = FirebaseAuth.getInstance()
-//        val user = auth.currentUser
+
+        val user = auth.currentUser // Retrieves the current user from Firebase Authentication
+
+        userEmail = user?.email!!
+        userUID = user.uid
 //        if (user == null) {
 //            startActivity(Intent(this, LoginActivity::class.java))
 //            finish()
@@ -154,69 +162,50 @@ class Dashboard_activity : AppCompatActivity() {
 
 
     // UID for all teachers in Firebase
-    val cn_UID = "8qd1AmvNspdMriLQmKGh1wvxZNm1"
-    val ps_UID = "7zXfIyDi76dmKlzkjsGHvsLCVMQ2"
-    val se_UID = "2S8Gy6tcwKQ8ABIqVJMA2ztthuR2"
-
-
-    var currentToken : String = "" // Token retrived from Firebase after Authentication (Login)
+//    val cn_UID = "8qd1AmvNspdMriLQmKGh1wvxZNm1"
+//    val ps_UID = "7zXfIyDi76dmKlzkjsGHvsLCVMQ2"
+//    val se_UID = "2S8Gy6tcwKQ8ABIqVJMA2ztthuR2"
+    // Now we dont need to hard code this as we have also fetched the UID from firebase
 
 
     // Now compare the CurrentToken and the HardCoded Tokens
     // Here
 
+    var currentToken: String? =
+        null // Initialize currentToken to null // Token retrieved from Firebase after Authentication (Login)
 
     private fun readDataOnce() {
         // Add listener to database reference for a single value event
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 // This method is called once with the initial value
+
+
                 for (snapshot in dataSnapshot.children) {
                     // Iterate through each child node
                     val key = snapshot.key // Retrieve the key
                     val value = snapshot.value // Retrieve the value
 
+                    // Check if the current key matches any of the desired keys
                     when (key) {
-                        cn_UID -> {
-                            Toast.makeText(
-                                applicationContext, "Key: $key, Value: $value", Toast.LENGTH_LONG
-                            ).show()
-
-                            currentToken = key
-
-
-                        }
-
-                        se_UID -> {
-                            Toast.makeText(
-                                applicationContext, "Key: $key, Value: $value", Toast.LENGTH_LONG
-                            ).show()
-
-                            currentToken = key
-
-                        }
-
-                        ps_UID -> {
-                            Toast.makeText(
-                                applicationContext, "Key: $key, Value: $value", Toast.LENGTH_LONG
-                            ).show()
-
-                            currentToken = key
+                        userUID -> {
+                            currentToken = value.toString()
+                            // Do something with the retrieved data
+                            Log.d("TokenHere", currentToken!!)
+                            // You can break the loop here if you only want one token
 
                         }
                     }
-                    // Do something with the retrieved data
-
-
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
-                Toast.makeText(applicationContext, "Failed to read value.", Toast.LENGTH_LONG)
+                Toast.makeText(applicationContext, "Failed to read value.", Toast.LENGTH_SHORT)
                     .show()
             }
         })
     }
+
 
 }
