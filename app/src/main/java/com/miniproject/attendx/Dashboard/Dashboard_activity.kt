@@ -94,19 +94,17 @@ class Dashboard_activity : AppCompatActivity() {
 
 
         // Read data from the database
-        readDataOnce()
-        FetchUserName()
+        readDataOnce(){courseNameToTokenMap->
+            FetchUserName()
+        }
 
-        RetrieveDataFromFirebase()
+
 
 //        WriteOntoDatabase(user)
 
     }
 
-    private fun RetrieveDataFromFirebase() {
 
-
-    }
 
 //    private fun WriteOntoDatabase(user: FirebaseUser) {
 //        // Writing into the Realtime Database
@@ -158,7 +156,6 @@ class Dashboard_activity : AppCompatActivity() {
                         Log.d("TAGXX", courseId)
                         FetchApplicantsList(courseId, courseName)
 
-//                        courseNameNew = course.getString("fullname")
                     }
                 }
             }
@@ -193,10 +190,11 @@ class Dashboard_activity : AppCompatActivity() {
                 response.body?.string()?.let { responseBody ->
                     val users = JSONArray(responseBody)
                     var applicant = users.length()
-                    data.add(objDashboard(courseName, applicant.toString(), courseId))
-
+                    data.add(objDashboard(courseName, applicant.toString(), courseId,courseNameToTokenMap[courseName].toString()))
+                    data.last().ClickedToken = courseNameToTokenMap[courseName].toString()
                     runOnUiThread {
-                        binding.RecyclerView.adapter = RecyclerViewDashboard_Adapter(data)
+                        binding.RecyclerView.adapter = RecyclerViewDashboard_Adapter(data,currentTOKEN,courseNameToTokenMap)
+
                     }
                 }
 
@@ -227,7 +225,7 @@ class Dashboard_activity : AppCompatActivity() {
         null // Initialize currentToken to null // Token retrieved from Firebase after Authentication (Login)
     var anotherData: String? = null
 
-    private fun readDataOnce() {
+    private fun readDataOnce(callback: (MutableMap<String,String>)-> Unit) {
         // Add listener to database reference for a single value event
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -299,6 +297,7 @@ class Dashboard_activity : AppCompatActivity() {
 
 
                 }
+                callback(courseNameToTokenMap)
             }
 
 
