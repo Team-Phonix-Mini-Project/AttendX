@@ -3,7 +3,7 @@
     android:id="@+id/attendance_list_module_item_container"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@color/black"
+    android:background="@color/text_in_button"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView

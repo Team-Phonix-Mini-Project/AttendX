@@ -10,7 +10,9 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -254,7 +256,7 @@ class AttendanceTakingActivity : AppCompatActivity() {
                     }
                 })
             dialogBinding.moduleNamesRecyclerView.adapter = adapter
-            MaterialAlertDialogBuilder(this)
+            AlertDialog.Builder(this)
                 .setView(dialogBinding.root)
                 .show()
         }

@@ -37,9 +37,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_dashboard_card_userName"
             android:layout_marginStart="28dp"
-            android:layout_marginTop="8dp"
-            android:background="#FFFFFF"
-            app:cardCornerRadius="6dp">
+            android:layout_marginTop="10dp"
+            android:backgroundTint="#5B8AB3"
+            app:cardCornerRadius="12dp">
 
             <TextView
                 android:id="@+id/text_view_dashboard_card_applicants_number"
@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:hint="Total Applicants: 69"
+                android:textColor="@color/white"
                 android:padding="6dp"
                 android:textSize="16sp" />
 

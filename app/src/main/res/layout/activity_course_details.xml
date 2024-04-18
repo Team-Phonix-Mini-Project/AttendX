@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,12 +8,61 @@
     tools:context=".course_details.activity_course_details">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/course_details_toolbar_dashboard"
+        android:id="@+id/toolbar_dashboard"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:background="#895EDA"
+        android:layout_height="130dp"
+        android:background="#F98012"
         android:contentInsetStart="0dp"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="27dp">
+
+            <TextView
+                android:id="@+id/course_details_courseName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="30sp"
+                android:layout_marginTop="30dp"
+                android:fontFamily="sans-serif-light"
+                android:hint="Course Name"
+                android:padding="0dp"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/course_details_courseName"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="0dp"
+                android:backgroundTint="#FFC885"
+                app:cardCornerRadius="12dp"
+                app:cardUseCompatPadding="true">
+
+                <TextView
+                    android:id="@+id/course_details_applicants"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/course_details_courseName"
+                    android:fontFamily="sans-serif-light"
+                    android:hint="Number of applicants : 69"
+                    android:padding="4dp"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -22,47 +71,14 @@
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:layout_marginTop="80dp"
-        android:backgroundTint="#6200EA"
-        android:padding="60px"
+        android:backgroundTint="@color/button_background_tint"
+        android:padding="20dp"
         android:text="Take Attendance"
-        android:textColor="#FFD600"
+        android:textColor="@color/text_in_button"
         android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/course_details_toolbar_dashboard" />
+        android:textStyle="bold" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="27dp">
 
-        <TextView
-            android:id="@+id/course_details_courseName"
-            android:layout_width="wrap_content"
-            android:layout_height="40sp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="Course Name"
-            android:textColor="@color/black"
-            android:textSize="28sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/course_details_applicants"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="Number of applicants : 69"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@id/course_details_courseName"
-            app:layout_constraintTop_toBottomOf="@id/course_details_courseName" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

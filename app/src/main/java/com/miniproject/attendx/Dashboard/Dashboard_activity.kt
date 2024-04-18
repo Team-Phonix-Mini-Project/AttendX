@@ -56,6 +56,9 @@ class Dashboard_activity : AppCompatActivity() {
     lateinit var token: String
 
 
+    // Search init
+    var flag: Boolean = false
+
     var courseNameToTokenMap = mutableMapOf<String, String>()
 
 
@@ -411,21 +414,20 @@ class Dashboard_activity : AppCompatActivity() {
         })
 
         // Create and show the dialog with the custom layout
-        AlertDialog.Builder(this)
-            .setTitle("Search Course")
-            .setView(customLayout)
+        AlertDialog.Builder(this).setTitle("Search Course").setView(customLayout)
             .setPositiveButton("OK") { dialog, _ ->
                 // Handle OK button click (if needed)
                 dialog.dismiss()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            }.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.dismiss()
-            }
-            .show()
+            }.show()
     }
 
 
     private fun filterCourses(courseName: String) {
+
+        flag = true
+
         val filteredList = mutableListOf<objDashboard>()
 
         // Iterate through all courses and set visibility based on course name
@@ -444,13 +446,24 @@ class Dashboard_activity : AppCompatActivity() {
             notifyDataSetChanged()
         }
 
+
         binding.showAllcoursesButton.setOnClickListener {
-            hideAllCourses()
-            FetchUserName()
+
+            if (flag == true) {
+
+                hideAllCourses()
+                filteredList.clear()
+                FetchUserName()
+
+
+            }
+
         }
     }
 
     private fun hideAllCourses() {
+
+        flag = false
         // Iterate through data list and set isGone property to true for all items
         for (course in data) {
             course.isGone = true
