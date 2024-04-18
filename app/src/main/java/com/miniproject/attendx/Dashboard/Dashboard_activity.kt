@@ -4,10 +4,16 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -16,6 +22,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.miniproject.attendx.Login_activity.LoginActivity
+import com.miniproject.attendx.R
 import com.miniproject.attendx.databinding.ActivityDashboardBinding
 import okhttp3.Call
 import okhttp3.Callback
@@ -30,7 +37,6 @@ class Dashboard_activity : AppCompatActivity() {
     lateinit var binding: ActivityDashboardBinding
     var data = arrayListOf<objDashboard>()
 
-    //    var courseNameToTokenMap= mapOf<String,String>()
     private lateinit var auth: FirebaseAuth
 
     private lateinit var sharedPreferences: SharedPreferences
@@ -82,19 +88,10 @@ class Dashboard_activity : AppCompatActivity() {
 
 //         Add click listener to logout button
         binding.logoutButton.setOnClickListener {
-            // Sign out the user
-            auth.signOut()
-
-            sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
-
-            val editor = sharedPreferences.edit()
-            editor.putString("name", "")
-            editor.apply()
-
-            // Redirect to login activity
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            showLogoutDialog()
         }
+
+        // Important
 
 
         // Initialize Firebase database reference
@@ -123,6 +120,59 @@ class Dashboard_activity : AppCompatActivity() {
         binding.overlay.setOnClickListener {
             closeNavigationPane()
         }
+
+
+        // Setting the User == Email dynamic
+
+        binding.textViewHiUser.setText("Hi $userEmail!")
+        binding.userEmailNavPane.setText(userEmail)
+
+        binding.searchButton.setOnClickListener {
+            showEditTextDialog()
+        }
+
+    }
+
+    private fun LogoutFunction() {
+        // Sign out the user
+        auth.signOut()
+
+        sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE)
+
+        val editor = sharedPreferences.edit()
+        editor.putString("name", "")
+        editor.apply()
+
+        // Redirect to login activity
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
+    }
+
+    private fun showLogoutDialog() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.logout_dialog, null)
+
+        val titleTextView = dialogView.findViewById<TextView>(R.id.dialog_title)
+        titleTextView.text = "Logout Confirmation"
+
+        val messageTextView = dialogView.findViewById<TextView>(R.id.dialog_message)
+        messageTextView.text = "Are you sure you want to logout?"
+
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setView(dialogView)
+        alertDialogBuilder.setPositiveButton("Logout") { dialog, which ->
+            // Perform logout action here
+
+            LogoutFunction()
+            // For example, navigate to the login screen or sign out the user
+            // Add your logout logic here
+            dialog.dismiss()
+        }
+        alertDialogBuilder.setNegativeButton("Cancel") { dialog, which ->
+            dialog.dismiss()
+        }
+
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
 
@@ -168,13 +218,16 @@ class Dashboard_activity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val courses = JSONArray(responseBody)
-                    for (i in 1 until courses.length()) {
+                    for (i in 0 until courses.length()) {
                         val course = courses.getJSONObject(i)
-                        val courseId = course.getString("id")
-                        val courseName = course.getString("fullname")
-                        Log.d("TAGXX", courseName)
-                        Log.d("TAGXX", courseId)
-                        FetchApplicantsList(courseId, courseName)
+                        if (course.getString("categoryid") != "0") {
+                            val courseId = course.getString("id")
+                            val courseName = course.getString("fullname")
+                            Log.d("TAGXX", courseName)
+                            Log.d("TAGXX", courseId)
+                            FetchApplicantsList(courseId, courseName)
+                        }
+
 
                     }
                 }
@@ -251,7 +304,7 @@ class Dashboard_activity : AppCompatActivity() {
 
     var currentToken: String? =
         null // Initialize currentToken to null // Token retrieved from Firebase after Authentication (Login)
-    var anotherData: String? = null
+//    var anotherData: String? = null
 
     private fun readDataOnce(callback: (MutableMap<String, String>) -> Unit) {
         // Add listener to database reference for a single value event
@@ -279,11 +332,7 @@ class Dashboard_activity : AppCompatActivity() {
                     }
                 }
 
-                // Now we don't need this
-//                // Retrieve uid_info and its children
-//                val uidInfoSnapshot = dataSnapshot.child("uidInfo")
-//                val uid1Snapshot = uidInfoSnapshot.child("uid1")
-//                val uid2Snapshot = uidInfoSnapshot.child("uid2")
+
 //
 //                // Retrieve token and courseName for uid1 and uid2
 //                val uid1Token = uid1Snapshot.child("token").value.toString()
@@ -337,6 +386,89 @@ class Dashboard_activity : AppCompatActivity() {
 
     }
 
+    //---------------------------Search course starts here----------------------------------
+
+
+    private fun showEditTextDialog() {
+        // Inflate the custom dialog layout
+        val customLayout = layoutInflater.inflate(R.layout.search_dialog_box, null)
+
+        // Find the EditText view
+        val editText = customLayout.findViewById<EditText>(R.id.edit_text_search)
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Call filterCourses function when text changes
+                filterCourses(s.toString())
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not used
+            }
+        })
+
+        // Create and show the dialog with the custom layout
+        AlertDialog.Builder(this)
+            .setTitle("Search Course")
+            .setView(customLayout)
+            .setPositiveButton("OK") { dialog, _ ->
+                // Handle OK button click (if needed)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+
+    private fun filterCourses(courseName: String) {
+        val filteredList = mutableListOf<objDashboard>()
+
+        // Iterate through all courses and set visibility based on course name
+        for (course in data) {
+            val isGone = course.name.lowercase().startsWith(courseName.lowercase())
+            course.isGone = isGone
+            if (isGone) {
+                filteredList.add(course)
+            }
+        }
+
+        // Update RecyclerView with filtered data
+        (binding.RecyclerView.adapter as? RecyclerViewDashboard_Adapter)?.apply {
+            data.clear()
+            data.addAll(filteredList)
+            notifyDataSetChanged()
+        }
+
+        binding.showAllcoursesButton.setOnClickListener {
+            hideAllCourses()
+            FetchUserName()
+        }
+    }
+
+    private fun hideAllCourses() {
+        // Iterate through data list and set isGone property to true for all items
+        for (course in data) {
+            course.isGone = true
+        }
+
+        // Clear the data list to remove all courses
+        data.clear()
+
+        // Notify the adapter to update the RecyclerView
+        (binding.RecyclerView.adapter as? RecyclerViewDashboard_Adapter)?.apply {
+            notifyDataSetChanged()
+        }
+    }
+
+    //-----------------------------Search course ends here--------------------------------------------
+
+
+    // Navigation Functions
 
     private fun enableOtherViews(enabled: Boolean) {
         // Enable or disable interaction with other views based on the 'enabled' parameter

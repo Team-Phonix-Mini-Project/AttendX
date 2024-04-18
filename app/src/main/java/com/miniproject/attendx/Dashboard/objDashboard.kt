@@ -5,4 +5,9 @@ data class objDashboard(
     var applicant: String,
     var courseId: String,
     var ClickedToken: String = ""
+
 )
+
+{
+    var isGone: Boolean = true
+}
