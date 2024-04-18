@@ -24,13 +24,13 @@
             android:exported="false" />
 
         <activity
-            android:parentActivityName=".course_details.activity_course_details"
             android:name=".attendance.AttendanceTakingActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".course_details.activity_course_details" />
         <activity
-            android:parentActivityName=".Dashboard.Dashboard_activity"
             android:name=".course_details.activity_course_details"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".Dashboard.Dashboard_activity" />
         <activity
             android:name=".Dashboard.Dashboard_activity"
             android:exported="false" />

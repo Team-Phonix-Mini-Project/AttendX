@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/attendance_list_module_item_container"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@color/black"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:padding="8dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Attendance Name"
+        android:fontFamily="sans-serif-light"
+        android:textColor="@color/red"
+        android:textAlignment="center"
+        android:backgroundTint="@color/white"
+        android:textSize="60px"
+        android:id="@+id/attendance_mod_list_attName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
