@@ -8,58 +8,55 @@
     <Toolbar
         android:id="@+id/toolbar_dashboard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="170dp"
         android:background="#F98012"
         android:contentInsetStart="0dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="20dp">
+            android:layout_margin="10dp">
 
             <ImageButton
                 android:id="@+id/drawer_icon_id"
                 android:layout_width="wrap_content"
+                android:padding="8dp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
                 android:layout_marginTop="10dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/option_menu_icon"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:contentDescription="Navigation Menu Button"
+                android:src="@drawable/option_menu_icon" />
 
             <TextView
                 android:id="@+id/text_view_hi_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/drawer_icon_id"
                 android:text="Hi User!"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toEndOf="@id/drawer_icon_id"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/text_view_your_courses"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/text_view_hi_user"
+                android:layout_alignStart="@id/text_view_hi_user"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="9dp"
                 android:fontFamily="sans-serif-light"
                 android:text="Your courses"
                 android:textColor="@color/white"
-                android:textSize="28sp"
-                app:layout_constraintStart_toStartOf="@id/text_view_hi_user"
-                app:layout_constraintTop_toBottomOf="@id/text_view_hi_user" />
+                android:textSize="28sp" />
 
-            <Button
-                android:id="@+id/logout_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Logout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+
     </Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -74,6 +71,45 @@
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/dashboard_item" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#B9000000"
+        android:visibility="gone"
+        android:id="@+id/overlay"/>
+
+
+    <com.google.android.material.navigationrail.NavigationRailView
+        android:id="@+id/navigation_pane"
+        android:layout_width="300dp"
+        app:menu="@menu/nav_menu"
+        app:menuGravity="top"
+        android:visibility="gone"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Add other navigation items here -->
+
+            <Button
+                android:id="@+id/logout_button"
+                style="@style/Widget.MaterialComponents.TabLayout.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="sans-serif"
+                android:text="Logout"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
+
+    </com.google.android.material.navigationrail.NavigationRailView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

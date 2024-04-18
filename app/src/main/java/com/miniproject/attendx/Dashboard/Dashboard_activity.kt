@@ -2,8 +2,11 @@ package com.miniproject.attendx.Dashboard
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -48,6 +51,12 @@ class Dashboard_activity : AppCompatActivity() {
 
 
     var courseNameToTokenMap = mutableMapOf<String, String>()
+
+
+    // Declarations for the navigation pane
+    private var isNavigationVisible =
+        false // Initially set to false assuming the navigation pane is hidden
+//    val rect = Rect()
 
 //    lateinit var courseName: String
 //    lateinit var TOKEN: String
@@ -94,30 +103,41 @@ class Dashboard_activity : AppCompatActivity() {
 
 
         // Read data from the database
-        readDataOnce(){courseNameToTokenMap->
+        readDataOnce() { courseNameToTokenMap ->
             FetchUserName()
         }
 
 
-
 //        WriteOntoDatabase(user)
 
-    }
 
+        // Onclick for Navigation Pane
+
+        binding.navigationPane.visibility = View.GONE
+
+
+        setupNavigationPane()
+        binding.drawerIconId.setOnClickListener {
+            openNavigationPane()
+        }
+        binding.overlay.setOnClickListener {
+            closeNavigationPane()
+        }
+    }
 
 
 //    private fun WriteOntoDatabase(user: FirebaseUser) {
 //        // Writing into the Realtime Database
 //
 //        // Step 2: Create a data class to represent the data you want to store
-//        data class MyData(val key: String, val value: String)
-//        val new = "NewClass"
+//        data class MyData(val attendanceID: String, val attendanceName: String)
 //        // Step 3: Create an instance of the data class with the new key-value pair
-//        val newData = MyData("currentToken", "courseIdStore")
+//        val newData = MyData("EnterAttendanceID", "EnterAttendanceName")
 //
 //        // Step 4: Use the reference to the Firebase database to push the data to the database
 //        // Push the new data to the database under a new unique key
-//        val newDataRef = database.child("module_session_info").child("CourseName")
+//        val newDataRef =
+//            database.child("whatever_is_the_parent_keyFolder_in_Firebase").child("SessionName")
 //        newDataRef.setValue(newData)
 //        Toast.makeText(this, "Running", Toast.LENGTH_SHORT).show()
 //    }
@@ -190,10 +210,18 @@ class Dashboard_activity : AppCompatActivity() {
                 response.body?.string()?.let { responseBody ->
                     val users = JSONArray(responseBody)
                     var applicant = users.length()
-                    data.add(objDashboard(courseName, applicant.toString(), courseId,courseNameToTokenMap[courseName].toString()))
+                    data.add(
+                        objDashboard(
+                            courseName,
+                            applicant.toString(),
+                            courseId,
+                            courseNameToTokenMap[courseName].toString()
+                        )
+                    )
                     data.last().ClickedToken = courseNameToTokenMap[courseName].toString()
                     runOnUiThread {
-                        binding.RecyclerView.adapter = RecyclerViewDashboard_Adapter(data,currentTOKEN,courseNameToTokenMap)
+                        binding.RecyclerView.adapter =
+                            RecyclerViewDashboard_Adapter(data, currentTOKEN, courseNameToTokenMap)
 
                     }
                 }
@@ -225,7 +253,7 @@ class Dashboard_activity : AppCompatActivity() {
         null // Initialize currentToken to null // Token retrieved from Firebase after Authentication (Login)
     var anotherData: String? = null
 
-    private fun readDataOnce(callback: (MutableMap<String,String>)-> Unit) {
+    private fun readDataOnce(callback: (MutableMap<String, String>) -> Unit) {
         // Add listener to database reference for a single value event
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -308,6 +336,79 @@ class Dashboard_activity : AppCompatActivity() {
 
 
     }
+
+
+    private fun enableOtherViews(enabled: Boolean) {
+        // Enable or disable interaction with other views based on the 'enabled' parameter
+        binding.toolbarDashboard.isEnabled = enabled
+        binding.RecyclerView.isEnabled = enabled
+        // Add other views here that you want to enable/disable
+    }
+
+    private fun setupNavigationPane() {
+        // Set up touch listener for non-navigation pane area to close the navigation pane
+        binding.root.setOnTouchListener { _, event ->
+            if (event.action == MotionEvent.ACTION_DOWN && isNavigationVisible) {
+                val outRect = Rect()
+                binding.navigationPane.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
+                    // User touched outside the navigation pane, close it
+                    openNavigationPane()
+                }
+            }
+            false
+        }
+    }
+
+    private fun openNavigationPane() {
+        // Show the navigation pane with animation
+        binding.navigationPane.animate().translationX(0f).setDuration(500).start()
+        binding.navigationPane.visibility = View.VISIBLE
+
+        // Fade in animation for the overlay
+        binding.overlay.alpha = 0f // Start with transparency
+        binding.overlay.visibility = View.VISIBLE // Make overlay visible
+        binding.overlay.animate().alpha(1f).setDuration(500).start() // Fade in with duration
+
+
+        // Set isNavigationVisible to true
+        isNavigationVisible = true
+    }
+
+    private fun closeNavigationPane() {
+        // Hide the navigation pane with animation
+        binding.navigationPane.animate().translationX(-binding.navigationPane.width.toFloat())
+            .setDuration(500).withEndAction {
+                binding.navigationPane.visibility = View.GONE
+            }.start()
+
+        // Fade out animation for the overlay
+        binding.overlay.animate().alpha(0f).setDuration(500).withEndAction {
+            binding.overlay.visibility = View.GONE // Hide the overlay when animation completes
+        }.start()
+
+        // Set isNavigationVisible to false
+        isNavigationVisible = false
+    }
+
+
+//    private fun setupBottomNavigationView() {
+//        binding.navigationPane.setNavigation { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.nav_item_1 -> {
+//                    // Handle navigation item 2 click
+//                    // Replace with your desired action
+//                    true
+//                }
+//                R.id.nav_item_2 -> {
+//                    // Handle navigation item 3 click
+//                    // Replace with your desired action
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
+//    }
 
 
 }

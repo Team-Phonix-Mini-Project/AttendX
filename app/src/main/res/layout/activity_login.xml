@@ -1,111 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:layout_gravity="center"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:fontFamily="sans-serif-medium"
-        android:text="@string/login_page_title"
-        android:textSize="32sp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email_input_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="4dp">
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
+            android:id="@+id/title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/login_page_title"
+            android:textSize="32sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/email_input_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/login_email_hint"
-            android:inputType="textEmailAddress" />
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="4dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_email_hint"
+                android:inputType="textEmailAddress" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password_input_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="0dp"
-        android:hint="@string/login_page_password_hint"
-        app:endIconContentDescription="Toggle Password Visibility"
-        app:endIconMode="password_toggle">
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/password_edit_text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/password_input_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            android:layout_marginStart="36dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="36dp"
+            android:layout_marginBottom="0dp"
+            android:hint="@string/login_page_password_hint"
+            app:endIconContentDescription="Toggle Password Visibility"
+            app:endIconMode="password_toggle">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
 
-
-    <!--        <com.google.android.material.textfield.TextInputLayout-->
-    <!--            android:id="@+id/password_input_text"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="30dp"-->
-    <!--            android:layout_marginTop="4dp"-->
-    <!--            android:layout_marginEnd="30dp"-->
-    <!--            android:layout_marginBottom="0dp"-->
-    <!--            android:orientation="horizontal">-->
-
-    <!--            <com.google.android.material.textfield.TextInputEditText-->
-    <!--                android:id="@+id/password_edit_text"-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:hint="Password"-->
-    <!--                android:inputType="textPassword" />-->
-
-    <!--            &lt;!&ndash; Show Password Button &ndash;&gt;-->
-    <!--            <ImageButton-->
-    <!--                android:id="@+id/show_password_button"-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:layout_alignParentEnd="true"-->
-    <!--                android:layout_centerVertical="true"-->
-    <!--                android:background="?android:attr/selectableItemBackgroundBorderless"-->
-    <!--                android:padding="8dp"-->
-    <!--                android:src="@drawable/ic_launcher_background" />-->
-
-    <!--        </com.google.android.material.textfield.TextInputLayout>-->
-    <!--        <CheckBox-->
-    <!--            android:id="@+id/remember_me_check_box"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_marginStart="30dp"-->
-    <!--            android:layout_marginTop="0dp"-->
-    <!--            android:layout_marginEnd="30dp"-->
-    <!--            android:layout_marginBottom="16dp"-->
-    <!--            android:text="Remember Me"-->
-    <!--            android:textSize="14sp" />-->
-
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="8dp"
-        android:text="@string/login_page_button_text"
-        android:textSize="24sp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-</LinearLayout>
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="@string/login_page_button_text"
+            android:textSize="24sp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
