@@ -18,9 +18,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout_editor_absoluteX="2dp"
-            tools:layout_editor_absoluteY="27dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/course_details_courseName"

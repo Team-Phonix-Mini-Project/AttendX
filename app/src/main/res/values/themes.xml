@@ -6,7 +6,11 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.AttendX" parent="Base.Theme.AttendX" />
+    <style name="Theme.AttendX" parent="Base.Theme.AttendX" >
+
+        <item name="android:statusBarColor">#FF0000</item> <!-- Change to your desired color -->
+
+    </style>
 
 
 </resources>
