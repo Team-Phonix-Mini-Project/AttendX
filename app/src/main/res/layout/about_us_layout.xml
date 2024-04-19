@@ -12,11 +12,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="About Us"
-            android:textStyle="bold"
-            android:textSize="28sp"
+            android:gravity="center"
             android:padding="12dp"
-            android:gravity="center"/>
+            android:text="About Us"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -25,9 +25,9 @@
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
             android:padding="10dp"
-            android:text="Chinmay Pail\nOmkar Patange\nPradnyanand Jade"
+            android:text="Pradnyanand Jade\nChinmay Patil\nOmkar Patange"
             android:textAlignment="center"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
         <!-- Add more TextViews or views as needed -->
 
