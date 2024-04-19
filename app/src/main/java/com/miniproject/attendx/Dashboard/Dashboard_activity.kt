@@ -3,6 +3,7 @@ package com.miniproject.attendx.Dashboard
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -75,6 +77,11 @@ class Dashboard_activity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // status bar color here
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+        }
+
         // Heere is the Firebase code
         auth = FirebaseAuth.getInstance()
 
@@ -133,6 +140,8 @@ class Dashboard_activity : AppCompatActivity() {
         binding.searchButton.setOnClickListener {
             showEditTextDialog()
         }
+
+
 
     }
 

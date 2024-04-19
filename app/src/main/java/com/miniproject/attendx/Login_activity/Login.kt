@@ -7,8 +7,10 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.miniproject.attendx.Dashboard.Dashboard_activity
+import com.miniproject.attendx.R
 import com.miniproject.attendx.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -20,6 +22,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindingLoginPage = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(bindingLoginPage.root)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
 
         // Initialize Firebase Authentication
         fAuth = FirebaseAuth.getInstance()

@@ -12,7 +12,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -25,7 +25,12 @@ import com.miniproject.attendx.R
 import com.miniproject.attendx.databinding.ActivityAttendanceTakingBinding
 import com.miniproject.attendx.databinding.AlertDialogueAttendanceNameBinding
 import com.miniproject.attendx.databinding.ModuleNamesListBinding
-import okhttp3.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
@@ -61,6 +66,10 @@ class AttendanceTakingActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // status bar color
+        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+
         database = FirebaseDatabase.getInstance().reference.child("AttendanceLogs")
 
         binding.attendanceTakingCourseName.text =

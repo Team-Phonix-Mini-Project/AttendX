@@ -96,7 +96,7 @@
         android:id="@+id/Recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/activity_backgroud_ember"
+        android:background="@color/activity_background_ember"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar_dashboard"

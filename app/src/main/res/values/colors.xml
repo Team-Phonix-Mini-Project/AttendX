@@ -4,7 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#11F411</color>
     <color name="red">#F82F2F</color>
+    <color name="colorPrimary">#F98012</color>
     <color name="button_background_tint">#472675</color>
     <color name="text_in_button">#FFF5C0</color>
-    <color name="activity_backgroud_ember">#FFF8E1</color>
+    <color name="activity_background_ember">#FFF8E1</color>
 </resources>

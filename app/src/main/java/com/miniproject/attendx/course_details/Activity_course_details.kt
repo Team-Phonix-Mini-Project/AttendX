@@ -1,9 +1,11 @@
 package com.miniproject.attendx.course_details
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.miniproject.attendx.R
@@ -22,6 +24,13 @@ class activity_course_details : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // Status bar color
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+        }
+
+
         var courseID=intent.getStringExtra("courseid")
         var name=intent.getStringExtra("Name")
         var appl=intent.getStringExtra("User")

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/activity_backgroud_ember"
+    android:background="@color/activity_background_ember"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".submitAttendance.SubmitAttendanceActivity">

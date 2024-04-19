@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/activity_background_ember"
     tools:context=".attendance.RecordingAttendance">
 
     <androidx.appcompat.widget.Toolbar
@@ -15,14 +17,15 @@
         android:orientation="vertical">
 
         <RelativeLayout
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="16dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="16dp">
 
             <TextView
                 android:id="@+id/recording_attendance_toolbar_textview"
                 android:layout_width="wrap_content"
+                android:textAlignment="center"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="sans-serif-light"
@@ -36,57 +39,71 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_dashboard"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/recording_attendance_student_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="80dp"
-            android:layout_marginBottom="30dp"
-            android:fontFamily="sans-serif-light"
-            android:hint="Name of Student"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+        android:layout_centerInParent="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="30dp"
+        app:cardCornerRadius="8dp"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:layout_margin="20dp"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/attendance_taking_present_btn"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+            <TextView
+                android:id="@+id/recording_attendance_student_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:backgroundTint="#A4FF25"
-                android:text="PRESENT"
+                android:layout_gravity="center"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="60dp"
+                android:fontFamily="sans-serif-light"
+                android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="28sp"
+                tools:hint="Name of Student" />
 
-            <Button
-                android:id="@+id/attendance_taking_absent_btn"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#C6F13800"
-                android:text="Absent"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/attendance_taking_present_btn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="30dp"
+                    android:backgroundTint="#A4FF25"
+                    android:text="PRESENT"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/attendance_taking_absent_btn"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#C6F13800"
+                    android:text="ABSENT"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
 
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
     <Button
@@ -98,10 +115,10 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="120dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="100dp"
         android:backgroundTint="@color/button_background_tint"
         android:padding="12dp"
-        android:text="Report of attendance"
+        android:text="GET REPORT"
         android:textColor="@color/text_in_button"
         android:textSize="16sp" />
 
