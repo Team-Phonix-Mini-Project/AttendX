@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.database.DataSnapshot
@@ -35,11 +34,6 @@ class activity_course_details : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        // UI elements
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
-
-
 
         database = FirebaseDatabase.getInstance().reference.child("AttendanceLogs")
         var courseID = intent.getStringExtra("courseid")
@@ -92,10 +86,12 @@ class activity_course_details : AppCompatActivity() {
                                 }
                                 var intent = Intent(
                                     this@activity_course_details,
-                                    ReportOfAttendanceModule::class.java
+                                    ReportOfAttendanceModuleSessionList::class.java
                                 )
                                 intent.putExtra("attname", attendanceModule.attName)
                                 intent.putExtra("attid", attendanceModule.attId)
+                                intent.putExtra("courseid",courseID)
+                                intent.putExtra("coursename",courseName)
                                 startActivity(intent)
                             })
                             .setNegativeButton("CANCEL", { _, _ ->

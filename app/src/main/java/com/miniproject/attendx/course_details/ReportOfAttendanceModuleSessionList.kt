@@ -1,9 +1,11 @@
 package com.miniproject.attendx.course_details
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,16 +19,21 @@ import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONArray
 import java.io.IOException
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
-class ReportOfAttendanceModule : AppCompatActivity() {
+class ReportOfAttendanceModuleSessionList : AppCompatActivity() {
     lateinit var binding:ActivityReportOfAttendanceModuleBinding
     lateinit var attendanceName:String
     lateinit var attendanceId:String
-    var sessionList= arrayListOf<String>()
+    lateinit var courseId:String
+    lateinit var courseName:String
+    var sessionList= arrayListOf<sessionIdAndNameData_Object>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         Log.d("ReportOfAttendanceModule", "ReportOfAttendanceModule")
 
         binding= ActivityReportOfAttendanceModuleBinding.inflate(layoutInflater)
@@ -38,15 +45,17 @@ class ReportOfAttendanceModule : AppCompatActivity() {
         }
         attendanceName=intent.getStringExtra("attname").toString()
         attendanceId=intent.getStringExtra("attid").toString()
-        FetchSessionsList(attendanceId,attendanceName){sessionList->
-
+        courseId=intent.getStringExtra("courseid").toString()
+        courseName=intent.getStringExtra("coursename").toString()
+        binding.recordingAttendanceToolbarTextview.text="Sessions conducted in attendance mudule ${attendanceName}"
+        FetchSessionsList(attendanceId,attendanceName,courseId,courseName){sessionList->
             runOnUiThread {
                 Toast.makeText(this, sessionList.toString(), Toast.LENGTH_SHORT).show()
+                binding.reportSessionListRecyclerView.adapter=report_session_list_adapter(sessionList)
             }
-
         }
     }
-    fun FetchSessionsList(attendanceId: String, attendanceName: String,callback: (ArrayList<String>)->Unit) {
+    fun FetchSessionsList(attendanceId: String, attendanceName: String,courseID:String,courseName:String,callback: (ArrayList<sessionIdAndNameData_Object>)->Unit) {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
 
         val params = mapOf(
@@ -70,18 +79,27 @@ class ReportOfAttendanceModule : AppCompatActivity() {
                 println("Failed to execute request: ${e.message}")
             }
 
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val courses = JSONArray(responseBody)
                     for (i in 0 until courses.length()){
                         val course=courses.getJSONObject(i)
                         val sesssionIdCurrentFetch=course.getString("id")
-                        sessionList.add(sesssionIdCurrentFetch)
+                        val sessionDate=convertUnixTime(course.getString("sessdate").toLong())
+                        sessionList.add(sessionIdAndNameData_Object(sesssionIdCurrentFetch,sessionDate,courseID,courseName))
                     }
 
                 }
                 callback(sessionList)
             }
         })
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun convertUnixTime(unixTime: Long): String {
+        val instant = Instant.ofEpochSecond(unixTime)
+        val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+        val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd    HH:mm:ss")
+        return dateTime.format(formatter)
     }
 }
