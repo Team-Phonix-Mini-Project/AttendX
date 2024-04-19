@@ -62,8 +62,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="60dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
                 android:fontFamily="sans-serif-light"
                 android:textAlignment="center"
                 android:textColor="@color/black"
@@ -82,9 +82,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="30dp"
-                    android:backgroundTint="#A4FF25"
+                    android:backgroundTint="@color/present_color"
                     android:text="PRESENT"
-                    android:textColor="@color/black"
+                    android:textColor="@color/activity_background_ember"
                     android:textSize="16sp" />
 
                 <Button
@@ -92,9 +92,9 @@
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="#C6F13800"
+                    android:backgroundTint="@color/absent_color"
                     android:text="ABSENT"
-                    android:textColor="@color/black"
+                    android:textColor="@color/activity_background_ember"
                     android:textSize="16sp" />
 
 
@@ -117,7 +117,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="120dp"
         android:layout_marginBottom="100dp"
-        android:backgroundTint="@color/button_background_tint"
+        android:backgroundTint="@color/card_view_color"
         android:padding="12dp"
         android:text="GET REPORT"
         android:textColor="@color/text_in_button"

@@ -47,13 +47,13 @@ class submit_attendance_recycleView_adapter(var arrayData:ArrayList<markedDataOb
                         {
                             markAttendance((markedDataObj.statusID.toInt()+1).toString(),markedDataObj.studentID,1,markedDataObj.studentID,markedDataObj.sessionID)
                             binding.submitAttenanceItemStatus.text="ABSENT"
-                            binding.submitAttenanceItemStatus.setTextColor(ContextCompat.getColor(binding.root.context, R.color.red))
+                            binding.submitAttenanceItemStatus.setTextColor(ContextCompat.getColor(binding.root.context, R.color.absent_color))
                         }
                         else
                         {
                             markAttendance((markedDataObj.statusID.toInt()-1).toString(),markedDataObj.studentID,1,markedDataObj.studentID,markedDataObj.sessionID)
                             binding.submitAttenanceItemStatus.text="PRESENT"
-                            binding.submitAttenanceItemStatus.setTextColor(ContextCompat.getColor(binding.root.context, R.color.green))
+                            binding.submitAttenanceItemStatus.setTextColor(ContextCompat.getColor(binding.root.context, R.color.present_color))
                         }
                     }
                     .setNegativeButton("CANCEL"){_,_->

@@ -31,32 +31,38 @@
                 android:textColor="@color/white"
                 android:textSize="28sp" />
 
+            <Button
+                android:id="@+id/submit_attendance_button"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="24dp"
+                android:backgroundTint="#FFAB5E"
+                android:padding="4dp"
+                android:text="SUBMIT"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+
         </RelativeLayout>
+
+
+
 
     </androidx.appcompat.widget.Toolbar>
 
 
 
-    <Button
-        android:id="@+id/submit_attendance_button"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/submit_attendance_toolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="3dp"
-        android:backgroundTint="#EF1573"
-        android:padding="12dp"
-        android:text="SUBMIT"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/submit_attendance_recycler_view"
         android:layout_width="match_parent"
-        android:layout_below="@id/submit_attendance_button"
+        android:layout_below="@id/submit_attendance_toolbar"
         android:layout_height="wrap_content"
-        android:background="#E3DFE1"
+        android:background="@color/activity_background_ember"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </RelativeLayout>

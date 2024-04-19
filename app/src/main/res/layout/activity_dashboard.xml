@@ -67,6 +67,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="16dp"
+                android:padding="8dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/icons8_search_100"
                 android:text="Search Course"
@@ -80,9 +81,10 @@
                 android:layout_above="@id/search_button"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="16dp"
+                android:padding="8dp"
                 android:layout_marginBottom="0dp"
                 android:background="@android:color/transparent"
-                android:src="@drawable/icons8_show_96"
+                android:src="@drawable/icons8_refresh_96"
                 android:text="Show All Course" />
 
             <!--            Buttons Add ends here -->
@@ -105,6 +107,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/dashboard_item" />
 
+<!--    Navigation starts here   -->
     <View
         android:id="@+id/overlay"
         android:layout_width="match_parent"
@@ -129,6 +132,7 @@
             <!-- Add other navigation items here -->
 
             <TextView
+                android:id="@+id/nav_pane_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -137,6 +141,31 @@
                 android:textAlignment="center"
                 android:textSize="28sp"
                 android:textStyle="bold" />
+
+            <View
+                android:layout_below="@id/nav_pane_title"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="#B3B3B3" />
+
+
+
+
+            <Button
+                android:backgroundTint="@color/white"
+                android:layout_marginTop="24dp"
+                android:layout_width="match_parent"
+                android:text="About Us"
+                android:textSize="20sp"
+                android:drawableStart="@drawable/icons8_info_96"
+                android:drawablePadding="4dp"
+                android:textColor="#606060"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nav_pane_title"/>
+
 
 
             <androidx.cardview.widget.CardView
@@ -148,7 +177,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="19dp"
                 android:elevation="1dp"
-                app:cardCornerRadius="12dp"
+                app:cardCornerRadius="8dp"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
@@ -199,6 +228,8 @@
         </RelativeLayout>
 
     </com.google.android.material.navigationrail.NavigationRailView>
+
+<!--    Navigation Ends Here    -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

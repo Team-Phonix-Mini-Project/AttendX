@@ -59,7 +59,7 @@
             android:backgroundTint="@color/card_view_color"
             android:fontFamily="sans-serif-light"
             android:padding="16dp"
-            android:text="Create attendance session in previous modules"
+            android:text="List previous modules"
             android:textColor="@color/text_in_button"
             android:textSize="18sp" />
 

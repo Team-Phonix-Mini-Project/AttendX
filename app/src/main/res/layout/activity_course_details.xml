@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/activity_background_ember"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/activity_background_ember"
     tools:context=".course_details.activity_course_details">
 
     <androidx.appcompat.widget.Toolbar
@@ -75,6 +75,21 @@
         android:backgroundTint="@color/card_view_color"
         android:padding="20dp"
         android:text="Take Attendance"
+        android:textColor="@color/text_in_button"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/course_details_get_attendance_report"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/course_details_take_attendance"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="80dp"
+        android:backgroundTint="@color/card_view_color"
+        android:padding="20dp"
+        android:text="Get Attendance Report"
         android:textColor="@color/text_in_button"
         android:textSize="16sp"
         android:textStyle="bold" />
