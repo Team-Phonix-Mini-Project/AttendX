@@ -113,7 +113,10 @@ class RecordingAttendance : AppCompatActivity() {
             startActivity(intentX)
         }
 
+
+
     }
+
 
     private fun markAttendance(
         statusIdPresent: String,

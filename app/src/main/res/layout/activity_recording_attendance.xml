@@ -39,6 +39,14 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#AAAAAA"
+        android:layout_below="@+id/toolbar_dashboard"
+        android:text="Record Attendance"/>
+
     <androidx.cardview.widget.CardView
         android:backgroundTint="@color/white"
         android:layout_width="match_parent"
@@ -67,7 +75,7 @@
                 android:fontFamily="sans-serif-light"
                 android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="28sp"
+                android:textSize="32sp"
                 tools:hint="Name of Student" />
 
             <LinearLayout
@@ -82,6 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="30dp"
+                    android:padding="12dp"
                     android:backgroundTint="@color/present_color"
                     android:text="PRESENT"
                     android:textColor="@color/activity_background_ember"
@@ -91,6 +100,7 @@
                     android:id="@+id/attendance_taking_absent_btn"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
+                    android:padding="12dp"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/absent_color"
                     android:text="ABSENT"

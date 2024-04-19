@@ -3,7 +3,6 @@ package com.miniproject.attendx.Dashboard
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -78,9 +77,7 @@ class Dashboard_activity : AppCompatActivity() {
         setContentView(binding.root)
 
         // status bar color here
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
-        }
+        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
 
         // Heere is the Firebase code
         auth = FirebaseAuth.getInstance()
@@ -122,7 +119,6 @@ class Dashboard_activity : AppCompatActivity() {
 
         binding.navigationPane.visibility = View.GONE
 
-
         setupNavigationPane()
         binding.drawerIconId.setOnClickListener {
             openNavigationPane()
@@ -130,17 +126,32 @@ class Dashboard_activity : AppCompatActivity() {
         binding.overlay.setOnClickListener {
             closeNavigationPane()
         }
+        binding.buttonAboutUs.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
 
+
+
+            // Inflate the custom layout for the dialog content
+            val dialogView = layoutInflater.inflate(R.layout.about_us_layout, null)
+            builder.setView(dialogView)
+            // Create the AlertDialog object
+            val dialog: AlertDialog = builder.create()
+
+            // Show the dialog
+            dialog.show()
+
+        }
 
         // Setting the User == Email dynamic
 
         binding.textViewHiUser.setText("Hi $userEmail!")
         binding.userEmailNavPane.setText(userEmail)
 
+
+        // Searching Functionality
         binding.searchButton.setOnClickListener {
             showEditTextDialog()
         }
-
 
 
     }
@@ -458,14 +469,18 @@ class Dashboard_activity : AppCompatActivity() {
 
         binding.showAllcoursesButton.setOnClickListener {
 
-            if (flag == true) {
+            refreshAllCourses(filteredList)
 
-                hideAllCourses()
-                filteredList.clear()
-                FetchUserName()
+        }
+    }
 
+    private fun refreshAllCourses(filteredList: MutableList<objDashboard>) {
+        if (flag) {
 
-            }
+            hideAllCourses()
+            filteredList.clear()
+            FetchUserName()
+
 
         }
     }
@@ -490,14 +505,7 @@ class Dashboard_activity : AppCompatActivity() {
     //-----------------------------Search course ends here--------------------------------------------
 
 
-    // Navigation Functions
-
-    private fun enableOtherViews(enabled: Boolean) {
-        // Enable or disable interaction with other views based on the 'enabled' parameter
-        binding.toolbarDashboard.isEnabled = enabled
-        binding.RecyclerView.isEnabled = enabled
-        // Add other views here that you want to enable/disable
-    }
+    // ----------------------------------- Navigation Functions -----------------------------------------------
 
     private fun setupNavigationPane() {
         // Set up touch listener for non-navigation pane area to close the navigation pane
@@ -545,24 +553,6 @@ class Dashboard_activity : AppCompatActivity() {
         isNavigationVisible = false
     }
 
-
-//    private fun setupBottomNavigationView() {
-//        binding.navigationPane.setNavigation { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.nav_item_1 -> {
-//                    // Handle navigation item 2 click
-//                    // Replace with your desired action
-//                    true
-//                }
-//                R.id.nav_item_2 -> {
-//                    // Handle navigation item 3 click
-//                    // Replace with your desired action
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
-//    }
-
+// ----------------------------------- Navigation  Ended ---------------------------------------
 
 }

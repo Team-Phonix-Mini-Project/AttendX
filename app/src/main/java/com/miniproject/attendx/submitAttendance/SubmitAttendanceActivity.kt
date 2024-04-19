@@ -35,16 +35,13 @@ class SubmitAttendanceActivity : AppCompatActivity() {
             "Attendance report for " + intent.getStringExtra("coursename")
         binding.submitAttendanceRecyclerView.adapter = submit_attendance_recycleView_adapter(data)
         binding.submitAttendanceButton.setOnClickListener {
-            MaterialAlertDialogBuilder(this)
-                .setTitle("Are you sure you want to submit the attendance?")
+            MaterialAlertDialogBuilder(this).setTitle("Are you sure you want to submit the attendance?")
                 .setPositiveButton("YES") { _, _ ->
                     var intent = Intent(this, Dashboard_activity::class.java)
                     startActivity(intent)
-                }
-                .setNegativeButton("CANCEL") { _, _ ->
+                }.setNegativeButton("CANCEL") { _, _ ->
 
-                }
-                .show()
+                }.show()
 
         }
     }

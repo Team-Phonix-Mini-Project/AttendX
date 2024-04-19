@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/activity_background_ember"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/activity_background_ember">
 
 
     <LinearLayout
@@ -74,7 +74,6 @@
             android:layout_margin="8dp"
             android:text="@string/login_page_button_text"
             android:textSize="24sp" />
-
 
     </LinearLayout>
 

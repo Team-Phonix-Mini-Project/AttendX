@@ -17,7 +17,7 @@
     <RelativeLayout
         android:layout_marginTop="28dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/text_view_dashboard_card_userName"
@@ -53,6 +53,15 @@
 
 
         </androidx.cardview.widget.CardView>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/icons8_arrow_right_100"/>
 
 
     </RelativeLayout>

@@ -73,7 +73,6 @@ class AttendanceTakingActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
 
         // Tool tip
-
         TooltipCompat.setTooltipText(binding.attendanceTakingCreateModule, "Create New Module")
 
 
@@ -93,10 +92,10 @@ class AttendanceTakingActivity : AppCompatActivity() {
         }
 
         binding.attendanceTakingCreateModule.setOnClickListener {
-            var bindingX: AlertDialogueAttendanceNameBinding
-            bindingX = AlertDialogueAttendanceNameBinding.inflate(layoutInflater)
+            var bindingX: AlertDialogueAttendanceNameBinding =
+                AlertDialogueAttendanceNameBinding.inflate(layoutInflater)
             MaterialAlertDialogBuilder(this).setView(bindingX.root)
-                .setTitle("Attendance module name ?").setPositiveButton("CREATE") { _, _ ->
+                .setTitle("Attendance Module Name?").setPositiveButton("CREATE") { _, _ ->
                     var attendanceName = bindingX.alertDialogueAttendanceName.text.toString()
                     Log.d("CHECKTAGS", attendanceName)
                     if (attendanceName != null) {
@@ -192,6 +191,8 @@ class AttendanceTakingActivity : AppCompatActivity() {
 
         }
     }
+
+
 
     private fun previousModAddSessionClicked(courseID: String) {
         ReadFromDatabase(courseID) { courseID ->

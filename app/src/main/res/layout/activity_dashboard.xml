@@ -67,12 +67,12 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="16dp"
-                android:padding="8dp"
                 android:background="@android:color/transparent"
+                android:contentDescription="Searches course name through the recyler view"
+                android:padding="12dp"
                 android:src="@drawable/icons8_search_100"
-                android:text="Search Course"
 
-                />
+                android:text="Search Course" />
 
             <ImageButton
                 android:id="@+id/showAllcourses_button"
@@ -81,9 +81,10 @@
                 android:layout_above="@id/search_button"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="16dp"
-                android:padding="8dp"
                 android:layout_marginBottom="0dp"
                 android:background="@android:color/transparent"
+                android:contentDescription="Refreshes the recyclerview items"
+                android:padding="12dp"
                 android:src="@drawable/icons8_refresh_96"
                 android:text="Show All Course" />
 
@@ -107,7 +108,7 @@
         tools:layout_editor_absoluteX="0dp"
         tools:listitem="@layout/dashboard_item" />
 
-<!--    Navigation starts here   -->
+    <!--    Navigation starts here   -->
     <View
         android:id="@+id/overlay"
         android:layout_width="match_parent"
@@ -120,7 +121,7 @@
         android:id="@+id/navigation_pane"
         android:layout_width="300dp"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:menuGravity="top">
 
@@ -143,29 +144,38 @@
                 android:textStyle="bold" />
 
             <View
-                android:layout_below="@id/nav_pane_title"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="12dp"
+                android:layout_below="@id/nav_pane_title"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="8dp"
                 android:background="#B3B3B3" />
 
 
-
-
-            <Button
+            <LinearLayout
+                android:padding="12dp"
+                android:id="@+id/button_about_us"
+                android:layout_width="match_parent"
                 android:backgroundTint="@color/white"
                 android:layout_marginTop="24dp"
-                android:layout_width="match_parent"
-                android:text="About Us"
-                android:textSize="20sp"
-                android:drawableStart="@drawable/icons8_info_96"
-                android:drawablePadding="4dp"
-                android:textColor="#606060"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/nav_pane_title"/>
+                android:layout_below="@id/nav_pane_title"
+                android:layout_centerHorizontal="true"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/icons8_info_96"
+                    android:drawablePadding="8dp"
+                    android:text="About Us"
+                    android:textAlignment="center"
+                    android:textColor="#606060"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
 
 
             <androidx.cardview.widget.CardView
@@ -229,7 +239,7 @@
 
     </com.google.android.material.navigationrail.NavigationRailView>
 
-<!--    Navigation Ends Here    -->
+    <!--    Navigation Ends Here    -->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

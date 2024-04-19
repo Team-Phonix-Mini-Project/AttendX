@@ -12,6 +12,6 @@
     <color name="card_veiw_liglt_color">#5B8AB3</color>
     <color name="present">#B2FF59</color>
     <color name="absent">#FF3232</color>
-    <color name="present_color">#599800</color>
+    <color name="present_color">#5B9C00</color>
     <color name="absent_color">#C6F13800</color>
 </resources>

@@ -37,25 +37,32 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#AAAAAA"
+        android:layout_below="@+id/toolbar_dashboard"
+        android:text="Attendance Taking"/>
+
 
     <LinearLayout
         android:id="@+id/linear_layout_3_buttons"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_dashboard"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:orientation="vertical">
 
 
         <Button
             android:id="@+id/attendance_taking_create_session_in_previous_module"
-
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="0dp"
             android:backgroundTint="@color/card_view_color"
             android:fontFamily="sans-serif-light"
             android:padding="16dp"
@@ -68,7 +75,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/card_view_color"
             android:fontFamily="sans-serif-light"
             android:padding="16dp"
@@ -82,7 +89,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/card_view_color"
             android:fontFamily="sans-serif-light"
             android:padding="16dp"
@@ -92,18 +99,34 @@
 
     </LinearLayout>
 
-
-    <ImageButton
-        android:id="@+id/attendance_taking_create_module"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="40dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/round_button_with_plus"
-        android:fontFamily="sans-serif-light"
-        android:padding="16dp" />
+        android:layout_margin="30dp"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/attendance_taking_create_module"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_gravity="center"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button_with_plus"
+            android:contentDescription="Create A Module"
+            android:fontFamily="sans-serif-light"
+            android:padding="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create New Module"
+            android:textAlignment="center"
+            android:textColor="#717171"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
 
 </RelativeLayout>
