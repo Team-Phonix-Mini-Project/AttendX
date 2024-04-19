@@ -81,9 +81,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // Check if the user is already logged in
-    private fun isLoggedIn(): Boolean {
-        return sharedPreferences.getBoolean("isLoggedIn", false)
-    }
+//    private fun isLoggedIn(): Boolean {
+//        return sharedPreferences.getBoolean("isLoggedIn", false)
+//    }
 
     // Save the login status in SharedPreferences
     private fun saveLoginStatus() {
