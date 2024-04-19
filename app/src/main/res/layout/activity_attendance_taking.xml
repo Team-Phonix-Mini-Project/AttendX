@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@color/activity_background_ember"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/activity_background_ember"
     tools:context=".attendance.AttendanceTakingActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -38,28 +37,17 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+
     <LinearLayout
+        android:id="@+id/linear_layout_3_buttons"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/toolbar_dashboard"
         android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/attendance_taking_create_module"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/button_background_tint"
-            android:fontFamily="sans-serif-light"
-            android:padding="16dp"
-            android:text="Create attendance Module"
-            android:textColor="@color/text_in_button"
-            android:textSize="18sp"
-
-            />
 
         <Button
             android:id="@+id/attendance_taking_create_session_in_previous_module"
@@ -68,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/button_background_tint"
+            android:backgroundTint="@color/card_view_color"
             android:fontFamily="sans-serif-light"
             android:padding="16dp"
             android:text="Create attendance session in previous modules"
@@ -81,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/button_background_tint"
+            android:backgroundTint="@color/card_view_color"
             android:fontFamily="sans-serif-light"
             android:padding="16dp"
             android:text="Create session in current module"
@@ -95,7 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
-            android:backgroundTint="@color/button_background_tint"
+            android:backgroundTint="@color/card_view_color"
             android:fontFamily="sans-serif-light"
             android:padding="16dp"
             android:text="Take attendance"
@@ -103,5 +91,19 @@
             android:textSize="18sp" />
 
     </LinearLayout>
+
+
+    <ImageButton
+        android:id="@+id/attendance_taking_create_module"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="40dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/round_button_with_plus"
+        android:fontFamily="sans-serif-light"
+        android:padding="16dp" />
+
 
 </RelativeLayout>

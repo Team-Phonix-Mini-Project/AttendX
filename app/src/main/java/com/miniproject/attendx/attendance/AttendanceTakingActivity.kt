@@ -12,6 +12,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -66,9 +67,17 @@ class AttendanceTakingActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+// ------------------------ UI Elements start here ---------------------------------
 
         // status bar color
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+
+        // Tool tip
+
+        TooltipCompat.setTooltipText(binding.attendanceTakingCreateModule, "Create New Module")
+
+
+        // --------------------------------UI Elements End Here ----------------------------------------
 
         database = FirebaseDatabase.getInstance().reference.child("AttendanceLogs")
 

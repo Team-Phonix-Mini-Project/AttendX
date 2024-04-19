@@ -8,4 +8,6 @@
     <color name="button_background_tint">#472675</color>
     <color name="text_in_button">#FFF5C0</color>
     <color name="activity_background_ember">#FFF8E1</color>
+    <color name="card_view_color">#305270</color>
+    <color name="card_veiw_liglt_color">#5B8AB3</color>
 </resources>
