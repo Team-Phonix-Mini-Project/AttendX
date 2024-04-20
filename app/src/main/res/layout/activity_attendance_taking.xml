@@ -58,33 +58,6 @@
 
 
         <Button
-            android:id="@+id/attendance_taking_create_session_in_previous_module"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:backgroundTint="@color/card_view_color"
-            android:fontFamily="sans-serif-light"
-            android:padding="16dp"
-            android:text="List previous modules"
-            android:textColor="@color/text_in_button"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/attendance_taking_create_session"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@color/card_view_color"
-            android:fontFamily="sans-serif-light"
-            android:padding="16dp"
-            android:text="Create session in current module"
-            android:textColor="@color/text_in_button"
-            android:textSize="18sp" />
-
-
-        <Button
             android:id="@+id/attendance_taking_take_attendance"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
@@ -105,28 +78,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
-        android:orientation="vertical">
-
-        <ImageButton
-            android:id="@+id/attendance_taking_create_module"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
-            android:layout_gravity="center"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_button_with_plus"
-            android:contentDescription="Create A Module"
-            android:fontFamily="sans-serif-light"
-            android:padding="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Create New Module"
-            android:textAlignment="center"
-            android:textColor="#717171"
-            android:textSize="16sp" />
-
-    </LinearLayout>
+        android:orientation="vertical"/>
 
 
 </RelativeLayout>
