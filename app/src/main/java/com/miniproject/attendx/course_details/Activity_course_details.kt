@@ -19,11 +19,20 @@ import com.miniproject.attendx.attendance.AttendanceTakingActivity
 import com.miniproject.attendx.attendance.attendance_module_list_object
 import com.miniproject.attendx.databinding.ActivityCourseDetailsBinding
 import com.miniproject.attendx.databinding.AttReportModuleNameListBinding
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
+import org.json.JSONArray
+import java.io.IOException
 
 class activity_course_details : AppCompatActivity() {
     lateinit var binding: ActivityCourseDetailsBinding
     var dataModuleName = arrayListOf<attendance_module_list_object>()
-    private lateinit var database: DatabaseReference
+    lateinit var AttModID:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCourseDetailsBinding.inflate(layoutInflater)
@@ -35,7 +44,6 @@ class activity_course_details : AppCompatActivity() {
             insets
         }
 
-        database = FirebaseDatabase.getInstance().reference.child("AttendanceLogs")
         var courseID = intent.getStringExtra("courseid")
         var name = intent.getStringExtra("Name")
         var appl = intent.getStringExtra("User")
@@ -58,99 +66,56 @@ class activity_course_details : AppCompatActivity() {
     }
 
     private fun onGetAttendanceReportClicked(courseID: String?, courseName: String?) {
-        ReadFromDatabase(courseID.toString()) { courseID ->
-            Log.d("READFROMDATABSECOMPLETED", dataModuleName.toString())
-            val dialogBinding = AttReportModuleNameListBinding.inflate(layoutInflater)
-            val adapter = Report_module_list_RecyclerView_adapter(
-                dataModuleName,
-                object : AttendanceModuleClickListener_report {
-                    override fun onAttendanceModuleClicked(attendanceModule: attendance_module_list_object) {
-                        // Handle the click event here
-                        val attendanceID = attendanceModule.attId
-                        runOnUiThread {
-                            Toast.makeText(
-                                this@activity_course_details,
-                                "Selected ${attendanceModule.attName}(id->$attendanceID) for attendance",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        AlertDialog.Builder(this@activity_course_details)
-                            .setTitle("Are you sure you want to see report of module ${attendanceModule.attName}?")
-                            .setPositiveButton("YES", { _, _ ->
-                                runOnUiThread {
-                                    Toast.makeText(
-                                        this@activity_course_details,
-                                        "Showing Report for ${attendanceModule.attName}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                var intent = Intent(
-                                    this@activity_course_details,
-                                    ReportOfAttendanceModuleSessionList::class.java
-                                )
-                                intent.putExtra("attname", attendanceModule.attName)
-                                intent.putExtra("attid", attendanceModule.attId)
-                                intent.putExtra("courseid",courseID)
-                                intent.putExtra("coursename",courseName)
-                                startActivity(intent)
-                            })
-                            .setNegativeButton("CANCEL", { _, _ ->
-
-                            })
-                            .show()
-                    }
-                })
-            dialogBinding.attReportModuleNamesRecyclerView.adapter = adapter
-            AlertDialog.Builder(this)
-                .setView(dialogBinding.root)
-                .show()
+        fetchAttendanceModuleID(courseID.toString()){attendanceMod->
+            AttModID=attendanceMod
+             var intent=Intent(this,ReportOfAttendanceModuleSessionList::class.java)
+            intent.putExtra("attname","Attendance")
+            intent.putExtra("attid",AttModID)
+            intent.putExtra("courseid",courseID)
+            intent.putExtra("coursename",courseName)
+            startActivity(intent)
         }
     }
 
-    private fun ReadFromDatabase(courseID: String, callback: (String) -> Unit) {
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                for (courseSnapshot in dataSnapshot.children) {
-                    val courseIdCompare = courseSnapshot.key // Get the courseID form the FB
+    private fun fetchAttendanceModuleID(courseID: String,callback: (String) -> Unit) {
+        val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
+        val params = mapOf(
+            "wstoken" to "cd8c3e7ed7bf515ad9a3fec7f7f8e8ef",
+            "wsfunction" to "core_course_get_contents",
+            "moodlewsrestformat" to "json",
+            "courseid" to courseID
+        )
+        val formBody = FormBody.Builder()
+        for ((key, value) in params) {
+            formBody.add(key, value)
+        }
+        val request = Request.Builder().url(url).post(formBody.build()).build()
 
-                    when (courseIdCompare) {
-                        courseID -> {
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                println("Failed to execute request: ${e.message}")
+            }
 
-                            for (moduleSnapshot in dataSnapshot.child("$courseID").children) {
-
-
-                                val moduleName = moduleSnapshot.value // Retrieve the value
-
-                                Log.d(
-                                    "ModuleList",
-                                    "$moduleName  ${moduleSnapshot.child("attendanceName").value}"
-                                )
-                                var x = moduleSnapshot.child("attendanceName").value
-                                var y = moduleSnapshot.child("attendanceID").value
-                                if (!dataModuleName.contains(
-                                        attendance_module_list_object(
-                                            x.toString(),
-                                            y.toString()
-                                        )
-                                    )
-                                ) {
-                                    dataModuleName.add(
-                                        attendance_module_list_object(
-                                            x.toString(),
-                                            y.toString()
-                                        )
-                                    )
-                                }
-                            }
+            override fun onResponse(call: Call, response: Response) {
+                response.body?.string()?.let { responseBody ->
+                    val datas = JSONArray(responseBody)
+                    val data=datas.getJSONObject(0)
+                    var array=data.getJSONArray("modules")
+                    for (i in 0 until array.length()) {
+                        var obj=array.getJSONObject(i)
+                        var x=obj.getString("name")
+                        if(x=="Attendance")
+                        {
+                            AttModID=obj.getString("instance")
                         }
                     }
+
                 }
-                callback(courseID)
+                callback(AttModID)
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                // Handle error
-            }
         })
     }
+
 }

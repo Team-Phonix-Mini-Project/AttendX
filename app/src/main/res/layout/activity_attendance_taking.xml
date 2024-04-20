@@ -20,7 +20,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/attendance_taking_courseName"
+                android:id="@+id/toolbar_attendance_taking_courseName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -58,7 +58,7 @@
 
 
         <Button
-            android:id="@+id/attendance_taking_take_attendance"
+            android:id="@+id/attendance_start_taking_button"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
             android:backgroundTint="@color/card_view_color"
             android:fontFamily="sans-serif-light"
             android:padding="16dp"
-            android:text="Take attendance"
+            android:text="Start attendance"
             android:textColor="@color/text_in_button"
             android:textSize="18sp" />
 

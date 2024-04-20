@@ -1,9 +1,11 @@
 package com.miniproject.attendx.attendance
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -33,15 +35,7 @@ class AttendanceTakingActivity : AppCompatActivity() {
     lateinit var sessionID: String
     lateinit var courseName: String
     lateinit var courseID:String
-    private lateinit var database: DatabaseReference
-
-    private lateinit var retrievedAttendanceId: String
-    private lateinit var retrievedAttendanceName: String
-    var dataModuleName = arrayListOf<attendance_module_list_object>()
     var dataArray = arrayListOf<MarkingAttDataObj>()
-
-    lateinit var attListSize: String
-
 
     @SuppressLint("SuspiciousIndentation")
     @RequiresApi(Build.VERSION_CODES.O)
@@ -55,16 +49,52 @@ class AttendanceTakingActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        binding.toolbarAttendanceTakingCourseName.text="Taking attendance for ${intent.getStringExtra("Name")}"
+        binding.attendanceStartTakingButton.setOnClickListener {
+            Toast.makeText(this@AttendanceTakingActivity,"Creating session..wait",Toast.LENGTH_SHORT).show()
+
+        }
+
 // ------------------------ UI Elements start here ---------------------------------
 
         // status bar color
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
         // --------------------------------UI Elements End Here ----------------------------------------
-        courseName= intent.getStringExtra("Name").toString()
-        courseID=intent.getStringExtra("courseid").toString()
+        courseName= intent.getStringExtra("Name")?:""
+        courseID=intent.getStringExtra("courseid")?:""
         fetchAttendanceModuleID(courseID){AttModID->
-            createSessionForAttendance(AttModID,courseID){
+            createSessionForAttendance(AttModID,courseID){sessionIDForMod->
+                sessionID=sessionIDForMod
+                makeUpdationsInAttendance(AttModID,courseID,sessionIDForMod){studentID,studentName,noOfUsers->
+                    Log.d("makeUpdationsInAttendance",studentName+" "+studentID+" "+noOfUsers)
+                    getStatusID(studentID,sessionIDForMod,courseID,studentName){statusIdPresent, statusset, takenByid->
+                        Log.d("getStatusID","statusid:$statusIdPresent studID:$studentID studName:$studentName")
+                        val obj = MarkingAttDataObj(
+                            courseID,
+                            AttModID,
+                            sessionID,
+                            studentName,
+                            studentID,
+                            statusIdPresent
+                        )
+                        dataArray.add(obj)
+                        Log.d("MarkingAttDataObj",obj.toString())
+                        Log.d("noOfUsers",noOfUsers+"="+dataArray.size)
+                        if(noOfUsers.toString()==dataArray.size.toString()){
+                            Log.d("noOfUsers","If condition satisfied")
+                            runOnUiThread{
+                                binding.attendanceStartTakingButton.setOnClickListener {
+                                    var intent=Intent(this@AttendanceTakingActivity,RecordingAttendance::class.java)
+                                    intent.putExtra("data",dataArray)
+                                    intent.putExtra("coursename",courseName)
+                                    startActivity(intent)
+                                }
+                            }
 
+
+                        }
+                    }
+                }
             }
 
         }
@@ -244,7 +274,6 @@ class AttendanceTakingActivity : AppCompatActivity() {
                     var obj = JSONObject(responseBody)
                     var objs = obj.getJSONArray("statuses")
                     var x = objs.getJSONObject(0)
-                    Log.d("StatusTag", x.getString("id"))
                     var statusIdPresent = x.getString("id")
                     var statusset = "1";
                     var takenByid = studentID;
