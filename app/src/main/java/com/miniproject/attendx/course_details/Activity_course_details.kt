@@ -7,11 +7,11 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miniproject.attendx.R
 import com.miniproject.attendx.attendance.MarkingAttDataObj
 import com.miniproject.attendx.attendance.RecordingAttendance
@@ -76,7 +76,7 @@ class activity_course_details : AppCompatActivity() {
                 var bindingx: LoadingAlertDialogueBoxBinding
                 bindingx = LoadingAlertDialogueBoxBinding.inflate(layoutInflater)
                 bindingx.loadingAlertDialogueBoxText.text = "Creating session.."
-                var x = AlertDialog.Builder(this)
+                var x = MaterialAlertDialogBuilder(this)
                     .setView(bindingx.root)
                     .show()
                 fetchAttendanceModuleID(courseID.toString()) { AttModID ->
@@ -140,8 +140,14 @@ class activity_course_details : AppCompatActivity() {
 
 
     private fun onGetAttendanceReportClicked(courseID: String?, courseName: String?) {
+        var bindingx = LoadingAlertDialogueBoxBinding.inflate(layoutInflater)
+        bindingx.loadingAlertDialogueBoxText.text = "Getting report..."
+        var x = MaterialAlertDialogBuilder(this)
+            .setView(bindingx.root)
+            .show()
         fetchAttendanceModuleID(courseID.toString()) { attendanceMod ->
             AttModID = attendanceMod
+            x.dismiss()
             var intent = Intent(this, ReportOfAttendanceModuleSessionList::class.java)
             intent.putExtra("attname", "Attendance")
             intent.putExtra("attid", AttModID)

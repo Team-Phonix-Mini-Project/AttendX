@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miniproject.attendx.R
 import com.miniproject.attendx.databinding.ActivityReportOfAttendanceModuleBinding
 import com.miniproject.attendx.databinding.LoadingAlertDialogueBoxBinding
@@ -59,7 +60,7 @@ class ReportOfAttendanceModuleSessionList : AppCompatActivity() {
         var bindingx: LoadingAlertDialogueBoxBinding
         bindingx = LoadingAlertDialogueBoxBinding.inflate(layoutInflater)
         bindingx.loadingAlertDialogueBoxText.text = "Fetching sessions list..."
-        var x = AlertDialog.Builder(this)
+        var x = MaterialAlertDialogBuilder(this)
             .setView(bindingx.root)
             .show()
         FetchSessionsList(attendanceId, attendanceName, courseId, courseName) { sessionList ->

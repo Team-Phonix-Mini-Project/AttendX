@@ -1,30 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:layout_gravity="center">
+    android:layout_marginStart="50dp"
+    android:layout_marginEnd="50dp">
 
-    <ProgressBar
-        android:id="@+id/loading_progress_bar"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary">
 
-        android:layout_centerHorizontal="true"
-        android:indeterminate="true" />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_view_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
 
-    <TextView
-        android:id="@+id/loading_alert_dialogue_box_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/loading_progress_bar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:padding="2dp"
-        android:layout_margin="5dp"
-        android:text="Fetching sessions list"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="22sp" />
+            <!-- Your view that will shimmer goes here -->
 
-</RelativeLayout>
+
+            <TextView
+                android:id="@+id/loading_alert_dialogue_box_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="5dp"
+                android:layout_marginTop="20dp"
+                android:padding="12dp"
+                android:text="Fetching sessions list"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

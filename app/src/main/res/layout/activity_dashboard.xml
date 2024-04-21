@@ -73,11 +73,10 @@
                 android:layout_margin="10dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="sans-serif-light"
                 android:text="Dashboard"
                 android:textColor="@color/white"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                android:textSize="30sp" />
 
 
         </RelativeLayout>
@@ -93,6 +92,7 @@
         android:background="@color/activity_background_ember"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/dashboard_item" />
+
 
     <!--    Navigation starts here   -->
 
@@ -111,7 +111,7 @@
         android:layout_height="400dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:visibility="visible"
+        android:visibility="gone"
         app:menuGravity="top">
 
         <RelativeLayout
@@ -133,6 +133,7 @@
                 android:textStyle="bold" />
 
             <View
+                android:id="@+id/divider_nav_pane"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@id/nav_pane_title"
@@ -142,36 +143,11 @@
                 android:background="#B3B3B3" />
 
 
-            <LinearLayout
-                android:id="@+id/button_about_us"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nav_pane_title"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="@color/white"
-                android:orientation="vertical"
-                android:padding="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:drawableStart="@drawable/icons8_info_96"
-                    android:drawablePadding="8dp"
-                    android:text="About Us"
-                    android:textAlignment="center"
-                    android:textColor="#4A4A4A"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/logout_button"
+                android:layout_below="@+id/divider_nav_pane"
                 android:layout_margin="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="19dp"
@@ -201,17 +177,14 @@
                         android:id="@+id/user_email_nav_pane"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@id/loggged_in_as"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="0dp"
                         android:layout_marginBottom="4dp"
-                        android:layout_below="@id/loggged_in_as"
                         android:text="userEmail"
                         android:textAlignment="center"
                         android:textSize="26dp"
                         android:textStyle="bold" />
-
-
-
 
 
                 </RelativeLayout>
@@ -219,6 +192,39 @@
 
             </androidx.cardview.widget.CardView>
 
+
+            <LinearLayout
+                android:id="@+id/button_about_us"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/logout_button"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:backgroundTint="@color/white"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:drawableStart="@drawable/icons8_info_96"
+                    android:drawablePadding="8dp"
+                    android:padding="10dp"
+                    android:text="About Us"
+                    android:textAlignment="center"
+                    android:textColor="#4A4A4A"
+                    android:textSize="20sp" />
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Copyright © AttendX" />
+
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/logout_button"

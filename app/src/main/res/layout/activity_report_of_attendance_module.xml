@@ -14,8 +14,7 @@
         android:layout_height="130dp"
         android:background="#F98012"
         android:contentInsetStart="0dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -29,10 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="sans-serif-light"
-                android:hint="Attendance for theory of computation"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:textAlignment="center"
+                android:hint="Attendance Report for theory of computation"
                 android:textColor="@color/white"
                 android:textSize="28sp" />
 
