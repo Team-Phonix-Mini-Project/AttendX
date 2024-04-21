@@ -7,13 +7,16 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.miniproject.attendx.R
 import com.miniproject.attendx.attendance.MarkingAttDataObj
 import com.miniproject.attendx.attendance.RecordingAttendance
 import com.miniproject.attendx.databinding.ActivityCourseDetailsBinding
+import com.miniproject.attendx.databinding.LoadingAlertDialogueBoxBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -30,11 +33,12 @@ import java.time.format.DateTimeFormatter
 
 class activity_course_details : AppCompatActivity() {
     lateinit var binding: ActivityCourseDetailsBinding
-    lateinit var AttModID:String
-    lateinit var courseName:String
-    lateinit var sessionID:String
-    lateinit var courseID:String
+    lateinit var AttModID: String
+    lateinit var courseName: String
+    lateinit var sessionID: String
+    lateinit var courseID: String
     var dataArray = arrayListOf<MarkingAttDataObj>()
+    var TakeAttendanceClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,80 +51,108 @@ class activity_course_details : AppCompatActivity() {
             insets
         }
 
-        courseID=intent.getStringExtra("courseid").toString()
+        // status bar color here
+        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+
+        courseID = intent.getStringExtra("courseid").toString()
         var courseID = intent.getStringExtra("courseid")
         var name = intent.getStringExtra("Name")
-        courseName= name.toString()
+        courseName = name.toString()
         var appl = intent.getStringExtra("User")
         appl = "Total applicants : " + appl
         binding.courseDetailsCourseName.text = name
         binding.courseDetailsApplicants.text = appl
         binding.courseDetailsTakeAttendance.setOnClickListener {
-            Toast.makeText(this@activity_course_details,"Creating session..wait", Toast.LENGTH_SHORT).show()
-            courseName= intent.getStringExtra("Name")?:""
-            courseID=intent.getStringExtra("courseid")?:""
-            fetchAttendanceModuleID(courseID.toString()){AttModID->
-                createSessionForAttendance(AttModID,courseID.toString()){sessionIDForMod->
-                    sessionID=sessionIDForMod
-                    makeUpdationsInAttendance(AttModID,courseID.toString(),sessionIDForMod){studentID,studentName,noOfUsers->
-                        Log.d("makeUpdationsInAttendance",studentName+" "+studentID+" "+noOfUsers)
-                        getStatusID(studentID,sessionIDForMod,courseID.toString(),studentName){statusIdPresent, statusset, takenByid->
-                            Log.d("getStatusID","statusid:$statusIdPresent studID:$studentID studName:$studentName")
-                            val obj = MarkingAttDataObj(
-                                courseID.toString(),
-                                AttModID,
-                                sessionID,
-                                studentName,
-                                studentID,
-                                statusIdPresent
+            courseName = intent.getStringExtra("Name") ?: ""
+            courseID = intent.getStringExtra("courseid") ?: ""
+            if (TakeAttendanceClicked == true) {
+                Toast.makeText(
+                    this@activity_course_details,
+                    "Creating session..wait",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else if (TakeAttendanceClicked == false) {
+                TakeAttendanceClicked = true
+                var bindingx: LoadingAlertDialogueBoxBinding
+                bindingx = LoadingAlertDialogueBoxBinding.inflate(layoutInflater)
+                bindingx.loadingAlertDialogueBoxText.text = "Creating session.."
+                var x = AlertDialog.Builder(this)
+                    .setView(bindingx.root)
+                    .show()
+                fetchAttendanceModuleID(courseID.toString()) { AttModID ->
+                    createSessionForAttendance(AttModID, courseID.toString()) { sessionIDForMod ->
+                        sessionID = sessionIDForMod
+                        makeUpdationsInAttendance(
+                            AttModID,
+                            courseID.toString(),
+                            sessionIDForMod
+                        ) { studentID, studentName, noOfUsers ->
+                            Log.d(
+                                "makeUpdationsInAttendance",
+                                studentName + " " + studentID + " " + noOfUsers
                             )
-                            dataArray.add(obj)
-                            Log.d("MarkingAttDataObj",obj.toString())
-                            Log.d("noOfUsers",noOfUsers+"="+dataArray.size)
-                            if(noOfUsers.toString()==dataArray.size.toString()){
-                                Log.d("noOfUsers","If condition satisfied")
-                                runOnUiThread{
-                                    binding.courseDetailsTakeAttendance.setOnClickListener {
-                                        var intent=Intent(this,
-                                            RecordingAttendance::class.java)
-                                        intent.putExtra("data",dataArray)
-                                        intent.putExtra("coursename",courseName)
+                            getStatusID(
+                                studentID,
+                                sessionIDForMod,
+                                courseID.toString(),
+                                studentName
+                            ) { statusIdPresent, statusset, takenByid ->
+                                Log.d(
+                                    "getStatusID",
+                                    "statusid:$statusIdPresent studID:$studentID studName:$studentName"
+                                )
+                                val obj = MarkingAttDataObj(
+                                    courseID.toString(),
+                                    AttModID,
+                                    sessionID,
+                                    studentName,
+                                    studentID,
+                                    statusIdPresent
+                                )
+                                dataArray.add(obj)
+                                Log.d("MarkingAttDataObj", obj.toString())
+                                Log.d("noOfUsers", noOfUsers + "=" + dataArray.size)
+                                if (noOfUsers.toString() == dataArray.size.toString()) {
+                                    Log.d("noOfUsers", "If condition satisfied")
+                                    x.dismiss()
+                                    runOnUiThread {
+                                        var intent = Intent(
+                                            this,
+                                            RecordingAttendance::class.java
+                                        )
+                                        intent.putExtra("data", dataArray)
+                                        intent.putExtra("coursename", courseName)
                                         startActivity(intent)
+
                                     }
                                 }
-
-
                             }
                         }
                     }
-                }
 
+                }
             }
-            onTakeAttendanceButtonClicked(courseID, name)
         }
         binding.courseDetailsGetAttendanceReport.setOnClickListener {
             onGetAttendanceReportClicked(courseID, name)
         }
     }
 
-    private fun onTakeAttendanceButtonClicked(courseID: String?, name: String?) {
-
-    }
 
     private fun onGetAttendanceReportClicked(courseID: String?, courseName: String?) {
-        fetchAttendanceModuleID(courseID.toString()){attendanceMod->
-            AttModID=attendanceMod
-             var intent=Intent(this,ReportOfAttendanceModuleSessionList::class.java)
-            intent.putExtra("attname","Attendance")
-            intent.putExtra("attid",AttModID)
-            intent.putExtra("courseid",courseID)
-            intent.putExtra("coursename",courseName)
+        fetchAttendanceModuleID(courseID.toString()) { attendanceMod ->
+            AttModID = attendanceMod
+            var intent = Intent(this, ReportOfAttendanceModuleSessionList::class.java)
+            intent.putExtra("attname", "Attendance")
+            intent.putExtra("attid", AttModID)
+            intent.putExtra("courseid", courseID)
+            intent.putExtra("coursename", courseName)
             startActivity(intent)
         }
     }
 
 
-    private fun fetchAttendanceModuleID(courseID: String,callback: (String) -> Unit) {
+    private fun fetchAttendanceModuleID(courseID: String, callback: (String) -> Unit) {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
         val params = mapOf(
             "wstoken" to "cd8c3e7ed7bf515ad9a3fec7f7f8e8ef",
@@ -143,26 +175,21 @@ class activity_course_details : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val datas = JSONArray(responseBody)
-                    val data=datas.getJSONObject(0)
-                    var array=data.getJSONArray("modules")
+                    val data = datas.getJSONObject(0)
+                    var array = data.getJSONArray("modules")
                     for (i in 0 until array.length()) {
-                        var obj=array.getJSONObject(i)
-                        var x=obj.getString("name")
-                        if(x=="Attendance")
-                        {
-                            AttModID=obj.getString("instance")
+                        var obj = array.getJSONObject(i)
+                        var x = obj.getString("name")
+                        if (x == "Attendance") {
+                            AttModID = obj.getString("instance")
                         }
                     }
-
                 }
                 callback(AttModID)
             }
 
         })
     }
-
-
-
 
 
     private fun createSessionForAttendance(

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.miniproject.attendx.course_details.activity_course_details
+import com.miniproject.attendx.databinding.ActivityDashboardBinding
 import com.miniproject.attendx.databinding.DashboardItemBinding
 
 
@@ -55,6 +56,9 @@ class RecyclerViewDashboard_Adapter(var data:ArrayList<objDashboard>,var current
                 }
 
             }
+
         }
     }
+
 }
+

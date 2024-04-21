@@ -161,6 +161,8 @@ class RecordingAttendance : AppCompatActivity() {
         Log.d("VisibilityCheck", "Text: ${binding.recordingAttendanceStudentName.text}")
         if (binding.recordingAttendanceStudentName.text == "Attendance completed") {
             binding.attendanceTakingGoToMainBtn.visibility = View.VISIBLE
+            binding.attendanceTakingPresentBtn.visibility=View.GONE
+            binding.attendanceTakingAbsentBtn.visibility=View.GONE
         }
     }
 

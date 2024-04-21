@@ -4,13 +4,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -33,6 +30,7 @@ import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONArray
 import java.io.IOException
+
 
 class Dashboard_activity : AppCompatActivity() {
     lateinit var binding: ActivityDashboardBinding
@@ -71,6 +69,7 @@ class Dashboard_activity : AppCompatActivity() {
 //    lateinit var courseName: String
 //    lateinit var TOKEN: String
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
@@ -108,6 +107,8 @@ class Dashboard_activity : AppCompatActivity() {
 
         // Read data from the database
         readDataOnce() { courseNameToTokenMap ->
+            Log.d("DashboardActivity", "Data fetched, invoking FetchUserName")
+
             FetchUserName()
         }
 
@@ -130,7 +131,6 @@ class Dashboard_activity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
 
 
-
             // Inflate the custom layout for the dialog content
             val dialogView = layoutInflater.inflate(R.layout.about_us_layout, null)
             builder.setView(dialogView)
@@ -148,13 +148,15 @@ class Dashboard_activity : AppCompatActivity() {
         binding.userEmailNavPane.setText(userEmail)
 
 
-        // Searching Functionality
-        binding.searchButton.setOnClickListener {
-            showEditTextDialog()
-        }
+        // show only auth courses
+        //------------------Auth starts here-----------------------
+
+
+        //--------------------Auth ends here---------------------------
 
 
     }
+
 
     private fun LogoutFunction() {
         // Sign out the user
@@ -248,7 +250,15 @@ class Dashboard_activity : AppCompatActivity() {
                             val courseName = course.getString("fullname")
                             Log.d("TAGXX", courseName)
                             Log.d("TAGXX", courseId)
-                            FetchApplicantsList(courseId, courseName)
+
+                            //-------------------------Check teacherToken & courseToken Starts here-----------------------------
+
+                            val isMatching = compareTokens(currentTOKEN, courseName)
+                            if (isMatching) {
+                                FetchApplicantsList(courseId, courseName)
+                            }
+
+                            //-------------------------Check teacherToken & courseToken ends here--------------------------------
                         }
 
 
@@ -256,6 +266,7 @@ class Dashboard_activity : AppCompatActivity() {
                 }
             }
         })
+
     }
 
     private fun FetchApplicantsList(courseId: String, courseName: String) {
@@ -307,18 +318,6 @@ class Dashboard_activity : AppCompatActivity() {
     }
 
 
-    // Variables to store the Tokens of the course teacher to access the specific Course
-    val token_cn = ""
-    val token_se = ""
-    val token_ps = ""
-    val token_java = ""
-    val token_ap = ""
-
-
-    // UID for all teachers in Firebase
-//    val cn_UID = "8qd1AmvNspdMriLQmKGh1wvxZNm1"
-//    val ps_UID = "7zXfIyDi76dmKlzkjsGHvsLCVMQ2"
-//    val se_UID = "2S8Gy6tcwKQ8ABIqVJMA2ztthuR2"
     // Now we don't need to hard code this as we have also fetched the UID from firebase
 
 
@@ -409,100 +408,48 @@ class Dashboard_activity : AppCompatActivity() {
 
     }
 
-    //---------------------------Search course starts here----------------------------------
 
+    //----------------------Authorised courses only-------------------------------------------
 
-    private fun showEditTextDialog() {
-        // Inflate the custom dialog layout
-        val customLayout = layoutInflater.inflate(R.layout.search_dialog_box, null)
-
-        // Find the EditText view
-        val editText = customLayout.findViewById<EditText>(R.id.edit_text_search)
-        editText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Not used
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                // Call filterCourses function when text changes
-                filterCourses(s.toString())
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                // Not used
-            }
-        })
-
-        // Create and show the dialog with the custom layout
-        AlertDialog.Builder(this).setTitle("Search Course").setView(customLayout)
-            .setPositiveButton("OK") { dialog, _ ->
-                // Handle OK button click (if needed)
-                dialog.dismiss()
-            }.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }.show()
-    }
-
-
-    private fun filterCourses(courseName: String) {
-
-        flag = true
-
+    private fun showOnlyAuthCourses() {
         val filteredList = mutableListOf<objDashboard>()
-
-        // Iterate through all courses and set visibility based on course name
+//        Toast.makeText(this, "button clicked", Toast.LENGTH_LONG).show()
         for (course in data) {
-            val isGone = course.name.lowercase().startsWith(courseName.lowercase())
+            val isMatching = compareTokens(currentTOKEN, course.name)
+            val isGone = isMatching
             course.isGone = isGone
             if (isGone) {
                 filteredList.add(course)
             }
+            //                if (isMatching) {
+            //                    Toast.makeText(this, "course mapping successful", Toast.LENGTH_LONG).show()
+            //                } else {
+            //                    Toast.makeText(this, "course mapping failed", Toast.LENGTH_LONG).show()
+            //                }
         }
-
-        // Update RecyclerView with filtered data
         (binding.RecyclerView.adapter as? RecyclerViewDashboard_Adapter)?.apply {
             data.clear()
             data.addAll(filteredList)
             notifyDataSetChanged()
-        }
-
-
-        binding.showAllcoursesButton.setOnClickListener {
-
-            refreshAllCourses(filteredList)
 
         }
     }
 
-    private fun refreshAllCourses(filteredList: MutableList<objDashboard>) {
-        if (flag) {
-
-            hideAllCourses()
-            filteredList.clear()
-            FetchUserName()
-
-
-        }
+    fun getTokenForCourse(courseName: String): String? {
+        // Retrieve the token from the map using the course name
+        return courseNameToTokenMap[courseName]
     }
 
-    private fun hideAllCourses() {
+    fun compareTokens(teacherToken: String, courseNamee: String): Boolean {
+        // Retrieve the token of the course
+        val courseToken = getTokenForCourse(courseNamee)
 
-        flag = false
-        // Iterate through data list and set isGone property to true for all items
-        for (course in data) {
-            course.isGone = true
-        }
-
-        // Clear the data list to remove all courses
-        data.clear()
-
-        // Notify the adapter to update the RecyclerView
-        (binding.RecyclerView.adapter as? RecyclerViewDashboard_Adapter)?.apply {
-            notifyDataSetChanged()
-        }
+        // Check if the course token is not null and matches the teacher token
+        return courseToken != null && teacherToken.equals(courseToken, ignoreCase = true)
     }
 
-    //-----------------------------Search course ends here--------------------------------------------
+
+    //----------------------------Authorization Ends here------------------------------------------------
 
 
     // ----------------------------------- Navigation Functions -----------------------------------------------
@@ -521,10 +468,55 @@ class Dashboard_activity : AppCompatActivity() {
             false
         }
     }
+//
+//    private fun openNavigationPane() {
+//
+//        val screenHeight = resources.displayMetrics.heightPixels.toFloat()
+//
+//        // Show the navigation pane with animation
+////        binding.navigationPane.animate().translationX(0f).setDuration(500).start()
+//        binding.navigationPane.animate()
+//            .translationY(screenHeight - binding.navigationPane.height) // Move up by the height of the navigation pane
+//            .alpha(1f) // Set alpha to 1 (fully visible)
+//            .setDuration(500) // Animation duration in milliseconds
+//            .start()
+//        binding.navigationPane.visibility = View.VISIBLE
+//
+//        // Fade in animation for the overlay
+//        binding.overlay.alpha = 0f // Start with transparency
+//        binding.overlay.visibility = View.VISIBLE // Make overlay visible
+//        binding.overlay.animate().alpha(1f).setDuration(500).start() // Fade in with duration
+//
+//
+//        // Set isNavigationVisible to true
+//        isNavigationVisible = true
+//    }
+//
+//    private fun closeNavigationPane() {
+//        // Hide the navigation pane with animation
+//        binding.navigationPane.animate().translationY(-binding.navigationPane.width.toFloat())
+//            .setDuration(500).withEndAction {
+//                binding.navigationPane.visibility = View.GONE
+//            }.start()
+//
+//        // Fade out animation for the overlay
+//        binding.overlay.animate().alpha(0f).setDuration(500).withEndAction {
+//            binding.overlay.visibility = View.GONE // Hide the overlay when animation completes
+//        }.start()
+//
+//        // Set isNavigationVisible to false
+//        isNavigationVisible = false
+//    }
+
 
     private fun openNavigationPane() {
+
         // Show the navigation pane with animation
-        binding.navigationPane.animate().translationX(0f).setDuration(500).start()
+        binding.navigationPane.animate()
+            .translationY(0f) // Move up by the height of the navigation pane
+            .alpha(1f) // Set alpha to 1 (fully visible)
+            .setDuration(500) // Animation duration in milliseconds
+            .start()
         binding.navigationPane.visibility = View.VISIBLE
 
         // Fade in animation for the overlay
@@ -532,15 +524,16 @@ class Dashboard_activity : AppCompatActivity() {
         binding.overlay.visibility = View.VISIBLE // Make overlay visible
         binding.overlay.animate().alpha(1f).setDuration(500).start() // Fade in with duration
 
-
         // Set isNavigationVisible to true
         isNavigationVisible = true
     }
 
     private fun closeNavigationPane() {
+        val screenHeight = resources.displayMetrics.heightPixels.toFloat()
+
         // Hide the navigation pane with animation
-        binding.navigationPane.animate().translationX(-binding.navigationPane.width.toFloat())
-            .setDuration(500).withEndAction {
+        binding.navigationPane.animate().translationY(screenHeight).setDuration(500)
+            .withEndAction {
                 binding.navigationPane.visibility = View.GONE
             }.start()
 
