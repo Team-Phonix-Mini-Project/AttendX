@@ -6,11 +6,14 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miniproject.attendx.R
 import com.miniproject.attendx.databinding.ActivityReportOfAttendanceModuleBinding
+import com.miniproject.attendx.databinding.LoadingAlertDialogueBoxBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -48,8 +51,15 @@ class ReportOfAttendanceModuleSessionList : AppCompatActivity() {
         courseId=intent.getStringExtra("courseid").toString()
         courseName=intent.getStringExtra("coursename").toString()
         binding.recordingAttendanceToolbarTextview.text="Sessions conducted in attendance mudule ${attendanceName}"
+        var bindingx:LoadingAlertDialogueBoxBinding
+        bindingx= LoadingAlertDialogueBoxBinding.inflate(layoutInflater)
+        bindingx.loadingAlertDialogueBoxText.text="Fetching sessions list..."
+        var x=AlertDialog.Builder(this)
+            .setView(bindingx.root)
+            .show()
         FetchSessionsList(attendanceId,attendanceName,courseId,courseName){sessionList->
             runOnUiThread {
+                x.dismiss()
                 Toast.makeText(this, sessionList.toString(), Toast.LENGTH_SHORT).show()
                 binding.reportSessionListRecyclerView.adapter=report_session_list_adapter(sessionList)
             }

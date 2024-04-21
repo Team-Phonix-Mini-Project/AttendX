@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.miniproject.attendx.Dashboard.RecyclerViewDashboard_Adapter
 import com.miniproject.attendx.Dashboard.objDashboard
 import com.miniproject.attendx.R
 import com.miniproject.attendx.databinding.ActivitySessionPresentyDisplayingBinding
+import com.miniproject.attendx.databinding.LoadingAlertDialogueBoxBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -47,11 +50,16 @@ class session_presenty_displaying_activity : AppCompatActivity() {
         courseId=intent.getStringExtra("courseid").toString()
         courseName=intent.getStringExtra("coursename").toString()
         binding.recordingAttendanceToolbarTextview.text="Session details for ${sessionDate}"
-        Log.d("fasfsafsf",sessionDate+"D"+sessionId)
+
+        var bindingx= LoadingAlertDialogueBoxBinding.inflate(layoutInflater)
+        bindingx.loadingAlertDialogueBoxText.text="Fetching sessions details..."
+        var x= AlertDialog.Builder(this)
+            .setView(bindingx.root)
+            .show()
+
         FetchSessionPresenty(sessionId){presentStatusId,absentstatusid->
             Log.d("jsonAttendanceLogs",jsonAttendanceLogs.toString())
             for (i in 0 until jsonAttendanceLogs.length()){
-                Log.d("jsonAttendanceLogsvvv",jsonAttendanceLogs.getJSONObject(i).toString())
                 var currentStatusID=jsonAttendanceLogs.getJSONObject(i).getString("statusid")
                 var currentStudentId:String
                 lateinit var presentOrAbsent:String
@@ -65,7 +73,7 @@ class session_presenty_displaying_activity : AppCompatActivity() {
                     dataStudNameAndStatus.add(data_attendance_report_show_object(fullname,presentOrAbsent))
                     if(dataStudNameAndStatus.size.toString()==noOfUser)
                     {
-                        Log.d("jkuedgfhksadhuigfhd",dataStudNameAndStatus.toString())
+                        x.dismiss()
                         runOnUiThread {
                             binding.sessionPresentyDisplayRecyclerView.adapter=presenty_showing_RecyclerView_adapter(dataStudNameAndStatus)
                         }
@@ -146,10 +154,8 @@ class session_presenty_displaying_activity : AppCompatActivity() {
                     response.body?.string()?.let { responseBody ->
                         val users = JSONArray(responseBody)
                         val noOfUser=JSONArray(responseBody).length()
-                        Log.d("JSONArrayfasfsa",noOfUser.toString())
                         for (i in 0 until users.length()){
                             val user=users.getJSONObject(i)
-                            Log.d("getJSONObject",user.toString())
                             if(user.getString("id")==StudentId)
                             {
                                 callback(user.getString("fullname"),noOfUser.toString())
