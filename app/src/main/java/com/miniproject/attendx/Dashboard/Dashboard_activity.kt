@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -23,6 +24,7 @@ import com.google.firebase.database.ValueEventListener
 import com.miniproject.attendx.Login_activity.LoginActivity
 import com.miniproject.attendx.R
 import com.miniproject.attendx.databinding.ActivityDashboardBinding
+import com.miniproject.attendx.databinding.LoadingAlertDialogueBoxBinding
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.FormBody
@@ -105,12 +107,16 @@ class Dashboard_activity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().reference
         infoReference = FirebaseDatabase.getInstance().reference.child("uidInfo")
 
+        var bindingx = LoadingAlertDialogueBoxBinding.inflate(layoutInflater)
+        bindingx.loadingAlertDialogueBoxText.text = "Fetching Information..."
+        var x = MaterialAlertDialogBuilder(this)
+            .setView(bindingx.root)
+            .show()
 
         // Read data from the database
         readDataOnce() { courseNameToTokenMap ->
             Log.d("DashboardActivity", "Data fetched, invoking FetchUserName")
-
-            FetchUserName()
+            FetchUserName(x)
         }
 
 
@@ -242,7 +248,7 @@ class Dashboard_activity : AppCompatActivity() {
 //        Toast.makeText(this, "Running", Toast.LENGTH_SHORT).show()
 //    }
 
-    fun FetchUserName() {
+    fun FetchUserName(x: AlertDialog) {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
 
         val params = mapOf(
@@ -280,7 +286,9 @@ class Dashboard_activity : AppCompatActivity() {
 
                             val isMatching = compareTokens(currentTOKEN, courseName)
                             if (isMatching) {
-                                FetchApplicantsList(courseId, courseName)
+                                FetchApplicantsList(courseId, courseName,x){
+                                    x.dismiss()
+                                }
                             }
 
                             //-------------------------Check teacherToken & courseToken ends here--------------------------------
@@ -294,7 +302,7 @@ class Dashboard_activity : AppCompatActivity() {
 
     }
 
-    private fun FetchApplicantsList(courseId: String, courseName: String) {
+    private fun FetchApplicantsList(courseId: String, courseName: String, x: AlertDialog,callback:(String)->Unit) {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
 
         val params = mapOf(
@@ -337,7 +345,7 @@ class Dashboard_activity : AppCompatActivity() {
 
                     }
                 }
-
+                callback("DONE")
             }
         })
     }
