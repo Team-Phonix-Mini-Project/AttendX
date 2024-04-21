@@ -168,6 +168,7 @@ class Dashboard_activity : AppCompatActivity() {
             setMessage("Are you sure you want to exit?")
             setPositiveButton("Yes") { dialogInterface: DialogInterface, _: Int ->
                 // If "Yes" is clicked, finish the activity and exit the app
+                finishAffinity()
                 super.onBackPressed()
             }
             setNegativeButton("No") { dialogInterface: DialogInterface, _: Int ->
