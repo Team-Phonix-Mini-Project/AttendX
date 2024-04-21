@@ -1,10 +1,12 @@
 package com.miniproject.attendx.attendance
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -114,6 +116,11 @@ class RecordingAttendance : AppCompatActivity() {
         }
 
 
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressedDispatcher
 
     }
 

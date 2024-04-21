@@ -1,5 +1,6 @@
 package com.miniproject.attendx.Dashboard
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
@@ -155,6 +156,29 @@ class Dashboard_activity : AppCompatActivity() {
         //--------------------Animation---------------------------
 
 
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressedDispatcher
+        // Build the alert dialog
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.apply {
+            setTitle("Exit App")
+            setMessage("Are you sure you want to exit?")
+            setPositiveButton("Yes") { dialogInterface: DialogInterface, _: Int ->
+                // If "Yes" is clicked, finish the activity and exit the app
+                super.onBackPressed()
+            }
+            setNegativeButton("No") { dialogInterface: DialogInterface, _: Int ->
+                // If "No" is clicked, dismiss the dialog and do nothing
+                dialogInterface.dismiss()
+            }
+        }
+
+        // Show the alert dialog
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
     }
 
 
@@ -532,10 +556,9 @@ class Dashboard_activity : AppCompatActivity() {
         val screenHeight = resources.displayMetrics.heightPixels.toFloat()
 
         // Hide the navigation pane with animation
-        binding.navigationPane.animate().translationY(screenHeight).setDuration(500)
-            .withEndAction {
-                binding.navigationPane.visibility = View.GONE
-            }.start()
+        binding.navigationPane.animate().translationY(screenHeight).setDuration(500).withEndAction {
+            binding.navigationPane.visibility = View.GONE
+        }.start()
 
         // Fade out animation for the overlay
         binding.overlay.animate().alpha(0f).setDuration(500).withEndAction {

@@ -44,5 +44,12 @@ class SubmitAttendanceActivity : AppCompatActivity() {
                 }.show()
 
         }
+
+
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressedDispatcher
+
     }
 }
