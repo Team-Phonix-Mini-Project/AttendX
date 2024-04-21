@@ -31,10 +31,6 @@
             android:exported="false" />
 
         <activity
-            android:name=".attendance.AttendanceTakingActivity"
-            android:exported="false"
-            android:parentActivityName=".course_details.activity_course_details" />
-        <activity
             android:name=".course_details.activity_course_details"
             android:exported="false"
             android:parentActivityName=".Dashboard.Dashboard_activity" />

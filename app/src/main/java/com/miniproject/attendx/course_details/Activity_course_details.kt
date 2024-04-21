@@ -59,7 +59,7 @@ class activity_course_details : AppCompatActivity() {
         var name = intent.getStringExtra("Name")
         courseName = name.toString()
         var appl = intent.getStringExtra("User")
-        appl = "Total applicants : " + appl
+        appl = "Total students : " + appl
         binding.courseDetailsCourseName.text = name
         binding.courseDetailsApplicants.text = appl
         binding.courseDetailsTakeAttendance.setOnClickListener {
@@ -86,47 +86,57 @@ class activity_course_details : AppCompatActivity() {
                             AttModID,
                             courseID.toString(),
                             sessionIDForMod
-                        ) { studentID, studentName, noOfUsers ->
+                        ) { studentID, studentName, noOfUsers ,role ->
                             Log.d(
                                 "makeUpdationsInAttendance",
                                 studentName + " " + studentID + " " + noOfUsers
                             )
-                            getStatusID(
-                                studentID,
-                                sessionIDForMod,
-                                courseID.toString(),
-                                studentName
-                            ) { statusIdPresent, statusset, takenByid ->
-                                Log.d(
-                                    "getStatusID",
-                                    "statusid:$statusIdPresent studID:$studentID studName:$studentName"
-                                )
-                                val obj = MarkingAttDataObj(
-                                    courseID.toString(),
-                                    AttModID,
-                                    sessionID,
-                                    studentName,
-                                    studentID,
-                                    statusIdPresent
-                                )
-                                dataArray.add(obj)
-                                Log.d("MarkingAttDataObj", obj.toString())
-                                Log.d("noOfUsers", noOfUsers + "=" + dataArray.size)
-                                if (noOfUsers.toString() == dataArray.size.toString()) {
-                                    Log.d("noOfUsers", "If condition satisfied")
-                                    x.dismiss()
-                                    runOnUiThread {
-                                        var intent = Intent(
-                                            this,
-                                            RecordingAttendance::class.java
-                                        )
-                                        intent.putExtra("data", dataArray)
-                                        intent.putExtra("coursename", courseName)
-                                        startActivity(intent)
+                            if(role=="admin" || role=="teacher_se" || role=="teacher_cn" ||role=="teacher_ps"||role=="teacherjava"||role=="teachertoc" ||role=="teacherps")
+                            {
 
+                            }
+                            else
+                            {
+                                getStatusID(
+                                    studentID,
+                                    sessionIDForMod,
+                                    courseID.toString(),
+                                    studentName
+                                ) { statusIdPresent, statusset, takenByid ->
+                                    Log.d(
+                                        "getStatusID",
+                                        "statusid:$statusIdPresent studID:$studentID studName:$studentName"
+                                    )
+                                    val obj = MarkingAttDataObj(
+                                        courseID.toString(),
+                                        AttModID,
+                                        sessionID,
+                                        studentName,
+                                        studentID,
+                                        statusIdPresent
+                                    )
+                                    dataArray.add(obj)
+                                    Log.d("MarkingAttDataObj", obj.toString())
+                                    Log.d("noOfUsers", noOfUsers + "=" + dataArray.size)
+                                    if (noOfUsers.toString() == dataArray.size.toString()) {
+                                        Log.d("noOfUsers", "If condition satisfied")
+                                        x.dismiss()
+                                        runOnUiThread {
+                                            var intent = Intent(
+                                                this,
+                                                RecordingAttendance::class.java
+                                            )
+                                            dataArray.sortBy { it.studentName.split(" ").first() }
+                                            Log.d("studentName__",dataArray.toString())
+                                            intent.putExtra("data", dataArray)
+                                            intent.putExtra("coursename", courseName)
+                                            startActivity(intent)
+
+                                        }
                                     }
                                 }
                             }
+
                         }
                     }
 
@@ -248,7 +258,7 @@ class activity_course_details : AppCompatActivity() {
         attendanceID: String,
         courseID: String,
         sessionID: String,
-        callback: (String, String, String) -> Unit
+        callback: (String, String, String,String) -> Unit
     ) {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
 
@@ -276,13 +286,14 @@ class activity_course_details : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val users = JSONArray(responseBody)
-                    val noOfUsers = users.length().toString()
+                    val noOfUsers = (users.length()-2).toString()
                     var i = 0
                     while (i < users.length()) {
                         val user = users.getJSONObject(i)
                         val studentID = user.getString("id")
+                        val role=user.getString("username")
                         val studentName = user.getString("fullname")
-                        callback(studentID, studentName, noOfUsers.toString())
+                        callback(studentID, studentName, noOfUsers.toString(),role)
                         i++
                     }
                 }
@@ -334,4 +345,6 @@ class activity_course_details : AppCompatActivity() {
             }
         })
     }
+
+
 }
