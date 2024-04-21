@@ -14,7 +14,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/card_veiw_liglt_color"
+        android:backgroundTint="@color/card_view_color"
+        app:cardCornerRadius="7dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -38,8 +39,8 @@
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
                 android:layout_marginEnd="10dp"
                 android:backgroundTint="@color/white"
                 android:text="Check" />

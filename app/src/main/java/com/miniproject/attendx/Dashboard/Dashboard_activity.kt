@@ -149,10 +149,10 @@ class Dashboard_activity : AppCompatActivity() {
 
 
         // show only auth courses
-        //------------------Auth starts here-----------------------
+        //------------------Animation-----------------------
 
 
-        //--------------------Auth ends here---------------------------
+        //--------------------Animation---------------------------
 
 
     }

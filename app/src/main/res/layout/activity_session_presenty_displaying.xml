@@ -39,6 +39,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.appcompat.widget.Toolbar>
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:background="@color/text_in_button"
         android:layout_width="match_parent"

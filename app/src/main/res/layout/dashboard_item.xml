@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="160dp"
     android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp"
     android:layout_marginTop="12dp"
+    android:layout_marginEnd="16dp"
     app:cardBackgroundColor="@color/card_view_color"
     app:cardCornerRadius="16dp"
     app:cardElevation="80dp"
@@ -15,9 +15,9 @@
 
 
     <RelativeLayout
-        android:layout_marginTop="28dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="28dp">
 
         <TextView
             android:id="@+id/text_view_dashboard_card_userName"
@@ -47,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
                 android:hint="Total Applicants: 69"
-                android:textColor="@color/white"
                 android:padding="6dp"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
 
@@ -58,15 +58,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:padding="10dp"
-            android:layout_margin="10dp"
             android:layout_alignParentBottom="true"
-            android:src="@drawable/icons8_arrow_right_100"/>
-
+            android:layout_margin="10dp"
+            android:padding="10dp"
+            android:src="@drawable/icons8_arrow_right_100" />
 
     </RelativeLayout>
 
-
 </androidx.cardview.widget.CardView>
+
+
+
+
 
 

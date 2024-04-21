@@ -20,6 +20,7 @@ import java.io.IOException
 
 class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataObj>) :
     RecyclerView.Adapter<submit_attendance_recycleView_adapter.ViewHolder>() {
+    var checkerList = arrayListOf<String>()
 
     override fun getItemCount(): Int {
         return arrayData.size
@@ -28,9 +29,7 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ActivitySubmitAttendanceItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
+                LayoutInflater.from(parent.context), parent, false
             )
         )
     }
@@ -46,45 +45,67 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
             binding.submitAttendanceItemStatus.text = markedDataObj.presentOrAbsent
             updateStatusColor(binding)
             binding.submitAttenanceItemChangeStatusButton.setOnClickListener {
-                MaterialAlertDialogBuilder(context)
-                    .setTitle("Change attendance status for ${markedDataObj.studentName}")
-                    .setPositiveButton("YES") { _, _ ->
-                        if (markedDataObj.presentOrAbsent == "PRESENT") {
-                            markAttendance(
-                                (markedDataObj.statusID.toInt() + 1).toString(),
-                                markedDataObj.studentID,
-                                1,
-                                markedDataObj.studentID,
-                                markedDataObj.sessionID
-                            )
-                            binding.submitAttendanceItemStatus.text = "ABSENT"
-                            binding.submitAttendanceItemStatus.setTextColor(
-                                ContextCompat.getColor(
-                                    binding.root.context,
-                                    R.color.absent_color
+                if (!checkerList.contains(markedDataObj.studentName)) {
+                    Log.d(
+                        "checkerList",
+                        checkerList.contains(markedDataObj.studentName)
+                            .toString() + "!!contains " + markedDataObj.studentName
+                    )
+                    MaterialAlertDialogBuilder(context).setTitle("Change attendance status for ${markedDataObj.studentName}")
+                        .setPositiveButton("YES") { _, _ ->
+                            if (markedDataObj.presentOrAbsent == "PRESENT") {
+                                markAttendance(
+                                    (markedDataObj.statusID.toInt() + 1).toString(),
+                                    markedDataObj.studentID,
+                                    1,
+                                    markedDataObj.studentID,
+                                    markedDataObj.sessionID
                                 )
-                            )
-                        } else {
-                            markAttendance(
-                                (markedDataObj.statusID.toInt() - 1).toString(),
-                                markedDataObj.studentID,
-                                1,
-                                markedDataObj.studentID,
-                                markedDataObj.sessionID
-                            )
-                            binding.submitAttendanceItemStatus.text = "PRESENT"
-                            binding.submitAttendanceItemStatus.setTextColor(
-                                ContextCompat.getColor(
-                                    binding.root.context,
-                                    R.color.present_color
+                                checkerList.add(markedDataObj.studentName)
+                                binding.submitAttendanceItemStatus.text = "ABSENT"
+                                markedDataObj.apply {
+                                    presentOrAbsent = "ABSENT"
+                                }
+                                arrayData[adapterPosition] = markedDataObj
+                                binding.submitAttendanceItemStatus.setTextColor(
+                                    ContextCompat.getColor(
+                                        binding.root.context, R.color.absent_color
+                                    )
                                 )
-                            )
-                        }
-                    }
-                    .setNegativeButton("CANCEL") { _, _ ->
+                            } else {
+                                markAttendance(
+                                    (markedDataObj.statusID.toInt() - 1).toString(),
+                                    markedDataObj.studentID,
+                                    1,
+                                    markedDataObj.studentID,
+                                    markedDataObj.sessionID
+                                )
+                                binding.submitAttendanceItemStatus.text = "PRESENT"
+                                markedDataObj.apply {
+                                    presentOrAbsent = "PRESENT"
+                                }
+                                arrayData[adapterPosition] = markedDataObj
+                                binding.submitAttendanceItemStatus.setTextColor(
+                                    ContextCompat.getColor(
+                                        binding.root.context, R.color.present_color
+                                    )
+                                )
+                            }
+                        }.setNegativeButton("CANCEL") { _, _ ->
 
-                    }
-                    .show()
+                        }.show()
+                } else if (checkerList.contains(markedDataObj.studentName)) {
+                    Log.d(
+                        "checkerList",
+                        checkerList.contains(markedDataObj.studentName)
+                            .toString() + "==contains " + markedDataObj.studentName
+                    )
+                    MaterialAlertDialogBuilder(context).setTitle("Already changed")
+                        .setPositiveButton("OK", { _, _ ->
+
+                        }).show()
+                }
+
 
             }
         }
@@ -114,10 +135,7 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
             params.forEach { (key, value) ->
                 formBody.add(key, value)
             }
-            val request = Request.Builder()
-                .url(url)
-                .post(formBody.build())
-                .build()
+            val request = Request.Builder().url(url).post(formBody.build()).build()
 
             try {
                 val response = OkHttpClient().newCall(request).execute()
@@ -134,15 +152,13 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
         if (binding.submitAttendanceItemStatus.text == "PRESENT") {
             binding.submitAttendanceItemStatus.setTextColor(
                 ContextCompat.getColor(
-                    binding.root.context,
-                    R.color.present_color
+                    binding.root.context, R.color.present_color
                 )
             )
         } else {
             binding.submitAttendanceItemStatus.setTextColor(
                 ContextCompat.getColor(
-                    binding.root.context,
-                    R.color.absent_color
+                    binding.root.context, R.color.absent_color
                 )
             )
         }
