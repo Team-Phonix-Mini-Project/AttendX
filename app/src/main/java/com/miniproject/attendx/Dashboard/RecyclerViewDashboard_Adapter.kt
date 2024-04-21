@@ -38,7 +38,7 @@ class RecyclerViewDashboard_Adapter(
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(s: objDashboard, context: Context) {
             binding.textViewDashboardCardUserName.text = s.name;
-            binding.textViewDashboardCardApplicantsNumber.text = "Total Applicants : ${s.applicant}"
+            binding.textViewDashboardCardApplicantsNumber.text = "Total students : ${s.applicant}"
             var i = 0
             while (i < mapData.size) {
                 Log.d("MAP_DATA", mapData.toString())

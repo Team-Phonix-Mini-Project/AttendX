@@ -321,7 +321,7 @@ class Dashboard_activity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val users = JSONArray(responseBody)
-                    var applicant = users.length()
+                    var applicant = users.length()-2
                     data.add(
                         objDashboard(
                             courseName,
