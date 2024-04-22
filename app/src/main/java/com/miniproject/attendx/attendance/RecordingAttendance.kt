@@ -30,13 +30,16 @@ class RecordingAttendance : AppCompatActivity() {
     var dataMarkedArray = arrayListOf<markedDataObj>()
     lateinit var courseName: String
 
+    lateinit var courseID: String
+    lateinit var noOfUsers: String
+
 
     // Audio
     private var mediaPlayerAbsent: MediaPlayer? = null
     private var mediaPlayerPresent: MediaPlayer? = null
+
     // vibrator
     private lateinit var vibrator: Vibrator
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +68,8 @@ class RecordingAttendance : AppCompatActivity() {
         binding.recordingAttendanceToolbarTextview.text =
             "Recording Attendance for " + intent.getStringExtra("coursename")
         courseName = intent.getStringExtra("coursename").toString()
+        courseID = intent.getStringExtra("courseid").toString()
+        noOfUsers = intent.getStringExtra("user").toString()
         binding.attendanceTakingGoToMainBtn.visibility = View.GONE
         var i = 0
         binding.recordingAttendanceStudentName.text = dataArray[0].studentName
@@ -142,6 +147,8 @@ class RecordingAttendance : AppCompatActivity() {
             var intentX = Intent(this, SubmitAttendanceActivity::class.java)
             intentX.putExtra("report", dataMarkedArray)
             intentX.putExtra("coursename", courseName)
+            intentX.putExtra("courseid", courseID)
+            intentX.putExtra("user", noOfUsers)
             startActivity(intentX)
             vibrate(100)
         }
@@ -164,7 +171,12 @@ class RecordingAttendance : AppCompatActivity() {
         if (vibrator.hasVibrator()) {
             // Vibrate with the specified duration
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
+                vibrator.vibrate(
+                    VibrationEffect.createOneShot(
+                        duration,
+                        VibrationEffect.DEFAULT_AMPLITUDE
+                    )
+                )
             } else {
                 vibrator.vibrate(duration)
             }

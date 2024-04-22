@@ -11,14 +11,18 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.miniproject.attendx.Dashboard.Dashboard_activity
 import com.miniproject.attendx.R
 import com.miniproject.attendx.attendance.markedDataObj
+import com.miniproject.attendx.course_details.activity_course_details
 import com.miniproject.attendx.databinding.ActivitySubmitAttendanceBinding
 
 class SubmitAttendanceActivity : AppCompatActivity() {
     lateinit var binding: ActivitySubmitAttendanceBinding
     var data = arrayListOf<markedDataObj>()
+
+    lateinit var courseId: String
+    lateinit var noOfUsers: String
+    lateinit var courseName: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,6 +40,11 @@ class SubmitAttendanceActivity : AppCompatActivity() {
         data = intent.getSerializableExtra("report") as ArrayList<markedDataObj>
         binding.submitAttendanceToolbarTextview.text =
             "Attendance report for " + intent.getStringExtra("coursename")
+
+        courseName = intent.getStringExtra("coursename").toString()
+        courseId = intent.getStringExtra("courseid").toString()
+        noOfUsers = intent.getStringExtra("user").toString()
+
         binding.submitAttendanceRecyclerView.adapter = submit_attendance_recycleView_adapter(data)
         binding.submitAttendanceButton.setOnClickListener {
             MaterialAlertDialogBuilder(this).setTitle("Are you sure you want to submit the attendance?")
@@ -58,12 +67,20 @@ class SubmitAttendanceActivity : AppCompatActivity() {
                             .show()
 
                         // Navigate to the dashboard activity
-                        val intent = Intent(this, Dashboard_activity::class.java)
+                        var intent = Intent(this, activity_course_details::class.java)
+
+                        intent.putExtra("courseid", courseId)
+                        intent.putExtra("User", noOfUsers)
+                        intent.putExtra("Name", courseName)
                         startActivity(intent)
+
                     }, 2000) // Adjust delay as needed (2 seconds in this example)
 
-//                    var intent = Intent(this, Dashboard_activity::class.java)
+
+//                    var intent = Intent(this, activity_course_details::class.java)
+
 //                    startActivity(intent)
+
                 }.setNegativeButton("CANCEL") { _, _ ->
 
                 }.show()

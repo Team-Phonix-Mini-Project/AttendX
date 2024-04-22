@@ -61,34 +61,52 @@ class session_presenty_displaying_activity : AppCompatActivity() {
 
         FetchSessionPresenty(sessionId) { presentStatusId, absentstatusid ->
             Log.d("jsonAttendanceLogs", jsonAttendanceLogs.toString())
-            for (i in 0 until jsonAttendanceLogs.length()) {
-                var currentStatusID = jsonAttendanceLogs.getJSONObject(i).getString("statusid")
-                var currentStudentId: String
-                lateinit var presentOrAbsent: String
-                if (currentStatusID == absentStatusId) {
-                    presentOrAbsent = "ABSENT"
-                } else {
-                    presentOrAbsent = "PRESENT"
+            if (jsonAttendanceLogs.length() == 0) {
+                Log.d("jsonAttendanceLogs", jsonAttendanceLogs.length().toString())
+                x.dismiss()
+                var emptyList = arrayListOf<data_attendance_report_show_object>(
+                    data_attendance_report_show_object("not", "not")
+                )
+                runOnUiThread {
+                    binding.sessionPresentyDisplayRecyclerView.adapter =
+                        presenty_showing_RecyclerView_adapter(emptyList)
                 }
-                currentStudentId = jsonAttendanceLogs.getJSONObject(i).getString("studentid")
-                getStudentNameFromStudentID(currentStudentId, courseId) { fullname, noOfUser ->
-                    dataStudNameAndStatus.add(
-                        data_attendance_report_show_object(
-                            fullname,
-                            presentOrAbsent
+
+            } else {
+                Log.d("jsonAttendanceLogs", jsonAttendanceLogs.length().toString())
+                for (i in 0 until jsonAttendanceLogs.length()) {
+                    var currentStatusID = jsonAttendanceLogs.getJSONObject(i).getString("statusid")
+                    var currentStudentId: String
+                    lateinit var presentOrAbsent: String
+                    if (currentStatusID == absentStatusId) {
+                        presentOrAbsent = "ABSENT"
+                    } else {
+                        presentOrAbsent = "PRESENT"
+                    }
+                    currentStudentId = jsonAttendanceLogs.getJSONObject(i).getString("studentid")
+                    getStudentNameFromStudentID(currentStudentId, courseId) { fullname, noOfUser ->
+                        dataStudNameAndStatus.add(
+                            data_attendance_report_show_object(
+                                fullname,
+                                presentOrAbsent
+                            )
                         )
-                    )
-                    Log.d("EQUALSORNOT",dataStudNameAndStatus.size.toString()+"!="+noOfUser)
-                    if (dataStudNameAndStatus.size.toString() == noOfUser) {
-                        x.dismiss()
-                        dataStudNameAndStatus.sortBy { it.studentName.split(" ").first() }
-                        runOnUiThread {
-                            binding.sessionPresentyDisplayRecyclerView.adapter =
-                                presenty_showing_RecyclerView_adapter(dataStudNameAndStatus)
+                        Log.d(
+                            "EQUALSORNOT",
+                            dataStudNameAndStatus.size.toString() + "!=" + noOfUser
+                        )
+                        if (dataStudNameAndStatus.size.toString() == noOfUser) {
+                            x.dismiss()
+                            dataStudNameAndStatus.sortBy { it.studentName.split(" ").first() }
+                            runOnUiThread {
+                                binding.sessionPresentyDisplayRecyclerView.adapter =
+                                    presenty_showing_RecyclerView_adapter(dataStudNameAndStatus)
+                            }
                         }
                     }
                 }
             }
+
         }
 
     }
@@ -166,7 +184,7 @@ class session_presenty_displaying_activity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val users = JSONArray(responseBody)
-                    val noOfUser = JSONArray(responseBody).length()-2
+                    val noOfUser = JSONArray(responseBody).length() - 2
                     for (i in 0 until users.length()) {
                         val user = users.getJSONObject(i)
                         if (user.getString("id") == StudentId) {

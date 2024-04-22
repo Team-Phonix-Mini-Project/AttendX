@@ -106,7 +106,6 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
                         }).show()
                 }
 
-
             }
         }
 

@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.miniproject.attendx.Dashboard.Dashboard_activity
 import com.miniproject.attendx.R
 import com.miniproject.attendx.attendance.MarkingAttDataObj
 import com.miniproject.attendx.attendance.RecordingAttendance
@@ -86,17 +87,14 @@ class activity_course_details : AppCompatActivity() {
                             AttModID,
                             courseID.toString(),
                             sessionIDForMod
-                        ) { studentID, studentName, noOfUsers ,role ->
+                        ) { studentID, studentName, noOfUsers, role ->
                             Log.d(
                                 "makeUpdationsInAttendance",
                                 studentName + " " + studentID + " " + noOfUsers
                             )
-                            if(role=="admin" || role=="teacher_se" || role=="teacher_cn" ||role=="teacher_ps"||role=="teacherjava"||role=="teachertoc" ||role=="teacherps")
-                            {
+                            if (role == "admin" || role == "teacher_se" || role == "teacher_cn" || role == "teacher_ps" || role == "teacherjava" || role == "teachertoc" || role == "teacherps") {
 
-                            }
-                            else
-                            {
+                            } else {
                                 getStatusID(
                                     studentID,
                                     sessionIDForMod,
@@ -127,9 +125,12 @@ class activity_course_details : AppCompatActivity() {
                                                 RecordingAttendance::class.java
                                             )
                                             dataArray.sortBy { it.studentName.split(" ").first() }
-                                            Log.d("studentName__",dataArray.toString())
+                                            Log.d("studentName__", dataArray.toString())
                                             intent.putExtra("data", dataArray)
                                             intent.putExtra("coursename", courseName)
+
+                                            intent.putExtra("courseid", courseID)
+                                            intent.putExtra("user", noOfUsers)
                                             startActivity(intent)
 
                                         }
@@ -146,6 +147,15 @@ class activity_course_details : AppCompatActivity() {
         binding.courseDetailsGetAttendanceReport.setOnClickListener {
             onGetAttendanceReportClicked(courseID, name)
         }
+    }
+
+
+    override fun onBackPressed() {
+        super.onBackPressedDispatcher
+
+        val intent = Intent(this, Dashboard_activity::class.java)
+        startActivity(intent)
+
     }
 
 
@@ -258,7 +268,7 @@ class activity_course_details : AppCompatActivity() {
         attendanceID: String,
         courseID: String,
         sessionID: String,
-        callback: (String, String, String,String) -> Unit
+        callback: (String, String, String, String) -> Unit
     ) {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
 
@@ -286,14 +296,14 @@ class activity_course_details : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val users = JSONArray(responseBody)
-                    val noOfUsers = (users.length()-2).toString()
+                    val noOfUsers = (users.length() - 2).toString()
                     var i = 0
                     while (i < users.length()) {
                         val user = users.getJSONObject(i)
                         val studentID = user.getString("id")
-                        val role=user.getString("username")
+                        val role = user.getString("username")
                         val studentName = user.getString("fullname")
-                        callback(studentID, studentName, noOfUsers.toString(),role)
+                        callback(studentID, studentName, noOfUsers.toString(), role)
                         i++
                     }
                 }
