@@ -1,12 +1,14 @@
 package com.miniproject.attendx.attendance
 
-import android.content.DialogInterface
+import android.content.Context
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -27,6 +29,16 @@ class RecordingAttendance : AppCompatActivity() {
     var dataArray = arrayListOf<MarkingAttDataObj>()
     var dataMarkedArray = arrayListOf<markedDataObj>()
     lateinit var courseName: String
+
+
+    // Audio
+    private var mediaPlayerAbsent: MediaPlayer? = null
+    private var mediaPlayerPresent: MediaPlayer? = null
+    // vibrator
+    private lateinit var vibrator: Vibrator
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecordingAttendanceBinding.inflate(layoutInflater)
@@ -37,6 +49,14 @@ class RecordingAttendance : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        // Audio for buttons
+        mediaPlayerAbsent = MediaPlayer.create(this, R.raw.absent)
+        mediaPlayerPresent = MediaPlayer.create(this, R.raw.present)
+
+        // Vibrator
+        // Initialize Vibrator
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         // Status bar color
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
@@ -50,6 +70,11 @@ class RecordingAttendance : AppCompatActivity() {
         binding.recordingAttendanceStudentName.text = dataArray[0].studentName
 
         binding.attendanceTakingPresentBtn.setOnClickListener {
+
+            // Audio feature
+//            mediaPlayerPresent?.start()
+            vibrate(50)
+
             if (binding.recordingAttendanceStudentName.text != "Attendance completed") {
                 markAttendance(
                     dataArray[i].statusID,
@@ -79,6 +104,11 @@ class RecordingAttendance : AppCompatActivity() {
         }
 
         binding.attendanceTakingAbsentBtn.setOnClickListener {
+
+            // Audio feature
+//            mediaPlayerAbsent?.start()
+            vibrate(50)
+
             if (binding.recordingAttendanceStudentName.text != "Attendance completed") {
                 markAttendance(
                     ((dataArray[i].statusID).toInt() + 1).toString(),
@@ -113,10 +143,32 @@ class RecordingAttendance : AppCompatActivity() {
             intentX.putExtra("report", dataMarkedArray)
             intentX.putExtra("coursename", courseName)
             startActivity(intentX)
+            vibrate(100)
         }
 
 
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // Release the MediaPlayer resources when the activity is destroyed
+        mediaPlayerPresent?.release()
+        mediaPlayerPresent = null
+        mediaPlayerAbsent?.release()
+        mediaPlayerAbsent = null
+    }
+
+    // vibrator
+    private fun vibrate(duration: Long) {
+        // Check if the device has a vibrator
+        if (vibrator.hasVibrator()) {
+            // Vibrate with the specified duration
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
+            } else {
+                vibrator.vibrate(duration)
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -168,8 +220,8 @@ class RecordingAttendance : AppCompatActivity() {
         Log.d("VisibilityCheck", "Text: ${binding.recordingAttendanceStudentName.text}")
         if (binding.recordingAttendanceStudentName.text == "Attendance completed") {
             binding.attendanceTakingGoToMainBtn.visibility = View.VISIBLE
-            binding.attendanceTakingPresentBtn.visibility=View.GONE
-            binding.attendanceTakingAbsentBtn.visibility=View.GONE
+            binding.attendanceTakingPresentBtn.visibility = View.GONE
+            binding.attendanceTakingAbsentBtn.visibility = View.GONE
         }
     }
 

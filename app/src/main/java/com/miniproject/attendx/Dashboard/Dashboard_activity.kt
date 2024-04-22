@@ -1,10 +1,13 @@
 package com.miniproject.attendx.Dashboard
 
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Rect
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -72,6 +75,8 @@ class Dashboard_activity : AppCompatActivity() {
 //    lateinit var courseName: String
 //    lateinit var TOKEN: String
 
+    private lateinit var vibrator: Vibrator
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +85,10 @@ class Dashboard_activity : AppCompatActivity() {
 
         // status bar color here
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
+
+        // Vibrator
+        // Initialize Vibrator
+        vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         // Heere is the Firebase code
         auth = FirebaseAuth.getInstance()
@@ -98,6 +107,7 @@ class Dashboard_activity : AppCompatActivity() {
 //         Add click listener to logout button
         binding.logoutButton.setOnClickListener {
             showLogoutDialog()
+            vibrate(50)
         }
 
         // Important
@@ -130,11 +140,13 @@ class Dashboard_activity : AppCompatActivity() {
         setupNavigationPane()
         binding.drawerIconId.setOnClickListener {
             openNavigationPane()
+            vibrate(50)
         }
         binding.overlay.setOnClickListener {
             closeNavigationPane()
         }
         binding.buttonAboutUs.setOnClickListener {
+            vibrate(50)
             val builder = AlertDialog.Builder(this)
 
 
@@ -164,6 +176,22 @@ class Dashboard_activity : AppCompatActivity() {
 
     }
 
+    private fun vibrate(duration: Long) {
+        // Check if the device has a vibrator
+        if (vibrator.hasVibrator()) {
+            // Vibrate with the specified duration
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                vibrator.vibrate(
+                    VibrationEffect.createOneShot(
+                        duration,
+                        VibrationEffect.DEFAULT_AMPLITUDE
+                    )
+                )
+            } else {
+                vibrator.vibrate(duration)
+            }
+        }
+    }
 
     override fun onBackPressed() {
         super.onBackPressedDispatcher
@@ -286,7 +314,7 @@ class Dashboard_activity : AppCompatActivity() {
 
                             val isMatching = compareTokens(currentTOKEN, courseName)
                             if (isMatching) {
-                                FetchApplicantsList(courseId, courseName,x){
+                                FetchApplicantsList(courseId, courseName, x) {
                                     x.dismiss()
                                 }
                             }
@@ -302,7 +330,12 @@ class Dashboard_activity : AppCompatActivity() {
 
     }
 
-    private fun FetchApplicantsList(courseId: String, courseName: String, x: AlertDialog,callback:(String)->Unit) {
+    private fun FetchApplicantsList(
+        courseId: String,
+        courseName: String,
+        x: AlertDialog,
+        callback: (String) -> Unit
+    ) {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
 
         val params = mapOf(
@@ -329,7 +362,7 @@ class Dashboard_activity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val users = JSONArray(responseBody)
-                    var applicant = users.length()-2
+                    var applicant = users.length() - 2
                     data.add(
                         objDashboard(
                             courseName,

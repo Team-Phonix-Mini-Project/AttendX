@@ -79,39 +79,7 @@
                 android:textSize="25sp"
                 tools:hint="Name of Student" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/attendance_taking_present_btn"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
-                    android:backgroundTint="@color/present_color"
-                    android:padding="14dp"
-                    android:text="PRESENT"
-                    android:textColor="@color/activity_background_ember"
-                    android:textSize="16sp" />
-
-                <Button
-                    android:id="@+id/attendance_taking_absent_btn"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="40dp"
-                    android:backgroundTint="@color/absent_color"
-                    android:padding="14dp"
-                    android:text="ABSENT"
-                    android:textColor="@color/activity_background_ember"
-                    android:textSize="16sp" />
-
-
-            </RelativeLayout>
 
 
         </LinearLayout>
@@ -133,6 +101,43 @@
         android:text="GET REPORT"
         android:textColor="@color/text_in_button"
         android:textSize="16sp" />
+
+
+    <RelativeLayout
+        android:layout_below="@+id/recording_attendance_card_container"
+        android:layout_width="match_parent"
+        android:layout_marginTop="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/attendance_taking_present_btn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:backgroundTint="@color/present_color"
+            android:padding="14dp"
+            android:text="PRESENT"
+            android:textColor="@color/activity_background_ember"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/attendance_taking_absent_btn"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="50dp"
+            android:backgroundTint="@color/absent_color"
+            android:padding="14dp"
+            android:text="ABSENT"
+            android:textColor="@color/activity_background_ember"
+            android:textSize="16sp" />
+
+
+    </RelativeLayout>
 
 
 
