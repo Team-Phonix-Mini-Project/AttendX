@@ -47,7 +47,7 @@ class presenty_showing_RecyclerView_adapter(var data: ArrayList<data_attendance_
             binding.presentyShowingPresentyStatus.setTextColor(
                 ContextCompat.getColor(
                     binding.root.context,
-                    R.color.green
+                    R.color.present_color
                 )
             )
         } else {

@@ -7,8 +7,6 @@ import android.text.style.AbsoluteSizeSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -18,7 +16,6 @@ import com.miniproject.attendx.databinding.ActivitySubmitAttendanceItemBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import okhttp3.Callback
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -60,7 +57,8 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
                     )
                     MaterialAlertDialogBuilder(context).setTitle("Change attendance status for ${markedDataObj.studentName}")
                         .setPositiveButton("YES") { _, _ ->
-                            val message = SpannableString(                            "Updating status for ${markedDataObj.studentName}"
+                            val message = SpannableString(
+                                "Updating status for ${markedDataObj.studentName}"
                             ).apply {
                                 setSpan(
                                     AbsoluteSizeSpan(18, true), // Set the text size here (18 is the size in pixels)

@@ -38,9 +38,9 @@ class activity_course_details : AppCompatActivity() {
     lateinit var courseName: String
     lateinit var sessionID: String
     lateinit var courseID: String
+    lateinit var attID: String
     var dataArray = arrayListOf<MarkingAttDataObj>()
     var TakeAttendanceClicked = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCourseDetailsBinding.inflate(layoutInflater)
@@ -81,6 +81,7 @@ class activity_course_details : AppCompatActivity() {
                     .setView(bindingx.root)
                     .show()
                 fetchAttendanceModuleID(courseID.toString()) { AttModID ->
+                    attID = AttModID
                     createSessionForAttendance(AttModID, courseID.toString()) { sessionIDForMod ->
                         sessionID = sessionIDForMod
                         makeUpdationsInAttendance(
@@ -88,10 +89,6 @@ class activity_course_details : AppCompatActivity() {
                             courseID.toString(),
                             sessionIDForMod
                         ) { studentID, studentName, noOfUsers, role ->
-                            Log.d(
-                                "makeUpdationsInAttendance",
-                                studentName + " " + studentID + " " + noOfUsers
-                            )
                             if (role == "admin" || role == "teacher_se" || role == "teacher_cn" || role == "teacher_ps" || role == "teacherjava" || role == "teachertoc" || role == "teacherps") {
 
                             } else {
@@ -100,39 +97,43 @@ class activity_course_details : AppCompatActivity() {
                                     sessionIDForMod,
                                     courseID.toString(),
                                     studentName
-                                ) { statusIdPresent, statusset, takenByid ->
-                                    Log.d(
-                                        "getStatusID",
-                                        "statusid:$statusIdPresent studID:$studentID studName:$studentName"
-                                    )
-                                    val obj = MarkingAttDataObj(
-                                        courseID.toString(),
-                                        AttModID,
-                                        sessionID,
-                                        studentName,
+                                ) { statusIdPresent, statusset, takenByid, studentID ->
+                                    getLastFiveSessionsStatusList(
                                         studentID,
+                                        attID,
                                         statusIdPresent
-                                    )
-                                    dataArray.add(obj)
-                                    Log.d("MarkingAttDataObj", obj.toString())
-                                    Log.d("noOfUsers", noOfUsers + "=" + dataArray.size)
-                                    if (noOfUsers.toString() == dataArray.size.toString()) {
-                                        Log.d("noOfUsers", "If condition satisfied")
-                                        x.dismiss()
-                                        runOnUiThread {
-                                            var intent = Intent(
-                                                this,
-                                                RecordingAttendance::class.java
-                                            )
-                                            dataArray.sortBy { it.studentName.split(" ").first() }
-                                            Log.d("studentName__", dataArray.toString())
-                                            intent.putExtra("data", dataArray)
-                                            intent.putExtra("coursename", courseName)
-
-                                            intent.putExtra("courseid", courseID)
-                                            intent.putExtra("user", noOfUsers)
-                                            startActivity(intent)
-
+                                    ) { Temp_array ->
+                                        val obj = MarkingAttDataObj(
+                                            courseID.toString(),
+                                            AttModID,
+                                            sessionID,
+                                            studentName,
+                                            studentID,
+                                            statusIdPresent,
+                                            Temp_array
+                                        )
+                                        dataArray.add(obj)
+                                        Log.d("MarkingAttDataObj", obj.toString())
+                                        Log.d("noOfUsers", noOfUsers + "=" + dataArray.size)
+                                        if (noOfUsers.toString() == dataArray.size.toString()) {
+                                            Log.d("noOfUsers", "If condition satisfied")
+                                            x.dismiss()
+                                            runOnUiThread {
+                                                var intent = Intent(
+                                                    this,
+                                                    RecordingAttendance::class.java
+                                                )
+                                                dataArray.sortBy {
+                                                    it.studentName.split(" ").first()
+                                                }
+                                                Log.d("studentName__", dataArray.toString())
+                                                intent.putExtra("data", dataArray)
+                                                intent.putExtra("coursename", courseName)
+                                                intent.putExtra("prev_five", Temp_array)
+                                                intent.putExtra("courseid", courseID)
+                                                intent.putExtra("user", noOfUsers)
+                                                startActivity(intent)
+                                            }
                                         }
                                     }
                                 }
@@ -317,7 +318,7 @@ class activity_course_details : AppCompatActivity() {
         sessionID: String,
         courseID: String,
         studentName: String,
-        callback: (String, String, String) -> Unit
+        callback: (String, String, String, String) -> Unit
     ) {
         val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
 
@@ -350,9 +351,75 @@ class activity_course_details : AppCompatActivity() {
                     var statusIdPresent = x.getString("id")
                     var statusset = "1";
                     var takenByid = studentID;
-                    callback(statusIdPresent, statusset, takenByid)
+                    callback(statusIdPresent, statusset, takenByid, studentID)
                 }
             }
+        })
+    }
+
+    private fun getLastFiveSessionsStatusList(
+        studentID: String,
+        attendanceID: String,
+        statusID: String,
+        callback: (ArrayList<String>) -> Unit
+    ) {
+        val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
+        val params = mapOf(
+            "wstoken" to "cd8c3e7ed7bf515ad9a3fec7f7f8e8ef",
+            "wsfunction" to "mod_attendance_get_sessions",
+            "moodlewsrestformat" to "json",
+            "attendanceid" to attendanceID
+        )
+        val formBody = FormBody.Builder()
+        for ((key, value) in params) {
+            formBody.add(key, value)
+        }
+        val request = Request.Builder().url(url).post(formBody.build()).build()
+
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                println("Failed to execute request: ${e.message}")
+            }
+
+
+            override fun onResponse(call: Call, response: Response) {
+                response.body?.string()?.let { responseBody ->
+                    var data = JSONArray(responseBody)
+                    var json_array_size = data.length()
+                    var i = 5
+                    if (json_array_size < i) {
+                        i = json_array_size - 1
+                    }
+                    var Temp_array = arrayListOf<String>()
+                    while (i > 0) {
+                        var json_Object = data.getJSONObject((json_array_size - 1) - i)
+                        var statusID_Array = json_Object.getJSONArray("statuses")
+                        var attendance_logs_array = json_Object.getJSONArray("attendance_log")
+                        var statusID_Array_first = statusID_Array.getJSONObject(0)
+                        var statusID_present = statusID_Array_first.getString("id")
+                        var statusID_absent = (statusID_present.toInt() + 1).toString()
+                        if (attendance_logs_array.length() == 0) {
+
+                        } else {
+                            Log.d("fasfsafsafsafsafa", attendance_logs_array.toString())
+                            for (i in 0 until attendance_logs_array.length()) {
+                                var att_logs_object = attendance_logs_array.getJSONObject(i)
+                                if (att_logs_object.getString("studentid") == studentID) {
+                                    if (att_logs_object.getString("statusid") == statusID_present) {
+                                        Temp_array.add("PRESENT")
+                                    } else if (att_logs_object.getString("statusid") == statusID_absent) {
+                                        Temp_array.add("ABSENT")
+                                    }
+                                }
+                            }
+                        }
+                        i--
+                    }
+                    callback(Temp_array)
+                }
+            }
+
         })
     }
 

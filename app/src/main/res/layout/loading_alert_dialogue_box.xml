@@ -3,6 +3,8 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginStart="50dp"
     android:layout_marginEnd="50dp">
 
@@ -10,12 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:padding="30dp"
         android:background="@color/colorPrimary">
 
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_view_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:shimmer_auto_start="true"
+            app:shimmer_base_color="@color/activity_background_ember"
+            app:shimmer_intensity="0.3"
+            app:shimmer_repeat_delay="10"
+            app:shimmer_tilt="45"
             android:layout_centerInParent="true">
 
             <!-- Your view that will shimmer goes here -->
@@ -29,10 +37,10 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="20dp"
                 android:padding="12dp"
-                android:text="Fetching sessions list"
+                android:textSize="24sp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="22sp" />
+                tools:text="Fetching sessions list" />
         </com.facebook.shimmer.ShimmerFrameLayout>
 
 

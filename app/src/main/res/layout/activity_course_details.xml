@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="30sp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="24dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="Course Name"
                 android:padding="0dp"
@@ -39,11 +39,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/course_details_courseName"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="0dp"
+                android:layout_alignStart="@+id/course_details_courseName"
+                android:layout_marginTop="6dp"
                 android:backgroundTint="#FFC885"
-                app:cardCornerRadius="12dp"
-                app:cardUseCompatPadding="true">
+                app:cardCornerRadius="12dp">
 
                 <TextView
                     android:id="@+id/course_details_applicants"
@@ -51,11 +50,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/course_details_courseName"
                     android:fontFamily="sans-serif-light"
-                    android:hint="Number of applicants : 69"
-                    android:padding="4dp"
+                    android:padding="8dp"
                     android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:textColor="#4E4E4E"
+                    android:textSize="20sp"
+                    tools:hint="Total Students: 69" />
 
 
             </androidx.cardview.widget.CardView>

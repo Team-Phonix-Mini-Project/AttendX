@@ -14,4 +14,5 @@
     <color name="absent">#FF3232</color>
     <color name="present_color">#5B9C00</color>
     <color name="absent_color">#C6F13800</color>
+    <color name="pink">#C6FF349D</color>
 </resources>

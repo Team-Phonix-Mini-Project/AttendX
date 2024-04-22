@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="5dp"
+        app:cardCornerRadius="8dp"
+        android:elevation="80dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="5dp"
         android:backgroundTint="@color/card_view_color"
@@ -25,22 +27,34 @@
                 android:id="@+id/presenty_showing_student_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:textSize="20dp"
+                android:layout_marginStart="15dp"
+                android:textSize="20sp"
                 android:textColor="@color/white"
                 android:layout_centerInParent="true"
                 android:layout_alignParentStart="true"
                 tools:text="Pradnyanand Jade" />
 
-            <TextView
-                android:id="@+id/presenty_showing_presenty_status"
-                android:layout_width="wrap_content"
+            <androidx.cardview.widget.CardView
+                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginRight="15dp"
-                android:textSize="17dp"
                 android:layout_alignParentEnd="true"
-                tools:text="PRESENT" />
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/white"
+                app:cardCornerRadius="6dp"
+                android:layout_marginEnd="10dp">
+
+                <TextView
+                    android:id="@+id/presenty_showing_presenty_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"
+                    android:padding="4dp"
+                    tools:text="PRESENT"
+                    tools:textColor="@color/present_color" />
+            </androidx.cardview.widget.CardView>
+
+
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

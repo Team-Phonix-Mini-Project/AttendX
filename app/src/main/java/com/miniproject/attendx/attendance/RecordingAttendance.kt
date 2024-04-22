@@ -76,6 +76,11 @@ class RecordingAttendance : AppCompatActivity() {
         var i = 0
         binding.recordingAttendanceStudentName.text = dataArray[0].studentName
 
+        for (i in 0 until dataArray.size) {
+            Log.d("getSerializableExtra_data", dataArray[i].toString())
+
+        }
+
         binding.attendanceTakingPresentBtn.setOnClickListener {
 
             // Audio feature

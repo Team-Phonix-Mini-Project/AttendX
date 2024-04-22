@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="sans-serif-light"
-                android:hint="Attendance for theory of computation"
+                tools:hint="Recording Attendance for Computer Networks"
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
                 android:textAlignment="center"
@@ -47,69 +47,94 @@
         android:textAlignment="center"
         android:textColor="#AAAAAA" />
 
+    <!--    <androidx.cardview.widget.CardView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="16dp"-->
+    <!--        android:layout_marginEnd="16dp"-->
+    <!--        android:layout_marginBottom="20dp"-->
+    <!--        app:cardCornerRadius="8dp">-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_above="@id/recording_attendance_card_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_above="@id/recording_attendance_card_container">
+        android:padding="8dp">
 
-        <TextView
+        <RelativeLayout
+            android:id="@+id/relativeLayoutPresent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/recording_attendance_present_text"
-            android:text="Present: "
-            android:textColor="@color/present_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:gravity="center"
-            android:textSize="20sp" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/recording_attendance_absent_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/absent"
-            android:text="Absent: "
-            app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
-            android:gravity="center"
-            android:textSize="20sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/recording_attendance_present_text"
-            app:layout_constraintStart_toEndOf="@id/recording_attendance_present_text"
-            tools:text="100"
-            android:id="@+id/recording_attendance_present_number"
-            android:textSize="20dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/recording_attendance_present_text"
-            app:layout_constraintStart_toEndOf="@id/recording_attendance_absent_text"
-            tools:text="100"
-            android:id="@+id/recording_attendance_absent_number"
-            android:textSize="20dp"
-            />
+            <TextView
+                android:id="@+id/recording_attendance_present_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="12dp"
+                android:text="Present: "
+                android:textColor="@color/present_color"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/recording_attendance_present_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/recording_attendance_present_text"
+                android:layout_marginStart="0dp"
+                android:layout_toEndOf="@id/recording_attendance_present_text"
+                android:textSize="20sp"
+                tools:text="100" />
+
+        </RelativeLayout>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            app:layout_constraintGuide_begin="206dp" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutAbsent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/recording_attendance_absent_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="12dp"
+                android:gravity="center"
+                android:text="Absent: "
+                android:textColor="@color/absent"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/recording_attendance_absent_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/recording_attendance_absent_text"
+                android:layout_marginStart="0dp"
+                android:layout_toEndOf="@id/recording_attendance_absent_text"
+                android:textSize="20sp"
+                tools:text="100" />
+
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+    <!--    </androidx.cardview.widget.CardView>-->
 
 
     <androidx.cardview.widget.CardView
@@ -124,7 +149,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="28dp"
             android:orientation="vertical">
 
             <TextView
@@ -132,8 +157,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="36dp"
                 android:fontFamily="sans-serif-light"
                 android:textAlignment="center"
                 android:textColor="@color/black"
@@ -145,6 +170,38 @@
 
 
     </androidx.cardview.widget.CardView>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/recording_attendance_card_container">-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            tools:src="@color/black" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            tools:src="@color/black" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            tools:src="@color/black" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            tools:src="@color/black" />-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="100px"-->
+<!--            android:layout_height="100px"-->
+<!--            tools:src="@color/black" />-->
+
+<!--    </LinearLayout>-->
 
 
     <Button
