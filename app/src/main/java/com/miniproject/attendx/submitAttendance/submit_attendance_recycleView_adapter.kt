@@ -1,9 +1,14 @@
 package com.miniproject.attendx.submitAttendance
 
 import android.content.Context
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.AbsoluteSizeSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -13,12 +18,14 @@ import com.miniproject.attendx.databinding.ActivitySubmitAttendanceItemBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.Callback
 import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
 
-class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataObj>) :
+
+class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataObj>,val listener: TextUpdateListener) :
     RecyclerView.Adapter<submit_attendance_recycleView_adapter.ViewHolder>() {
     var checkerList = arrayListOf<String>()
 
@@ -53,6 +60,20 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
                     )
                     MaterialAlertDialogBuilder(context).setTitle("Change attendance status for ${markedDataObj.studentName}")
                         .setPositiveButton("YES") { _, _ ->
+                            val message = SpannableString(                            "Updating status for ${markedDataObj.studentName}"
+                            ).apply {
+                                setSpan(
+                                    AbsoluteSizeSpan(18, true), // Set the text size here (18 is the size in pixels)
+                                    0,
+                                    "Updating status for ${markedDataObj.studentName}"
+                                        .length,
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                                )
+                            }
+
+                            var x=MaterialAlertDialogBuilder(context)
+                                .setMessage(message)
+                                .show()
                             if (markedDataObj.presentOrAbsent == "PRESENT") {
                                 markAttendance(
                                     (markedDataObj.statusID.toInt() + 1).toString(),
@@ -60,36 +81,44 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
                                     1,
                                     markedDataObj.studentID,
                                     markedDataObj.sessionID
-                                )
-                                checkerList.add(markedDataObj.studentName)
-                                binding.submitAttendanceItemStatus.text = "ABSENT"
-                                markedDataObj.apply {
-                                    presentOrAbsent = "ABSENT"
-                                }
-                                arrayData[adapterPosition] = markedDataObj
-                                binding.submitAttendanceItemStatus.setTextColor(
-                                    ContextCompat.getColor(
-                                        binding.root.context, R.color.absent_color
+                                ){
+                                    x.dismiss()
+                                    checkerList.add(markedDataObj.studentName)
+                                    binding.submitAttendanceItemStatus.text = "ABSENT"
+                                    markedDataObj.apply {
+                                        presentOrAbsent = "ABSENT"
+                                    }
+                                    arrayData[adapterPosition] = markedDataObj
+                                    binding.submitAttendanceItemStatus.setTextColor(
+                                        ContextCompat.getColor(
+                                            binding.root.context, R.color.absent_color
+                                        )
                                     )
-                                )
-                            } else {
+                                    listener.updateText("dec","inc")
+                                }
+                            }
+                            else {
                                 markAttendance(
                                     (markedDataObj.statusID.toInt() - 1).toString(),
                                     markedDataObj.studentID,
                                     1,
                                     markedDataObj.studentID,
                                     markedDataObj.sessionID
-                                )
-                                binding.submitAttendanceItemStatus.text = "PRESENT"
-                                markedDataObj.apply {
-                                    presentOrAbsent = "PRESENT"
-                                }
-                                arrayData[adapterPosition] = markedDataObj
-                                binding.submitAttendanceItemStatus.setTextColor(
-                                    ContextCompat.getColor(
-                                        binding.root.context, R.color.present_color
+                                ){
+                                    x.dismiss()
+                                    binding.submitAttendanceItemStatus.text = "PRESENT"
+                                    markedDataObj.apply {
+                                        presentOrAbsent = "PRESENT"
+                                    }
+                                    arrayData[adapterPosition] = markedDataObj
+                                    binding.submitAttendanceItemStatus.setTextColor(
+                                        ContextCompat.getColor(
+                                            binding.root.context, R.color.present_color
+                                        )
                                     )
-                                )
+                                    listener.updateText("inc","dec")
+                                }
+
                             }
                         }.setNegativeButton("CANCEL") { _, _ ->
 
@@ -117,6 +146,7 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
         statusset: Int,
         takenByid: String,
         sessionID: String
+        ,callback: (String)->Unit
     ) {
         GlobalScope.launch(Dispatchers.IO) {
             val url = "https://attendancex.moodlecloud.com/webservice/rest/server.php"
@@ -144,6 +174,7 @@ class submit_attendance_recycleView_adapter(var arrayData: ArrayList<markedDataO
             } catch (e: IOException) {
                 Log.e("markAttendance", "Network error: ${e.message}")
             }
+            callback("DONE")
         }
     }
 

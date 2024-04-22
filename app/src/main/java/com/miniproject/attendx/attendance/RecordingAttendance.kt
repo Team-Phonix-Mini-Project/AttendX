@@ -29,10 +29,10 @@ class RecordingAttendance : AppCompatActivity() {
     var dataArray = arrayListOf<MarkingAttDataObj>()
     var dataMarkedArray = arrayListOf<markedDataObj>()
     lateinit var courseName: String
-
     lateinit var courseID: String
     lateinit var noOfUsers: String
-
+    var noOfPresentStudents=0
+    var noOfAbsentStudents=0
 
     // Audio
     private var mediaPlayerAbsent: MediaPlayer? = null
@@ -61,6 +61,8 @@ class RecordingAttendance : AppCompatActivity() {
         // Initialize Vibrator
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
+        binding.recordingAttendanceAbsentNumber.text=noOfAbsentStudents.toString()
+        binding.recordingAttendancePresentNumber.text=noOfPresentStudents.toString()
         // Status bar color
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimary)
 
@@ -97,6 +99,8 @@ class RecordingAttendance : AppCompatActivity() {
                     "PRESENT"
                 )
                 dataMarkedArray.add(obj)
+                noOfPresentStudents++
+                updatePresentAbsentNumber()
                 if ((i + 1) < dataArray.size) {
                     binding.recordingAttendanceStudentName.text = dataArray[i + 1].studentName
                 } else {
@@ -131,6 +135,8 @@ class RecordingAttendance : AppCompatActivity() {
                     "ABSENT"
                 )
                 dataMarkedArray.add(obj)
+                noOfAbsentStudents++
+                updatePresentAbsentNumber()
                 if ((i + 1) < dataArray.size) {
                     binding.recordingAttendanceStudentName.text = dataArray[i + 1].studentName
                 } else {
@@ -144,17 +150,27 @@ class RecordingAttendance : AppCompatActivity() {
 
 
         binding.attendanceTakingGoToMainBtn.setOnClickListener {
+            Log.d("noOfPAStudents","A: $noOfAbsentStudents P: $noOfPresentStudents")
             var intentX = Intent(this, SubmitAttendanceActivity::class.java)
             intentX.putExtra("report", dataMarkedArray)
             intentX.putExtra("coursename", courseName)
             intentX.putExtra("courseid", courseID)
             intentX.putExtra("user", noOfUsers)
+            intentX.putExtra("presentnumber",noOfPresentStudents.toString())
+            intentX.putExtra("absentnumber",noOfAbsentStudents.toString())
             startActivity(intentX)
             vibrate(100)
         }
 
 
     }
+
+    fun updatePresentAbsentNumber()
+    {
+        binding.recordingAttendanceAbsentNumber.text=noOfAbsentStudents.toString()
+        binding.recordingAttendancePresentNumber.text=noOfPresentStudents.toString()
+    }
+
 
     override fun onDestroy() {
         super.onDestroy()

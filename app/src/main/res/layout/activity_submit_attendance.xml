@@ -27,30 +27,63 @@
                 android:id="@+id/submit_attendance_toolbar_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="12dp"
                 android:fontFamily="sans-serif-light"
                 android:hint="Attendance for theory of computation"
                 android:textColor="@color/white"
                 android:textSize="28sp" />
 
-            <!--            <Button-->
-            <!--                android:id="@+id/submit_attendance_button"-->
-            <!--                style="@style/Widget.MaterialComponents.Button.TextButton"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_alignParentEnd="true"-->
-            <!--                android:layout_alignParentBottom="true"-->
-            <!--                android:layout_centerHorizontal="true"-->
-            <!--                android:layout_marginEnd="24dp"-->
-            <!--                android:layout_below="@+id/submit_attendance_toolbar_textview"-->
-            <!--                android:layout_marginBottom="8dp"-->
-            <!--                android:backgroundTint="#FFAB5E"-->
-            <!--                android:padding="4dp"-->
-            <!--                android:text="SUBMIT"-->
-            <!--                android:textColor="#FFFFFF"-->
-            <!--                android:textSize="16sp" />-->
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/submit_attendance_toolbar_textview">
+                <TextView
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:id="@+id/submit_attendance_total_present_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:text="Absent :"
+                    android:textColor="@color/red"
+                    android:textSize="22dp"
+                    />
+                <TextView
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/submit_attendance_total_absent_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="100"
+                    app:layout_constraintStart_toEndOf="@id/submit_attendance_total_present_text"
+                    android:textSize="22dp"
+                    />
+                <TextView
+                    android:id="@+id/submit_attendance_total_present_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="100"
+                    app:layout_constraintStart_toEndOf="@id/submit_attendance_total_absent_text"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:textSize="22dp"
+                    />
+                <TextView
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/submit_attendance_total_absent_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="60dp"
+                    android:text="Present :"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/present_color"
+                    android:textSize="22dp"
+                    />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </RelativeLayout>

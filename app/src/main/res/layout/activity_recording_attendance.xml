@@ -47,15 +47,76 @@
         android:textAlignment="center"
         android:textColor="#AAAAAA" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@id/recording_attendance_card_container">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recording_attendance_present_text"
+            android:text="Present: "
+            android:textColor="@color/present_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/recording_attendance_absent_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/absent"
+            android:text="Absent: "
+            app:layout_constraintStart_toEndOf="@id/guideline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:textSize="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/recording_attendance_present_text"
+            app:layout_constraintStart_toEndOf="@id/recording_attendance_present_text"
+            tools:text="100"
+            android:id="@+id/recording_attendance_present_number"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/recording_attendance_present_text"
+            app:layout_constraintStart_toEndOf="@id/recording_attendance_absent_text"
+            tools:text="100"
+            android:id="@+id/recording_attendance_absent_number"
+            android:textSize="20dp"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/recording_attendance_card_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbar_dashboard"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="10dp"
+        android:layout_centerVertical="true"
         android:backgroundTint="@color/white"
         app:cardCornerRadius="5dp"
         app:cardUseCompatPadding="true">
@@ -80,12 +141,11 @@
                 tools:hint="Name of Student" />
 
 
-
-
         </LinearLayout>
 
 
     </androidx.cardview.widget.CardView>
+
 
     <Button
         android:id="@+id/attendance_taking_go_to_main_btn"
@@ -104,11 +164,11 @@
 
 
     <RelativeLayout
-        android:layout_below="@+id/recording_attendance_card_container"
         android:layout_width="match_parent"
-        android:layout_marginTop="200dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/recording_attendance_card_container"
         android:layout_gravity="center"
+        android:layout_marginTop="200dp"
         android:orientation="horizontal">
 
         <Button
@@ -138,8 +198,6 @@
 
 
     </RelativeLayout>
-
-
 
 
 </RelativeLayout>
