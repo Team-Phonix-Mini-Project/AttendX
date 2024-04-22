@@ -78,6 +78,7 @@ class session_presenty_displaying_activity : AppCompatActivity() {
                             presentOrAbsent
                         )
                     )
+                    Log.d("EQUALSORNOT",dataStudNameAndStatus.size.toString()+"!="+noOfUser)
                     if (dataStudNameAndStatus.size.toString() == noOfUser) {
                         x.dismiss()
                         runOnUiThread {
@@ -164,7 +165,7 @@ class session_presenty_displaying_activity : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     val users = JSONArray(responseBody)
-                    val noOfUser = JSONArray(responseBody).length()
+                    val noOfUser = JSONArray(responseBody).length()-2
                     for (i in 0 until users.length()) {
                         val user = users.getJSONObject(i)
                         if (user.getString("id") == StudentId) {
