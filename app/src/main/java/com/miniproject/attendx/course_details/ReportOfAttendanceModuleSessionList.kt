@@ -66,7 +66,7 @@ class ReportOfAttendanceModuleSessionList : AppCompatActivity() {
         FetchSessionsList(attendanceId, attendanceName, courseId, courseName) { sessionList ->
             runOnUiThread {
                 x.dismiss()
-                Toast.makeText(this, sessionList.toString(), Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this, sessionList.toString(), Toast.LENGTH_SHORT).show()
                 if (sessionList.size == 0) {
                     var EmptySessionList = arrayListOf<sessionIdAndNameData_Object>(
                         sessionIdAndNameData_Object(

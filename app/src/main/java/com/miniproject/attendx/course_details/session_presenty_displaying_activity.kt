@@ -81,6 +81,7 @@ class session_presenty_displaying_activity : AppCompatActivity() {
                     Log.d("EQUALSORNOT",dataStudNameAndStatus.size.toString()+"!="+noOfUser)
                     if (dataStudNameAndStatus.size.toString() == noOfUser) {
                         x.dismiss()
+                        dataStudNameAndStatus.sortBy { it.studentName.split(" ").first() }
                         runOnUiThread {
                             binding.sessionPresentyDisplayRecyclerView.adapter =
                                 presenty_showing_RecyclerView_adapter(dataStudNameAndStatus)
