@@ -1,11 +1,20 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.AttendX" parent="Theme.Material3.DayNight.NoActionBar">
+<resources>
+    <!--    &lt;!&ndash; Base application theme. &ndash;&gt;-->
+    <!--    <style name="Base.Theme.AttendX" parent="Theme.Material3.DayNight.NoActionBar">-->
 
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+    <!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--        <item name="colorPrimaryDark">@color/colorPrimary</item>-->
 
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-    </style>
+    <!--        &lt;!&ndash; Customize your dark theme here. &ndash;&gt;-->
+    <!--        &lt;!&ndash; <item name="colorPrimary">@color/my_dark_primary</item> &ndash;&gt;-->
+
+    <!--        &lt;!&ndash; Base application theme. &ndash;&gt;-->
+    <!--        <style name="Base.Theme.AttendX" parent="Theme.Material3.DayNight.NoActionBar">-->
+    <!--            &lt;!&ndash; Customize your light theme here. &ndash;&gt;-->
+    <!--            <item name="colorPrimary">@color/colorPrimary</item>-->
+    <!--            <item name="colorPrimaryDark">@color/colorPrimary</item>-->
+    <!--            &lt;!&ndash; <item name="colorPrimary">@color/my_light_primary</item> &ndash;&gt;-->
+    <!--        </style>-->
+    <!--        -->
+    <!--    </style>-->
 </resources>
