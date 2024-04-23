@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="30dp"
+        android:padding="10dp"
         android:background="@color/colorPrimary">
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -36,7 +36,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_margin="5dp"
                 android:layout_marginTop="20dp"
-                android:padding="12dp"
+                android:padding="10dp"
                 android:textSize="24sp"
                 android:textAlignment="center"
                 android:textColor="@color/white"

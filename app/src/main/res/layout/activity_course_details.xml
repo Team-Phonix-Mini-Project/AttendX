@@ -41,7 +41,7 @@
                 android:layout_below="@id/course_details_courseName"
                 android:layout_alignStart="@+id/course_details_courseName"
                 android:layout_marginTop="6dp"
-                android:backgroundTint="#FFC885"
+                android:backgroundTint="#FFBA56"
                 app:cardCornerRadius="12dp">
 
                 <TextView
@@ -52,7 +52,7 @@
                     android:fontFamily="sans-serif-light"
                     android:padding="8dp"
                     android:textAlignment="center"
-                    android:textColor="#4E4E4E"
+                    android:textColor="#1B1B1B"
                     android:textSize="20sp"
                     tools:hint="Total Students: 69" />
 

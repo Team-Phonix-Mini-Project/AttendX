@@ -149,7 +149,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="28dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginBottom="28dp"
             android:orientation="vertical">
 
             <TextView
@@ -170,6 +171,52 @@
 
 
     </androidx.cardview.widget.CardView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/recording_attendance_card_container"
+        android:layout_marginTop="15dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/recording_attendance_prev_1_status"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginRight="10dp"
+            tools:src="@color/black" />
+
+        <ImageView
+            android:id="@+id/recording_attendance_prev_2_status"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginRight="10dp"
+            tools:src="@color/black" />
+
+        <ImageView
+            android:id="@+id/recording_attendance_prev_3_status"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginRight="10dp"
+            tools:src="@color/black" />
+
+        <ImageView
+            android:id="@+id/recording_attendance_prev_4_status"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginRight="10dp"
+            tools:src="@color/black" />
+
+        <ImageView
+            android:id="@+id/recording_attendance_prev_5_status"
+            android:layout_width="100px"
+            android:layout_height="100px"
+            android:layout_marginRight="10dp"
+            tools:src="@color/black" />
+
+
+    </LinearLayout>
 
 <!--    <LinearLayout-->
 <!--        android:layout_width="match_parent"-->

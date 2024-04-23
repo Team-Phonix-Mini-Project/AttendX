@@ -1,5 +1,6 @@
 package com.miniproject.attendx.attendance
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
@@ -75,18 +76,30 @@ class RecordingAttendance : AppCompatActivity() {
         binding.attendanceTakingGoToMainBtn.visibility = View.GONE
         var i = 0
         binding.recordingAttendanceStudentName.text = dataArray[0].studentName
+        if(dataArray[0].Temp_array[0]=="PRESENT") { binding.recordingAttendancePrev1Status.setImageResource(R.drawable.present_symbol) }
+        else if(dataArray[0].Temp_array[0]=="ABSENT"){ binding.recordingAttendancePrev1Status.setImageResource(R.drawable.absent_symbol) }
+        else if(dataArray[0].Temp_array[0]=="SESSION_EMPTY"){binding.recordingAttendancePrev1Status.setImageResource(R.drawable.null_symbol)}
 
-        for (i in 0 until dataArray.size) {
-            Log.d("getSerializableExtra_data", dataArray[i].toString())
+        if(dataArray[0].Temp_array[1]=="PRESENT") { binding.recordingAttendancePrev2Status.setImageResource(R.drawable.present_symbol) }
+        else if(dataArray[0].Temp_array[1]=="ABSENT"){ binding.recordingAttendancePrev2Status.setImageResource(R.drawable.absent_symbol) }
+        else if(dataArray[0].Temp_array[1]=="SESSION_EMPTY"){binding.recordingAttendancePrev2Status.setImageResource(R.drawable.null_symbol)}
 
-        }
+        if(dataArray[0].Temp_array[2]=="PRESENT") { binding.recordingAttendancePrev3Status.setImageResource(R.drawable.present_symbol) }
+        else if(dataArray[0].Temp_array[2]=="ABSENT"){ binding.recordingAttendancePrev3Status.setImageResource(R.drawable.absent_symbol) }
+        else if(dataArray[0].Temp_array[2]=="SESSION_EMPTY"){binding.recordingAttendancePrev3Status.setImageResource(R.drawable.null_symbol)}
+
+        if(dataArray[0].Temp_array[3]=="PRESENT") { binding.recordingAttendancePrev4Status.setImageResource(R.drawable.present_symbol) }
+        else if(dataArray[0].Temp_array[3]=="ABSENT"){ binding.recordingAttendancePrev4Status.setImageResource(R.drawable.absent_symbol) }
+        else if(dataArray[0].Temp_array[3]=="SESSION_EMPTY"){binding.recordingAttendancePrev4Status.setImageResource(R.drawable.null_symbol)}
+
+        if(dataArray[0].Temp_array[4]=="PRESENT") { binding.recordingAttendancePrev5Status.setImageResource(R.drawable.present_symbol) }
+        else if(dataArray[0].Temp_array[4]=="ABSENT"){ binding.recordingAttendancePrev5Status.setImageResource(R.drawable.absent_symbol) }
+        else if(dataArray[0].Temp_array[4]=="SESSION_EMPTY"){binding.recordingAttendancePrev5Status.setImageResource(R.drawable.null_symbol)}
+
+
 
         binding.attendanceTakingPresentBtn.setOnClickListener {
-
-            // Audio feature
-//            mediaPlayerPresent?.start()
             vibrate(50)
-
             if (binding.recordingAttendanceStudentName.text != "Attendance completed") {
                 markAttendance(
                     dataArray[i].statusID,
@@ -106,10 +119,40 @@ class RecordingAttendance : AppCompatActivity() {
                 dataMarkedArray.add(obj)
                 noOfPresentStudents++
                 updatePresentAbsentNumber()
+
+                for (i in 0 until dataArray.size) {
+                    Log.d("getSerializableExtra_data",dataArray[i].Temp_array.toString())
+                }
+
                 if ((i + 1) < dataArray.size) {
                     binding.recordingAttendanceStudentName.text = dataArray[i + 1].studentName
-                } else {
+                    if(dataArray[i+1].Temp_array[0]=="PRESENT") { binding.recordingAttendancePrev1Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[0]=="ABSENT"){ binding.recordingAttendancePrev1Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[0]=="SESSION_EMPTY"){ binding.recordingAttendancePrev1Status.setImageResource(R.drawable.null_symbol)}
+
+                    if(dataArray[i+1].Temp_array[1]=="PRESENT") { binding.recordingAttendancePrev2Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[1]=="ABSENT"){ binding.recordingAttendancePrev2Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[1]=="SESSION_EMPTY"){ binding.recordingAttendancePrev2Status.setImageResource(R.drawable.null_symbol)}
+
+                    if(dataArray[i+1].Temp_array[2]=="PRESENT") { binding.recordingAttendancePrev3Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[2]=="ABSENT"){ binding.recordingAttendancePrev3Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[2]=="SESSION_EMPTY"){ binding.recordingAttendancePrev3Status.setImageResource(R.drawable.null_symbol)}
+
+                    if(dataArray[i+1].Temp_array[3]=="PRESENT") { binding.recordingAttendancePrev4Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[3]=="ABSENT"){ binding.recordingAttendancePrev4Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[3]=="SESSION_EMPTY"){ binding.recordingAttendancePrev4Status.setImageResource(R.drawable.null_symbol)}
+
+                    if(dataArray[i+1].Temp_array[4]=="PRESENT") { binding.recordingAttendancePrev5Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[4]=="ABSENT"){ binding.recordingAttendancePrev5Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[4]=="SESSION_EMPTY"){ binding.recordingAttendancePrev5Status.setImageResource(R.drawable.null_symbol)}
+                }
+                else {
                     binding.recordingAttendanceStudentName.text = "Attendance completed"
+                    binding.recordingAttendancePrev1Status.visibility=View.GONE
+                    binding.recordingAttendancePrev2Status.visibility=View.GONE
+                    binding.recordingAttendancePrev3Status.visibility=View.GONE
+                    binding.recordingAttendancePrev4Status.visibility=View.GONE
+                    binding.recordingAttendancePrev5Status.visibility=View.GONE
                     i--
                     updateButtonVisibility()
                 }
@@ -122,7 +165,6 @@ class RecordingAttendance : AppCompatActivity() {
             // Audio feature
 //            mediaPlayerAbsent?.start()
             vibrate(50)
-
             if (binding.recordingAttendanceStudentName.text != "Attendance completed") {
                 markAttendance(
                     ((dataArray[i].statusID).toInt() + 1).toString(),
@@ -144,8 +186,32 @@ class RecordingAttendance : AppCompatActivity() {
                 updatePresentAbsentNumber()
                 if ((i + 1) < dataArray.size) {
                     binding.recordingAttendanceStudentName.text = dataArray[i + 1].studentName
+                    if(dataArray[i+1].Temp_array[0]=="PRESENT") { binding.recordingAttendancePrev1Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[0]=="ABSENT"){ binding.recordingAttendancePrev1Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[0]=="SESSION_EMPTY"){ binding.recordingAttendancePrev1Status.setImageResource(R.drawable.null_symbol)}
+
+                    if(dataArray[i+1].Temp_array[1]=="PRESENT") { binding.recordingAttendancePrev2Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[1]=="ABSENT"){ binding.recordingAttendancePrev2Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[1]=="SESSION_EMPTY"){ binding.recordingAttendancePrev2Status.setImageResource(R.drawable.null_symbol)}
+
+                    if(dataArray[i+1].Temp_array[2]=="PRESENT") { binding.recordingAttendancePrev3Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[2]=="ABSENT"){ binding.recordingAttendancePrev3Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[2]=="SESSION_EMPTY"){ binding.recordingAttendancePrev3Status.setImageResource(R.drawable.null_symbol)}
+
+                    if(dataArray[i+1].Temp_array[3]=="PRESENT") { binding.recordingAttendancePrev4Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[3]=="ABSENT"){ binding.recordingAttendancePrev4Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[3]=="SESSION_EMPTY"){ binding.recordingAttendancePrev4Status.setImageResource(R.drawable.null_symbol)}
+
+                    if(dataArray[i+1].Temp_array[4]=="PRESENT") { binding.recordingAttendancePrev5Status.setImageResource(R.drawable.present_symbol) }
+                    else if(dataArray[i+1].Temp_array[4]=="ABSENT"){ binding.recordingAttendancePrev5Status.setImageResource(R.drawable.absent_symbol) }
+                    else if(dataArray[i+1].Temp_array[4]=="SESSION_EMPTY"){ binding.recordingAttendancePrev5Status.setImageResource(R.drawable.null_symbol)}
                 } else {
                     binding.recordingAttendanceStudentName.text = "Attendance completed"
+                    binding.recordingAttendancePrev1Status.visibility=View.GONE
+                    binding.recordingAttendancePrev2Status.visibility=View.GONE
+                    binding.recordingAttendancePrev3Status.visibility=View.GONE
+                    binding.recordingAttendancePrev4Status.visibility=View.GONE
+                    binding.recordingAttendancePrev5Status.visibility=View.GONE
                     i--
                     updateButtonVisibility()
                 }
@@ -204,6 +270,7 @@ class RecordingAttendance : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         super.onBackPressedDispatcher
 

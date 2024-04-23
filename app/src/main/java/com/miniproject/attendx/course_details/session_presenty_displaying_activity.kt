@@ -3,6 +3,7 @@ package com.miniproject.attendx.course_details
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -96,11 +97,26 @@ class session_presenty_displaying_activity : AppCompatActivity() {
                             dataStudNameAndStatus.size.toString() + "!=" + noOfUser
                         )
                         if (dataStudNameAndStatus.size.toString() == noOfUser) {
+                            var a = 0
+                            var p = 0
+                            for (c in dataStudNameAndStatus) {
+                                if (c.status == "PRESENT") {
+                                    p++
+                                } else {
+                                    a++
+                                }
+                            }
                             x.dismiss()
                             dataStudNameAndStatus.sortBy { it.studentName.split(" ").first() }
                             runOnUiThread {
+                                binding.cardContainerPresentorabsentNumber.visibility = View.VISIBLE
+                                binding.sessionPresentyTotalAbsentText.visibility = View.VISIBLE
+                                binding.sessionPresentyTotalPresentText.visibility = View.VISIBLE
+                                binding.sessionPresentyTotalAbsentNumber.text = a.toString()
+                                binding.sessionPresentyTotalPresentNumber.text = p.toString()
                                 binding.sessionPresentyDisplayRecyclerView.adapter =
                                     presenty_showing_RecyclerView_adapter(dataStudNameAndStatus)
+
                             }
                         }
                     }

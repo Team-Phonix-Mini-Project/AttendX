@@ -1,5 +1,6 @@
 package com.miniproject.attendx.course_details
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -151,6 +152,7 @@ class activity_course_details : AppCompatActivity() {
     }
 
 
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         super.onBackPressedDispatcher
 
@@ -386,21 +388,33 @@ class activity_course_details : AppCompatActivity() {
             override fun onResponse(call: Call, response: Response) {
                 response.body?.string()?.let { responseBody ->
                     var data = JSONArray(responseBody)
-                    var json_array_size = data.length()
+                    var json_array_size = data.length() - 1
+                    Log.d("SIZE_OF_JSON_ARRAY", "INITIAL SIZE :" + json_array_size.toString())
                     var i = 5
-                    if (json_array_size < i) {
-                        i = json_array_size - 1
-                    }
                     var Temp_array = arrayListOf<String>()
+                    if (json_array_size < i) {
+                        var k = i
+                        i = json_array_size
+                        Log.d(
+                            "SIZE_OF_JSON_ARRAY",
+                            "json less than i where i was $k and jsonSz:$json_array_size" + json_array_size.toString()
+                        )
+                        for (k in 0 until (5 - json_array_size)) {
+                            Log.d("SIZE_OF_JSON_ARRAY", "PUSHED SESSIONEMPPTY :")
+
+                            Temp_array.add("SESSION_EMPTY")
+                        }
+                    }
+                    Log.d("SIZE_OF_JSON_ARRAY", "Rest i -> $i")
                     while (i > 0) {
-                        var json_Object = data.getJSONObject((json_array_size - 1) - i)
+                        var json_Object = data.getJSONObject((json_array_size) - i)
                         var statusID_Array = json_Object.getJSONArray("statuses")
                         var attendance_logs_array = json_Object.getJSONArray("attendance_log")
                         var statusID_Array_first = statusID_Array.getJSONObject(0)
                         var statusID_present = statusID_Array_first.getString("id")
                         var statusID_absent = (statusID_present.toInt() + 1).toString()
                         if (attendance_logs_array.length() == 0) {
-
+                            Temp_array.add("SESSION_EMPTY")
                         } else {
                             Log.d("fasfsafsafsafsafa", attendance_logs_array.toString())
                             for (i in 0 until attendance_logs_array.length()) {
@@ -413,9 +427,11 @@ class activity_course_details : AppCompatActivity() {
                                     }
                                 }
                             }
+
                         }
                         i--
                     }
+                    Log.d("TEMP_ARRAY_CHECKER_TOOLS", Temp_array.toString())
                     callback(Temp_array)
                 }
             }
